@@ -1,0 +1,103 @@
+<div class="cards_Resumo_div">
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;" (click)="exportarExcel_Dashboard('conciliadas',2)">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingExcel" style="transform: scale(2);color:#34bfa3;"
+							color="primary">sentiment_satisfied
+						</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingExcel">
+						</mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#34bfa3; padding-left: 10%;">{{dados.entregasConciliadas | number:
+							'1.0-0'}}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Entregas Conciliadas</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="cards_Resumo">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-12" style="display: flex; flex-direction: row; align-items: center;">
+						<mat-icon style="transform: scale(2);color:#c03333;" color="danger">error</mat-icon>
+						<h1 class="" style="color:#c03333; padding-left: 10%;">{{dados.entregasComProblema | number: '1.0-0'}}</h1>
+					</div>
+					<div class="col-xl-12">
+						<p style="text-align: center;">Entregas Com Problemas</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;" (click)="exportarExcel_Dashboard('divergentes',3)">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingExcel" style="transform: scale(2);color:#f5e61ef6;"
+							color="primary">sentiment_dissatisfied
+						</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingExcel">
+						</mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#f5e61ef6; padding-left: 10%;">{{dados.entregasComDivergencia |
+							number: '1.0-0'}}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Entregas Divergentes</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;" (click)="exportarExcel_Dashboard('semCte',1)">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingExcel" style="transform: scale(2);color:#2e73b7;"
+							color="primary">mood_bad</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingExcel">
+						</mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#2e73b7; padding-left: 10%;">{{dados.entregasSemCte | number:
+							'1.0-0'}}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Entregas Sem CTE</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;" (click)="exportarExcel_Dashboard('total',0)">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingExcel" style="transform: scale(2);color:#4f4e4df6;"
+							color="primary">poll</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingExcel">
+						</mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#4f4e4df6; padding-left: 10%;">{{dados.totalGeral | number: '1.0-0'}}
+						</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Total Geral</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

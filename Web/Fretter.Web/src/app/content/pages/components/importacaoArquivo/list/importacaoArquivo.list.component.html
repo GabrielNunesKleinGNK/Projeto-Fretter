@@ -1,0 +1,228 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Importação Arquivo | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-4">
+							<label>Periodo</label>
+							<ng-select [items]="filtro.periodos" bindLabel="nome" bindValue="id" placeholder=""
+								[(ngModel)]="filtro.periodoId" (change)="filtroPeriodoChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-4" *ngIf="filtro.periodoId == 11">
+							<div class="row">
+								<div class="col-6">
+									<label>Data Inicial</label>
+									<input id="dataInicio" name="dataInicio" type="date" [(ngModel)]="filtro.DataInicio"
+										(change)="filtroDataChange($event)" class="form-control">
+								</div>
+								<div class="col-6">
+									<label>Data Final</label>
+									<input id="dataTermino" name="dataTermino" type="date"
+										[(ngModel)]="filtro.DataTermino" (change)="filtroDataChange($event)"
+										class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-4">
+							<label>Nome</label>
+							<input [(ngModel)]="filtro.nome" class="form-control" type="text">
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+							<label>Transportador</label>
+							<ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id"
+								placeholder="Todos" [(ngModel)]="filtro.transportadorId"
+								(change)="filtroTransportadorChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+							<label>Status</label>
+							<ng-select [items]="importacaoArquivoStatus" bindLabel="nome" bindValue="id"
+								placeholder="Todos" [(ngModel)]="filtro.importacaoArquivoStatusId"
+								(change)="filtroStatusChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 align-self-end">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="aplicarFiltro()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+<div class="cards_Resumo_div">
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingResumo" style="transform: scale(2);color:#2e73b7;"
+							color="primary">poll</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingResumo"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#2e73b7; padding-left: 10%;">{{ dadosCard.total| number:
+							'1.0-0' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Arquivos</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingResumo" style="transform: scale(2);color:#34bfa3;"
+							color="primary">sentiment_satisfied</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingResumo"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#34bfa3; padding-left: 10%;">{{ dadosCard.concluido | number:
+							'1.0-0' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Sucesso</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingResumo" style="transform: scale(2);color:#2e73b7;"
+							color="primary">sentiment_satisfied</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingResumo"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#2e73b7; padding-left: 10%;">{{ dadosCard.pendente | number:
+							'1.0-0' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Pendente</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingResumo" style="transform: scale(2);color:#e90707;"
+							color="primary">mood_bad</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingResumo"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#e90707; padding-left: 10%;">{{ dadosCard.falha | number:
+							'1.0-0' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Falha</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon [hidden]="viewLoadingResumo" style="transform: scale(2);color:#f5e61ef6;"
+							color="primary">sentiment_dissatisfied</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoadingResumo"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#f5e61ef6; padding-left: 10%;">{{ dadosCard.critica | number:
+							'1.0-0' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+						<p style="text-align: center;">Arquivos com Criticas</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Importar Arquivo" color="primary" type="button" (click)="novo()">
+			<span translate="">Novo Arquivo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+			<mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0" class="lmat-elevation-z8"
+				[dataSource]="dataSource" matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="nome">
+					<mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.nome }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="importacaoArquivoStatusId">
+					<mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.importacaoArquivoStatus.nome}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="importacaoArquivoTipoId">
+					<mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.importacaoArquivoTipo.nome}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastro">
+					<mat-header-cell *matHeaderCellDef>Dt. Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastro | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="acoes">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Download"
+							(click)="download(model.diretorio, model.nome)">
+							<mat-icon>file_download</mat-icon>
+						</button>
+						<button *ngIf="model.importacaoArquivoCriticas?.length > 0" mat-icon-button color="warn"
+							matTooltip="Visualizar Criticas"
+							(click)="visualizarCriticas(model.importacaoArquivoCriticas)">
+							<mat-icon>warning</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" (page)="pageChange($event)"
+				showFirstLastButtons [pageIndex]="pageIndex"></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

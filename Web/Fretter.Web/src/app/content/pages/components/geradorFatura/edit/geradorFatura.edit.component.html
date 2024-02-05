@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Arquivos">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row" style="text-align:right;">
+					<label for="example-text-input" class="col-2 col-form-label">Novo Arquivo</label>
+					<div class="col-8 col-form-label">
+						<div style="text-align: left !important;">
+							<input id="arquivo" name="arquivo" #arquivoInput type="file" accept="text/*"
+								style="text-align:left; width: 100%;" (change)="processFile(arquivoInput.files)" />
+							<div class="alert alert-danger" name="alert" style="display: none; margin-top: 2%;">
+								<span _ngcontent-c6="" translate="">Arquivo obrigatório</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<div class="col-2 col-form-label"></div>
+					<div class="col-8 col-form-label">
+						<span>* Formatos de Arquivos permitidos: <b>DOCCOB 5.0 e 3.0</b></span>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancelar">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading"
+		matTooltip="Processar">
+		<mat-icon class="iconPulseLoad" [hidden]="!viewLoading">settings</mat-icon>
+		<mat-icon [hidden]="viewLoading">settings</mat-icon>&nbsp;
+		<span [hidden]="viewLoading">Processar</span>
+		<span [hidden]="!viewLoading" style="color: lightgrey;">Processando...</span>
+	</button>
+</mat-dialog-actions>

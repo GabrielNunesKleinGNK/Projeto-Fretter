@@ -1,0 +1,23 @@
+.mat-column-actions{
+    min-width: 3% !important;
+    max-width: 3% !important;
+}
+
+ .mat-column-cliente, .mat-column-filial  {
+    min-width: 9% !important;
+    max-width: 25% !important;
+}
+
+.mat-column-filial  {
+    min-width: 9% !important;
+    max-width: 15% !important;
+}
+
+.cdk-column-data, .mat-column-periodo{
+    max-width: 7% !important;
+}
+
+.mat-column-qtdeItens, .mat-column-id
+{
+    max-width: 5% !important;
+}

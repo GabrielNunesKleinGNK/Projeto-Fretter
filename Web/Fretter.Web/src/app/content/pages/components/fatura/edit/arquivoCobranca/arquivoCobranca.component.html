@@ -1,0 +1,58 @@
+<!-- <m-portlet [options]="{headLarge: false}"> -->
+	<div *ngIf="viewLoading" class="m-splash-screen">
+		<span>Aguarde, Importando arquivo DOCCOB (.txt)... </span>
+		<mat-spinner diameter="40"></mat-spinner>
+	</div>
+	<ng-container mPortletHeadTitle style="background-color: white;">
+		<div style="display: flex;flex-direction: row-reverse;">
+			<input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)" accept=".txt" multiple="false"/>
+			<button mat-flat-button color="primary" (click)="csvInput.click()">Upload DOCCOB</button>
+		</div>
+	</ng-container>	
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="Id" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="DocRemetente" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Doc. Remetente</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.identificacaoRemetente }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="DocDestinatario" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Doc. Destinatario</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.identificacaoDestinatario }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="QtdTotal" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Qtd. Total</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.qtdTotal | number: '1.0-2'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="QtdItens" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Qtd. Itens</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.qtdItens | number: '1.0-2' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="ValorTotal" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Valor Total</mat-header-cell>
+					<mat-cell *matCellDef="let model">R$ {{model.valorTotal | number: '1.2-2' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="DataCadastro" >
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastro | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef style="flex-flow: column">Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="warn" matTooltip="Deletar Arquivo" (click)="deletarArquivo(model)">
+							<mat-icon>delete_outline</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+<!-- </m-portlet> -->

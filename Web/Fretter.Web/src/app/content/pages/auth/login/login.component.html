@@ -1,0 +1,27 @@
+<div>
+	<div class="m-stack__item m-stack__item--middle m-brand__logo" style="text-align: -webkit-center;background-color: #2D5E90 !important;">
+		<a routerLink="/" class="m-brand__logo-wrapper">
+			<!-- <img alt="" src="../../../../../assets/app/media/img/logos/logo_login.png"
+				style="width: 100%;object-fit: fill;margin:0px;" /> -->
+			<img alt="" src="../../../../../assets/app/media/img/logos/logo.svg" style="width: 80%;object-fit: fill;margin:0px;"/>
+		</a>
+	</div>
+	<form class="m-login__form m-form" name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm" novalidate>
+		<div class="form-group">
+			<mat-form-field>
+				<mat-label>Usuario</mat-label>
+				<input matInput type="text" name="username" placeholder="Usuario" [(ngModel)]="model.username"
+					#username="ngModel" required>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Senha</mat-label>
+				<input matInput type="password" name="password" placeholder="Password" autocomplete="off"
+					[(ngModel)]="model.password" #username="ngModel" required>
+			</mat-form-field>
+		</div>
+
+		<button (click)="submit()" type="button" mat-raised-button
+			color="primary">{{'AUTH.LOGIN.BUTTON' | translate}}</button>
+	</form>
+	<m-auth-notice></m-auth-notice>
+</div>

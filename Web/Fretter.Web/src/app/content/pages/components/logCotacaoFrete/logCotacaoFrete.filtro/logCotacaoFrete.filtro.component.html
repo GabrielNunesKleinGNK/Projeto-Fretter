@@ -1,0 +1,56 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="EMPRESA.LIST.TITULO">Log | Filtros</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="filtro">
+			<div class="row">
+				<div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+					<label>Periodo</label>
+					<ng-select [items]="filtro.periodos" bindLabel="nome" bindValue="id" placeholder=""
+						[(ngModel)]="filtro.periodoId" (change)="filtroPeriodoChange($event)" appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-4" *ngIf="filtro.periodoId == 11">
+					<div class="row">
+						<div class="col-6">
+							<label>Data Inicial</label>
+							<input id="dataInicio" name="dataInicio" type="date" [(ngModel)]="filtro.DataInicio"
+								class="form-control">
+						</div>
+						<div class="col-6">
+							<label>Data Final</label>
+							<input id="dataTermino" name="dataTermino" type="date" [(ngModel)]="filtro.DataTermino"
+								class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+					<label>Instância</label>
+					<input id="instancia" name="instancia" type="text" [(ngModel)]="filtro.instancia"
+						class="form-control">
+				</div>				
+				<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 align-self-end mb-1">
+					<button mat-raised-button matTooltip="Limpar Filtros" color="warn" type="button"
+						(click)="limpar()">
+						<mat-icon class="mt-2">clear</mat-icon>
+						<span class="ml-1">Limpar</span>
+					</button>
+				</div>
+				<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 align-self-end mb-1">
+					<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+						(click)="pesquisar()">
+						<mat-icon class="mt-2">search</mat-icon>
+						<span class="ml-1">Pesquisar</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,421 @@
+<m-portlet [options]="{headLarge: false}" *ngIf="viewLoading && dataSource.data.length === 0">
+	<ng-container mPortletBody>
+		<div class="row" *ngIf="viewLoading">
+			<div class="col-xl-12">
+				<div class="m-splash-screen d-flex p-3" style="position: relative;">
+					<span>Aguarde, buscando registros na base... </span>
+					<mat-spinner diameter="40"></mat-spinner>
+				</div>
+			</div>
+		</div>
+		<div class="row" *ngIf="!viewLoading">
+			<div class="col-xl-12">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>
+<m-portlet [options]="{headLarge: false}" [hidden]="viewLoading || !dataSource || dataSource.data.length == 0">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Faturamento de Conciliação - {{ tipoProcesso == 1 ? 'ENTREGAS' : 'DOCCOB' }} :</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-horizontal-stepper [linear]="isLinear">
+			<mat-step [stepControl]="fmConciliacao" label="Conciliações">
+				<m-portlet [options]="{headLarge: false}">
+					<ng-container mPortletHeadTitle>
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								<span translate="">{{visaoSelecionada}}</span>
+							</h3>
+						</div>
+					</ng-container>
+					<ng-container mPortletHeadTools>
+						<button mat-raised-button type="button" (click)="filtraTotal()" matTooltip="Total Geral"
+							[ngClass]="{'filterButtonSelected': headerFilterSelected == 1}"
+							[style.display]="exibirTotalizadores()">
+							<mat-icon>check_circle</mat-icon>
+							<span>
+								{{getTotal() | number}}
+							</span>
+						</button>
+					</ng-container>
+					<ng-container mPortletHeadTools>
+						<button mat-raised-button type="button" (click)="filtraNaoEncontrada()"
+							matTooltip="Entregas Não Encontradas"
+							[ngClass]="{'filterButtonSelected': headerFilterSelected == 2}"
+							[style.display]="exibirTotalizadores()">
+							<mat-icon>highlight_off</mat-icon>
+							<span>
+								{{getTotalNaoEncontrada() | number}}
+							</span>
+						</button>
+					</ng-container>
+					<ng-container mPortletHeadTools>
+						<button mat-raised-button type="button" (click)="filtraDivergente()"
+							matTooltip="Entregas Divergentes"
+							[ngClass]="{'filterButtonSelected': headerFilterSelected == 3}"
+							[style.display]="exibirTotalizadores()">
+							<mat-icon>assignment_late</mat-icon>
+							<span>
+								{{getTotalDivergente() | number}}
+							</span>
+						</button>
+					</ng-container>
+					<ng-container mPortletHeadTools>
+						<button mat-raised-button type="button" (click)="filtraValida()" matTooltip="Entregas Válidas"
+							[ngClass]="{'filterButtonSelected': headerFilterSelected == 4}"
+							[style.display]="exibirTotalizadores()">
+							<mat-icon>assignment_turned_in</mat-icon>
+							<span>
+								{{getTotalValida() | number}}
+							</span>
+						</button>
+					</ng-container>
+					<ng-container mPortletHeadTools>
+						<button mat-raised-button matTooltip="Download" color="success" type="button" (click)="exportarExcel()">
+							<mat-icon fontSet="fas" fontIcon="fa-file-excel" [hidden]="viewLoadingExcel"></mat-icon>			
+							<span  [hidden]="viewLoadingExcel">Download Entregas</span>
+							<mat-icon class="iconPulseLoad" [hidden]="!viewLoadingExcel">autorenew</mat-icon>
+							<span  [hidden]="!viewLoadingExcel">Processando...</span>
+						</button>
+					</ng-container>
+					<ng-container mPortletBody>
+						<form [formGroup]="fmConciliacao">
+							<div class="form-group m-form__group row">
+								<div class="col-3">
+									<div class="m-widget-conciliacao">
+										<div class="m-widget1__item">
+											<div class="row m-row--no-padding align-items-center">
+												<div class="col">
+													<h4 class="m-widget1__title m--font-brand">Qtd. Disponíveis:</h4>
+												</div>
+												<div class="col m--align-right">
+													<h4 class="m-widget1__number m--font-brand">
+														{{getTotal() | number}}
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="m-widget-conciliacao">
+										<div class="m-widget1__item">
+											<div class="row m-row--no-padding align-items-center">
+												<div class="col">
+													<h4 class="m-widget1__title m--font-brand">Qtd. Selecionadas:</h4>
+												</div>
+												<div class="col m--align-right">
+													<h4 class="m-widget1__number m--font-brand">
+														{{getTotalSelecionado() | number}}
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="m-widget-conciliacao">
+										<div class="m-widget1__item">
+											<div class="row m-row--no-padding align-items-center">
+												<div class="col">
+													<h4 class="m-widget1__title m--font-success">Vl. Total:</h4>
+												</div>
+												<div class="col m--align-right">
+													<h4 class="m-widget1__number m--font-success">
+														R$ {{getValorTotal() | number: '1.2-2'}}
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="m-widget-conciliacao">
+										<div class="m-widget1__item">
+											<div class="row m-row--no-padding align-items-center">
+												<div class="col">
+													<h4 class="m-widget1__title m--font-success">Vl. Selecionadas:</h4>
+												</div>
+												<div class="col m--align-right">
+													<h4 class="m-widget1__number m--font-success">
+														R$ {{getSomaValorSelecionado() | number: '1.2-2'}}
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<mat-form-field>
+								<input matInput (keyup)="applyFilter($event.target.value)"
+									placeholder="Filtrar Entregas">
+							</mat-form-field>
+							<div class="mat-table__wrapper">
+								<mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0"
+									class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+									matSortDirection="desc">
+									<ng-container matColumnDef="notaFiscal">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Nota Fiscal
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.notaFiscal}}-{{model.serie}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="transportador">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Transportador
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.transportador }}</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="conciliacaoTipo">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Tipo
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.conciliacaoTipo || '--' }}</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="codigoPedido">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Cod. Pedido
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.codigoPedido }}</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="valorCustoFrete">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Custo Frete
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">R$ {{model.valorCustoFrete | number:
+											'1.2-2'}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="valorCustoReal">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Custo Real
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">R$ {{model.valorCustoReal | number:
+											'1.2-2'}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="valorFreteDoccob">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Custo Doccob
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">R$ {{model.valorFreteDoccob | number:
+											'1.2-2'}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="statusConciliacao">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.statusConciliacao }}</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="dataEmissao">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Dt. Emissão
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.dataEmissao | date: 'dd/MM/yyyy'}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="dataCadastro">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>Dt. Cadastro
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">{{model.dataCadastro | date: 'dd/MM/yyyy
+											HH:mm' || '--'}}
+										</mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="actions">
+										<mat-header-cell *matHeaderCellDef>
+											<input type="checkbox" (change)="selecionarTodos($event)"
+												class="form-control" [disabled]="desativarSelecionarTodos()" />
+										</mat-header-cell>
+										<mat-cell *matCellDef="let model">
+											<input type="checkbox" [(ngModel)]="model.selecionado"
+												[checked]="model.selecionado" [disabled]="!model.habilitado"
+												class="form-control" [ngModelOptions]="{standalone: true}" />
+											<!-- (change)="onCheckboxChange($event)"-->
+										</mat-cell>
+									</ng-container>
+									<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+									<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+								</mat-table>
+								<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" [pageSize]="15"
+									showFirstLastButtons>
+								</mat-paginator>
+							</div>
+							<div class="form-group m-form__group row">
+								<div class="col-8 col-form-label">
+									<span>* Formatos de Arquivos permitidos: <b>DOCCOB 5.0 e 3.0</b></span>
+								</div>
+							</div>
+						</form>
+					</ng-container>
+					<ng-container mPortletFooter>
+						<ng-container mPortletFooterTools>
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col-12 m--align-right">
+									<button type="button" mat-raised-button matStepperNext>Proximo</button>
+								</div>
+							</div>
+						</ng-container>
+					</ng-container>
+				</m-portlet>
+			</mat-step>
+			<mat-step [stepControl]="fmResumo" label="Resumo">
+				<form [formGroup]="fmResumo">
+					<ng-container mPortletBody>
+						<div class="form-group m-form__group row">
+							<div class="col-6 col-form-label">
+								<div class="m-widget1">
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col-xl-12">
+												<h3 class="m-widget1__title">Resumo {{ tipoProcesso == 1 ? 'ENTREGAS' : 'DOCCOB' }} - Quantidade</h3>
+												<span class="m-widget1__desc">Resumo das Entregas Importadas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-brand">{{getTotal() |
+													number}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Válidas</h3>
+												<span class="m-widget1__desc">Quantidade de Entregas Válidas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-success">{{getTotalValida() |
+													number}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Divergentes</h3>
+												<span class="m-widget1__desc">Quantidade de Entregas Divergentes</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-warning">{{getTotalDivergente() |
+													number}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Não Encontradas</h3>
+												<span class="m-widget1__desc">Quantidade de Entregas Não
+													Encontradas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-danger">{{getTotalNaoEncontrada()
+													| number}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item item-footer">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Selecionadas</h3>
+												<span class="m-widget1__desc">Quantidade de Entregas Selecionadas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number">{{getTotalSelecionado() |
+													number}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-form-label">
+								<div class="m-widget1">
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col-xl-12">
+												<h3 class="m-widget1__title">Resumo {{ tipoProcesso == 1 ? 'ENTREGAS' : 'DOCCOB' }} - Valores</h3>
+												<span class="m-widget1__desc">Resumo das Entregas Importadas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-brand">R$ {{getValorTotal() |
+													number: '1.2-2'}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Vl. Custo {{ tipoProcesso == 1 ? 'ENTREGAS' : 'DOCCOB' }}</h3>
+												<span class="m-widget1__desc">Valores dos Fretes Importados no
+													Arquivo</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-success">R$ {{getValorTotal() |
+													number: '1.2-2'}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Vl. Custo Frete</h3>
+												<span class="m-widget1__desc">Soma dos Valores de Frete na
+													Importação</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-warning">R$
+													{{getSomaValorFreteCusto() | number: '1.2-2'}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Vl. Custo Real</h3>
+												<span class="m-widget1__desc">Soma dos Valores de Frete da CTe</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number m--font-danger">R$
+													{{getSomaValorFreteReal() | number: '1.2-2'}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="m-widget1__item item-footer">
+										<div class="row m-row--no-padding align-items-center">
+											<div class="col">
+												<h3 class="m-widget1__title">Vl. Entregas Selecionadas</h3>
+												<span class="m-widget1__desc">Soma Total dos Valores das Entregas
+													Selecionadas</span>
+											</div>
+											<div class="col m--align-right">
+												<span class="m-widget1__number">R$ {{getSomaValorSelecionado() | number:
+													'1.2-2'}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					<ng-container mPortletFooter>
+						<ng-container mPortletFooterTools>
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+									<button type="button" mat-raised-button matStepperPrevious>Voltar</button>
+								</div>
+								<div class="col m--align-right">
+									<button type="button" mat-raised-button color="primary"
+										[disabled]="viewLoadingFatura" (click)="processarFaturaAprovacao()">
+										<mat-icon class="iconPulseLoad" [hidden]="!viewLoadingFatura">settings
+										</mat-icon>
+										<mat-icon [hidden]="viewLoadingFatura">checked</mat-icon>&nbsp;
+										<span [hidden]="viewLoadingFatura">Finalizar</span>
+										<span [hidden]="!viewLoadingFatura"
+											style="color: lightgrey;">Processando...</span>
+									</button>
+								</div>
+							</div>
+						</ng-container>
+					</ng-container>
+				</form>
+			</mat-step>
+		</mat-horizontal-stepper>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,52 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="EMPRESA.LIST.TITULO">Log | Filtros</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Filtrar dados" color="primary" type="button" (click)="pesquisar()">
+			<mat-icon>search</mat-icon>&nbsp;Pesquisar
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="filtro">
+			<div class="row">
+				<div class="col-xl-3">
+					<label>Periodo</label>
+					<ng-select [items]="filtro.periodos"
+						bindLabel="nome"
+						bindValue="id"
+						placeholder=""
+						[(ngModel)]="filtro.periodoId"
+						(change)="filtroPeriodoChange($event)"
+						appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-3">
+					<label>Nível de Log</label>
+					<ng-select [items]="filtro.levels"
+						bindLabel="nome"
+						bindValue="id"
+						placeholder=""
+						[(ngModel)]="filtro.level"
+						appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+					<label>Aplicação</label>
+					<input id="application" name="application" type="text" [(ngModel)]="filtro.application"
+						class="form-control">
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+					<label>Processo</label>
+					<input id="process" name="process" type="text" [(ngModel)]="filtro.process"
+						class="form-control">
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>
+

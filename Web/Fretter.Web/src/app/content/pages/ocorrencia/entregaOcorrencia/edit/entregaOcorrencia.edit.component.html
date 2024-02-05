@@ -1,0 +1,117 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Nova Ocorrência" [ngClass]="{ 'm-portlet--body-progress' : viewLoading, 'm-portlet--body-progress-overlay' : loadingAfterSubmit }">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="m-portlet__body">
+					<div class="form-group m-form__group row" *ngIf="model.listaEntregas.length === 0">
+						<label class="col-2 col-form-label" style="text-align:right;">Código:</label>
+						<div class="col-3">
+							<input class="form-control" type="text" id="id" name="id" formControlName="id" [(ngModel)]="model.id" disabled >
+						</div>
+
+						<label class="col-2 col-form-label" style="text-align:right;">Código Entrega:</label>
+						<div class="col-4">
+							<input class="form-control" type="text" id="codigoEntrega" name="codigoEntrega" formControlName="codigoEntrega" [(ngModel)]="model.codigoEntrega" disabled >
+						</div>
+					</div>
+					<div class="form-group m-form__group row" *ngIf="model.listaEntregas.length === 0">
+						<label class="col-2 col-form-label" style="text-align:right;">Entrega (Fusion):</label>
+						<div class="col-3">
+							<input class="form-control" type="text" id="entregaId" name="entregaId" formControlName="entregaId" [(ngModel)]="model.entregaId"  disabled>
+							<div *ngIf="entregaId.invalid && (entregaId.dirty || entregaId.touched)" class="alert alert-danger">
+								<div *ngIf="entregaId.errors.required">Campo obrigatório</div>
+							</div>
+						</div>
+
+						<label class="col-2 col-form-label" style="text-align:right;">
+							Ocorrência :</label>
+						<div class="col-4">
+							<ng-select [items]="deParaList"
+									bindLabel="descricao"
+									bindValue="id"
+									placeholder="Selecione uma ocorrência"
+									[(ngModel)]="model.ocorrenciaId"
+									formControlName="ocorrenciaId"
+									appendTo="body"
+									(change)="atualizaOcorrencia($event)">
+							</ng-select>
+							<input hidden id="ocorrencia" name="ocorrencia" formControlName="ocorrencia" [(ngModel)]="model.ocorrencia"/>
+							<div *ngIf="ocorrenciaId.invalid && (ocorrenciaId.dirty || ocorrenciaId.touched)" class="alert alert-danger">
+								<div *ngIf="ocorrenciaId.errors.required">Campo obrigatório</div>
+							</div>	
+						</div>
+					</div>
+					<div class="form-group m-form__group row" *ngIf="model.listaEntregas.length !== 0">
+						<label class="col-2 col-form-label" style="text-align:right;">Entrega (Fusion):</label>
+						<div class="col-9">
+							<textarea type="text" id="listaEntregas" name="listaEntregas"
+							[(ngModel)]="model.listaEntregas" style="min-height: 80px; resize: vertical;"  disabled class="form-control"
+							formControlName="listaEntregas"></textarea>
+						</div>
+					</div>
+					<div class="form-group m-form__group row" *ngIf="model.listaEntregas.length !== 0">
+						<label class="col-2 col-form-label" style="text-align:right;">
+							Ocorrência :</label>
+						<div class="col-8">
+							<ng-select [items]="deParaList"
+									bindLabel="descricao"
+									bindValue="id"
+									placeholder="Selecione uma ocorrência"
+									[(ngModel)]="model.ocorrenciaId"
+									formControlName="ocorrenciaId"
+									appendTo="body"
+									(change)="atualizaOcorrencia($event)">
+							</ng-select>
+							<input hidden id="ocorrencia" name="ocorrencia" formControlName="ocorrencia" [(ngModel)]="model.ocorrencia"/>
+							<div *ngIf="ocorrenciaId.invalid && (ocorrenciaId.dirty || ocorrenciaId.touched)" class="alert alert-danger">
+								<div *ngIf="ocorrenciaId.errors.required">Campo obrigatório</div>
+							</div>	
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Data da Ocorrência:</label>
+						<div class="col-3">
+							<input class="form-control" type="datetime-local" id="dataOcorrencia" name="dataOcorrencia" formControlName="dataOcorrencia" [(ngModel)]="model.dataOcorrencia">
+							<div *ngIf="dataOcorrencia.invalid && (dataOcorrencia.dirty || dataOcorrencia.touched)" class="alert alert-danger">
+								<div *ngIf="dataOcorrencia.errors.required"> Campo obrigatório</div>
+							</div>
+						</div>
+
+						<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Sigla:</label>
+						<div class="col-1">
+							<label class="col-2 col-form-label" style="text-align:right;">{{model.sigla}}</label>
+						</div>
+
+						<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Finaliza:</label>
+						<div class="col-1">
+							<label class="col-2 col-form-label" style="text-align:right;">{{model.finalizar ? 'Sim' : 'Não'}}</label>
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Complemento:</label>
+						<div class="col-9">
+							<input class="form-control" type="text" id="complementar" name="complementar" formControlName="complementar" [(ngModel)]="model.complementar">
+						</div>
+					</div>
+				</div>
+			</form>
+		</mat-tab>	
+	</mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>&nbsp;
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()"  [class.spinner]="viewLoading" [disabled]="viewLoading" matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

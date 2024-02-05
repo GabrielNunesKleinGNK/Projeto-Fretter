@@ -1,0 +1,16 @@
+
+
+.text-elipsis{
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow:    ellipsis;
+}
+
+.mat-column-id, .mat-column-tipo, .mat-column-operacao, .mat-column-valor {
+    min-width: 9% !important;
+  }
+
+.mat-column-actions {
+    min-width: 9% !important;
+  }

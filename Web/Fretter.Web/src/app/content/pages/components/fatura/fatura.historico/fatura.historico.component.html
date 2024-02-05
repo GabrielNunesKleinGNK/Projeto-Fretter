@@ -1,0 +1,49 @@
+<!-- <m-portlet [options]="{headLarge: false}"> -->
+<ng-container mPortletHeadTitle style="background-color: white;">
+	<div class="m-portlet__head-title">
+		<h3 class="m-portlet__head-text">
+			<span translate=""></span>
+		</h3>
+	</div>
+</ng-container>
+<ng-container mPortletBody>
+	<div class="mat-table__wrapper">
+		<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+			matSortDirection="desc">
+			<ng-container matColumnDef="Id">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.id }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="Descricao">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao</mat-header-cell>
+				<mat-cell *matCellDef="let model" matTooltip="{{model.descricao }}">
+					{{model.descricao?.length>35?model.descricao.substr(0,35)+'...':model.descricao }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="Motivo">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Motivo</mat-header-cell>
+				<mat-cell *matCellDef="let model" matTooltip="{{ model.motivo }}">{{model.motivo?.length > 0 ?
+					model.motivo :'--' }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="StatusAnterior">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Status Anterior</mat-header-cell>
+				<mat-cell *matCellDef="let model">
+					{{
+					model.faturaStatusAnterior == null ? "--" : model.faturaStatusAnterior.descricao
+					}}
+				</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="Status">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Novo Status</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.faturaStatus.descricao }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="DataCadastro">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Alterado Em</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.dataCadastro | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+			</ng-container>
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+		</mat-table>
+		<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+	</div>
+</ng-container>
+<!-- </m-portlet> -->

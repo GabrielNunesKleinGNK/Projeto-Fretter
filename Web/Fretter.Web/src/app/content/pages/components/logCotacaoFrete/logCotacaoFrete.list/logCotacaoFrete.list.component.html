@@ -1,0 +1,56 @@
+<m-portlet [options]="{headLarge: false}">
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                <span translate="">Logs de Cotação de Frete - Indisponivel</span>
+            </h3>
+        </div>
+    </ng-container>
+    <ng-container mPortletBody>
+        <div class="mat-table__wrapper">
+            <div *ngIf="dataSource && dataSource.data.length === 0">Não foi encontrado registros para sua pesquisa</div>
+            <mat-table *ngIf="dataSource && dataSource.data.length > 0" class="lmat-elevation-z8"
+                [dataSource]="dataSource" matSort matSortActive="timestamp" matSortDirection="desc">
+                <ng-container matColumnDef="timestamp">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Data</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.timestamp | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="empresaId">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Cod. Empresa</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.empresaId}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="instancia">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Instancia</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.instancia}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="hostName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Host</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.hostName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="level">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Nível do Log</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.level}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="cotacaoPeso">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Peso</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.cotacaoPeso}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="cotacaoCepInvalido">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>CEP</mat-header-cell>
+                    <mat-cell *matCellDef="let model">{{model.cotacaoCepInvalido}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                    <mat-cell *matCellDef="let model">
+                        <button mat-icon-button color="primary" matTooltip="Exibir log" (click)="showObject(model)">
+                            <mat-icon>zoom_in</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+        </div>
+    </ng-container>
+</m-portlet>

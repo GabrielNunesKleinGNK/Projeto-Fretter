@@ -1,0 +1,127 @@
+<!-- Filtro -->
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Filtrar Arquivos</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<!-- Filtro -->
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-3 col-lg-5 col-md-6 col-sm-6">
+							<label>Nome Fantasia</label>
+							<input id="nomeFantasia" [(ngModel)]="filtro.nomeFantasia" class="form-control">
+						</div>
+						<div class="col-xl-3 col-lg-5 col-md-4 col-sm-6">
+							<label>Cnpj</label>
+							<input id="cnpj" [(ngModel)]="filtro.cnpj" class="form-control">
+						</div>
+						<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Limpar Filtros" color="warn" type="button"
+								(click)="limpar()">
+								<mat-icon class="mt-2">clear</mat-icon>
+								<span class="ml-1">Limpar</span>
+							</button>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>						
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>&nbsp;</label>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Arquivos</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Download Arquivo" color="primary" type="button"
+			(click)="downloadTemplate()">
+			<mat-icon>file_download</mat-icon>
+			<span class="ml-1">Template</span>
+		</button>
+		<input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)"
+			accept=".xlsx,.xls" multiple="false" />
+		<button mat-raised-button matTooltip="Upload Arquivo" color="primary" type="button" (click)="csvInput.click()">
+			<mat-icon>backup</mat-icon>
+			<span class="ml-1">Upload Excel</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar Arquivos">
+		</mat-form-field>
+		<div [hidden]="!viewLoading" class="m-splash-screen" style="position: relative;">
+			<span class="m-5">Aguarde, Importando arquivo... </span>
+			<mat-spinner diameter="40" class="mb-5"></mat-spinner>
+		</div>
+		<div [hidden]="viewLoading" class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="nome">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.nome }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.descricao }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="quantidadeEmpresa">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Qtd. Empresas</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.quantidadeEmpresa | number: '1.0-2'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="sucesso">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sucesso</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<mat-icon *ngIf="model.sucesso" color="primary">done</mat-icon>
+						<mat-icon *ngIf="!model.sucesso" color="warn">close</mat-icon>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastro">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastro | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Download"
+							(click)="download(model.id,model.nome)">
+							<mat-icon>file_download</mat-icon>
+						</button>
+						<button mat-icon-button color="primary" matTooltip="Detalhes" (click)="view(model)">
+							<mat-icon>remove_red_eye</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,26 @@
+.right.mat-cell {
+    display: flex;
+    justify-content: flex-end;
+}
+.right.mat-header-cell {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0;
+    padding-left: 24px;
+}
+.right.mat-header-cell:last-child {
+    margin-right: 0;
+}
+
+// .mat-column-quantidade {
+//     color: #008861;
+//     text-align: right !important;
+//     padding-right: 10px;
+//     font-weight: bold;
+// }
+// .mat-column-valorMinimo {
+//     color: #008861;
+//     text-align: right !important;
+//     padding-right: 10px;
+//     font-weight: bold;
+// }

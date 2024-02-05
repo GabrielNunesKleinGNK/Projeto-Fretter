@@ -1,0 +1,21 @@
+.mat-column-actions, .mat-column-url , .mat-column-layoutHeader, .mat-column-layout{
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 auto !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.cdk-column-actions{
+    min-width: 10% !important;
+}
+.cdk-column-url, .cdk-column-layoutHeader, .cdk-column-layout{
+    min-width: 9% !important;
+}

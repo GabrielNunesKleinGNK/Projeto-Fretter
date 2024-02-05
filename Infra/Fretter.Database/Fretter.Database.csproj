@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="SqlScripts\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="SqlScripts\Migrate\0015_Processamento_Conciliacao\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0017_Menus_Ajustes\Script001_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0021_6681_Contrato_Recotacao\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0021_6681_Contrato_Recotacao\Script002_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0020_MenuFatura\Script001_Populate - Copy.sql" />
+    <None Remove="SqlScripts\Migrate\0029_Criacao_Tabelas_Empresa_Integracao\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0028_Conciliacao_Ajuste_DuplicidadeNF\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0027_Conciliacao_Integracao_Autorizacao\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0026_Conciliacao_Integracao\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0025_Conciliacao_Tabela_Imposto\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0024_Ajuste_Conciliacao_Peso\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0023_Modal_Detalhes_Faturas\Script001_Schema.sql" />
+    <None Remove="SqlScripts\Migrate\0029_Criacao_Tabelas_Empresa_Integracao\Script002_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0030_Conciliacao_Entrega_Nao_Finalizada\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0032_Contrato_Transportador_Regra\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0031_Conciliacao_Entrega_Finalizada\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0031_Conciliacao_Entrega_Finalizada\Script002_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0032_Menu_Agendamento\Script001_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0033_Recalculo_Transferencia\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0034_Novo_Campos_ContratoTransportadorRegra\Script001_Schemma.sql" />
+    <None Remove="sqlscripts\migrate\0033_nf_serie_conemb\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0036_Status_Nao_Classificado_Arquivo_CTe\Script001_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0037_Criticas_Leitura_Doccob\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0036_Criticas_Processamento_CTe\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0038_Conciliacao_Generalidades\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0038_Conciliacao_Generalidades\Script002_Populate.sql" />
+    <None Remove="SqlScripts\Migrate\0039_Validacao_DataEmissaoNF_Doccob\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0041_Conciliacao_Numero_Cte_Conemb\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0040_Tabelas_Reenvio_Conciliacao\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_ConciliacaoRecotacaoRetorno.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_FaturaArquivo.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_FaturaArquivoCritica.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_FaturaConciliacao.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_FaturaConciliacaoReenvio.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.EnviaConciliacaoRecalculoFrete.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.EnviaConciliacaoRecalculoFreteMassivo.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetCanaisUsuario.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetContratoTransportadorRegraPorEmpresa.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetDashboadTransportadorTotal.sql" />
+    <None Remove="SqlScripts\Migrate\0021_Farol_Fatura\Script001_Schemma.sql" />
+    <None Remove="SqlScripts\Migrate\0021_Farol_Fatura\Script002_Populate.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetDemonstrativoPorFatura.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetDetalhesConciliacaoRecotacao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetFaturaConciliacaoIntegracao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetImportacaoArquivoResumo.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetJsonIntegracaoFaturaConciliacao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.GetOcorrenciasPorEmpresa.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaConciliacaoOcorrencia.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaConciliacaoRecotacao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaConciliacaoTransportador.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_CdEntregaList.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_EntregaConciliacao.sql" />
+    <None Remove="SqlScripts\Objects\01_Types\Fretter.Tp_PedidoPendenteTransportador.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaEntregaReprocessamento.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaEntrega_ReprocessaSustentacao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ProcessaFaturaImportacao.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.SetContratoTransportadorArquivoTipo.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.SetContratoTransportadorRegra.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.SetFaturaArquivo.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.SetFaturaConciliacaoReenvio.sql" />
+    <None Remove="SqlScripts\Objects\04_Procedures\Fretter.ValidarReincidenciaReenvioConciliacao.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="dbup-core" Version="4.5.0" />
+    <PackageReference Include="dbup-sqlserver" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SqlScripts\Migrate\0033_NF_Serie_Conemb\" />
+    <Folder Include="SqlScripts\Objects\02_Functions\" />
+    <Folder Include="SqlScripts\Objects\03_Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="SqlScripts\Objects\01_Types\Fretter.Tp_FaturaArquivo.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

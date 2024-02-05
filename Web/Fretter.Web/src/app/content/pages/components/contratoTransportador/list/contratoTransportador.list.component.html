@@ -1,0 +1,131 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Contrato Transportador | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>	
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-4">
+							<label>Transportador</label>
+							<ng-select [items]="transportadores"
+								bindLabel="transportadorNome"
+								bindValue="id"
+								placeholder="Selecione um Transportador"
+								[(ngModel)]="filtro.transportadorId"
+								appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 align-self-end">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button" (click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>		
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="CONTRATOTRANSPORTADOR.LIST.TITULO">Contrato Transportador</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Criar Novo Contrato" color="success" type="button" (click)="novo()">
+			<span translate="CONTRATOTRANSPORTADOR.LIST.BTNEW">Cadastrar Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+			<mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0" 
+				class="lmat-elevation-z8" [dataSource]="dataSource" matSort 
+				matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef>Descricao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.descricao}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="transportador">
+					<mat-header-cell *matHeaderCellDef>Transportador</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.transportador.nomeFantasia}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="cnpj">
+					<mat-header-cell *matHeaderCellDef>CNPJ</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.transportadorCnpj.cnpj }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="vigenciaInicial">
+					<mat-header-cell *matHeaderCellDef>Vigência Inicial</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.vigenciaInicial | date: 'dd/MM/yyyy'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="vigenciaFinal">
+					<mat-header-cell *matHeaderCellDef>Vigência Final</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.vigenciaFinal | date: 'dd/MM/yyyy'}}</mat-cell>
+				</ng-container>
+				
+				<ng-container matColumnDef="usuarioAlteracao">
+					<mat-header-cell *matHeaderCellDef>Us. Alteracao</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span class="text-elipsis" [matTooltip]="model.alteracaoUsuario?.userName">
+							{{ model.alteracaoUsuario?.userName || '--' }}
+						</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataAlteracao">
+					<mat-header-cell *matHeaderCellDef>Dt. Alteracao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ (model.dataAlteracao | date: 'dd/MM/yyyy HH:mm') || '--' }}</mat-cell>
+				</ng-container>				
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item (click)="edit(model)">
+								<mat-icon>create</mat-icon>
+								<span>Editar</span>
+							</button>
+							<button mat-menu-item (click)="verHistorico(model)">
+								<mat-icon>history</mat-icon>
+								<span>Historico</span>
+							</button>
+							<button mat-menu-item (click)="delete(model)">
+								<mat-icon color="warn">delete</mat-icon>
+								<span>Deletar</span>
+							</button>
+						</mat-menu>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

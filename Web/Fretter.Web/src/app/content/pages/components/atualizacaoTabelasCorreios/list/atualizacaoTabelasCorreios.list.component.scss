@@ -1,0 +1,66 @@
+.spanVermelho{
+    color: red;
+    font-weight: bold;
+    margin: 0;
+}
+
+.spanVerde{
+    color: green;
+    font-weight: bold;
+    margin: 0;
+}
+
+.spanAzul{
+    color: blue;
+    font-weight: bold;
+    margin: 0;
+}
+
+.mat-column-tabelaArquivoStatusId, .mat-column-criacao, .mat-column-importacaoDados, .mat-column-importacaoTabelas{
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+.mat-column-url {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-actions {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+table{
+    width: 100%;
+}

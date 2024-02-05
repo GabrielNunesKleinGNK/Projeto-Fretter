@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>
+  <div>
+    <span>{{getTitle()}}</span>
+    <button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+      X
+    </button>
+  </div>
+</h2>
+
+<mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Configuração">
+      <form class="m-form" [formGroup]="modelForm" style="width: 900px;">
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Filial:</label>
+          <div class="col-8">
+            <ng-select [items]="lstCanais" bindLabel="canalNome" bindValue="id" placeholder="Todas"
+              [(ngModel)]="model.canalId" formControlName="canalId" appendTo="body">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Transportador:</label>
+          <div class="col-8">
+            <ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id"
+              placeholder="Todos" (change)="getTransportadoresCnpjChange($event.id)" (clear)="limparComboTransportadorFilial()"
+              [(ngModel)]="model.transportadorId" formControlName="transportadorId" appendTo="body">
+            </ng-select>
+            <div *ngIf="transportadorId.invalid && (transportadorId.dirty || transportadorId.touched)"
+              class="alert alert-danger">
+            <div *ngIf="transportadorId.errors.required">Transportador é obrigatório</div>
+          </div>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Transp. Filial:</label>
+          <div class="col-8">
+            <ng-select [items]="transportadoresCnpj" bindLabel="descricao" bindValue="id"
+              placeholder="Todos" [(ngModel)]="model.transportadorCnpjId"
+              formControlName="transportadorCnpjId" appendTo="body">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">
+            Gera Notifis:
+            <mat-icon matTooltip="A expedição desse agendamento será automática." style="color: coral;">
+              info
+            </mat-icon>
+          </label>
+          <div class="col-1 align-self-center">
+            <mat-slide-toggle class="mt-2" [(ngModel)]="model.expedicaoAutomatica"
+              formControlName="expedicaoAutomatica">
+            </mat-slide-toggle>
+          </div>
+
+          <label class="col-4 col-form-label" style="text-align:right;">Prazo mínimo:</label>
+          <div class="col-3">
+            <ng-select [items]="prazoMinimo" placeholder="Selecione um prazo" [(ngModel)]="model.prazoComercial"
+              formControlName="prazoComercial" appendTo="body">
+            </ng-select>
+            <div *ngIf="prazoComercial.invalid && (prazoComercial.dirty || prazoComercial.touched)"
+              class="alert alert-danger">
+            <div *ngIf="prazoComercial.errors.required">Prazo mínimo é obrigatório</div>
+          </div>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+    Cancelar
+  </button>
+  <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading"
+    [class.spinner]="viewLoading" matTooltip="Save changes">
+    Salvar
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,131 @@
+<div class="col-xl-12" style="padding: 2%">
+	<div class="row">
+		<form class="m-form" style="width: 100%; display: inline-block;">
+			<div class="form-group m-form__group row">
+				<label class="col-1 col-form-label" style="text-align:left;">Filial:</label>
+				<div class="col-3">
+					<ng-select [items]="canaisUsuario" bindLabel="canalNome" bindValue="id" placeholder="Todos"
+						[(ngModel)]="filtro.canalId" appendTo="body" [ngModelOptions]="{standalone: true}">
+					</ng-select>
+				</div>
+				<label class="col-1 col-form-label" style="text-align:left;">CEP:</label>
+				<div class="col-2">
+					<input id="cep" name="cep" class="form-control" minlength="8" maxlength="8"
+					[(ngModel)]="filtro.cep"/>
+				</div>
+				<label class="col-1 col-form-label" style="text-align:left;">Nº Itens:</label>
+				<div class="col-2">
+					<input type="number" id="qtdItens" name="qtdItens" class="form-control" min="1"
+					[(ngModel)]="filtro.quantidadeItens" />
+				</div>
+				<div class="col-2">
+					<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button" (click)="pesquisar()">
+						<mat-icon class="mt-2">search</mat-icon>
+						<span class="ml-1">Pesquisar</span>
+					</button>
+				</div>
+			</div>
+        </form>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}"  *ngIf="edicao == true">
+	<ng-container mPortletHeadTitle >
+		<div class="m-portlet__head-title" style="text-align: center;">
+			<h3 class="m-portlet__head-text">
+				<span>Agendamento para o pedido: {{value.cdPedido}}</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div class="col-12" style="padding: 1% 0;" >
+				<label class="form col-12" style="text-align:left; font-size: 14px;">
+					<b>A entrega {{value.cdPedido}} está agendada para o dia {{value.dtAgendamento | date: 'dd/MM/yyyy'}} período da {{value.periodoSelecionado}}</b>
+				</label>
+				<label class="form col-12 " style="text-align:left; font-size: 12px;">
+					<b>Obs: Para alterar, basta fazer uma pesquisa de disponilbilidade e selecionar a nova data.</b>
+				</label>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>
+
+<m-portlet [options]="{headLarge: false}"  *ngIf="edicao == false">
+	<ng-container mPortletHeadTitle >
+		<div class="m-portlet__head-title" style="text-align: center;">
+			<h3 class="m-portlet__head-text">
+				<span>Disponibilidade</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools class="float-left">
+		<button mat-raised-button matTooltip="Anterior" color="primary" type="button" (click)="proximoRangeDeData(false)" 
+			[disabled]="disabledButtonNext" id="anterior">
+			<mat-icon>navigate_before</mat-icon>
+		</button>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<div style="padding: 0 5%;">
+			<h5 class="m-portlet__head-text mb0" style="margin-bottom: 0;" >
+				<span>{{filtro.pagina}}</span>
+			</h5>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Próximo" color="primary" type="button" (click)="proximoRangeDeData(true)"
+			id="proximo" style="margin-left: 0 !important;">
+			<mat-icon>navigate_next</mat-icon>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+			<mat-table class="lmat-elevation-z8" 
+                [hidden]="viewLoading || !dataSource || dataSource.data.length == 0"
+                [dataSource]="dataSource" matSort>
+				<!-- <ng-container matColumnDef="id" *ngIf="model.id == 0">
+					<mat-header-cell *matHeaderCellDef>Identificador</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.id }}</mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="data" class="col-3">
+					<mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.data | date: 'dd/MM/yyyy'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="manha">
+					<mat-header-cell *matHeaderCellDef>Manhã</mat-header-cell>
+					<mat-cell *matCellDef="let model"> Restam disponíveis: {{ model.manha  }}
+						<div style="display: flex;align-items: center; justify-content: center; padding: 1% 3% 0 3%">
+							<mat-radio-button (click)="selecionarPeriodo(model, 'manha')" [disabled]="model.desabilitaManha" ></mat-radio-button>
+						</div>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="tarde">
+					<mat-header-cell *matHeaderCellDef>Tarde</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						Restam disponíveis: {{ model.tarde}}
+						<div style="display: flex;align-items: center; justify-content: center; padding: 1% 3% 0 3%">
+							<mat-radio-button (click)="selecionarPeriodo(model, 'tarde')" [disabled]="model.desabilitaTarde" ></mat-radio-button>
+						</div>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="noite">
+					<mat-header-cell *matHeaderCellDef>Noite</mat-header-cell>
+					<mat-cell *matCellDef="let model">Restam disponíveis: {{ model.noite }}
+						<div style="display: flex;align-items: center; justify-content: center; padding: 1% 3% 0 3%">
+							<mat-radio-button (click)="selecionarPeriodo(model, 'noite')" [disabled]="model.desabilitaNoite"></mat-radio-button>
+						</div>
+					</mat-cell>
+				</ng-container>				
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+		</div>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,125 @@
+<div style="margin-top: 1%">
+    <form class="m-form" [formGroup]="dadosAgendamentoForm">
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Cep: </label>
+            <div class="col-2">
+                <input [(ngModel)]="model.destinatario.cep" id="cep" name="cep" class="form-control"
+                    formControlName="cep" disabled>
+                <div *ngIf="cep.invalid && (cep.dirty || cep.touched)" class="alert alert-danger">
+                    <div>campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col- col-form-label" style="text-align:left;">Endereço: </label>
+            <div class="col-5">
+                <input [(ngModel)]="model.destinatario.logradouro" id="logradouro" name="logradouro"
+                    class="form-control" formControlName="logradouro">
+                <div *ngIf="logradouro.invalid && (logradouro.dirty || logradouro.touched)" class="alert alert-danger">
+                    <div *ngIf="logradouro.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Número: </label>
+            <div class="col-2">
+                <input [(ngModel)]="model.destinatario.numero" id="numero" name="numero" class="form-control"
+                    formControlName="numero">
+                <div *ngIf="numero.invalid && (numero.dirty || numero.touched)" class="alert alert-danger">
+                    <div *ngIf="numero.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Complem: </label>
+            <div class="col-4">
+                <input [(ngModel)]="model.destinatario.complemento" id="complemento" name="complemento"
+                    class="form-control" formControlName="complemento">
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Referência: </label>
+            <div class="col-6">
+                <input [(ngModel)]="model.destinatario.pontoReferencia" id="pontoReferencia" name="pontoReferencia"
+                    class="form-control" formControlName="pontoReferencia">
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Bairro: </label>
+            <div class="col-3">
+                <input [(ngModel)]="model.destinatario.bairro" id="bairro" name="bairro" class="form-control"
+                    formControlName="bairro">
+                <div *ngIf="bairro.invalid && (bairro.dirty || bairro.touched)" class="alert alert-danger">
+                    <div *ngIf="bairro.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Cidade: </label>
+            <div class="col-4">
+                <input id="cidade" name="cidade" class="form-control" formControlName="cidade" [(ngModel)]="model.destinatario.cidade">
+                <div *ngIf="cidade.invalid && (cidade.dirty || cidade.touched)" class="alert alert-danger">
+                    <div *ngIf="cidade.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Estado: </label>
+            <div class="col-2">
+                <input [(ngModel)]="model.destinatario.uf" id="uf" name="uf" class="form-control" formControlName="uf"
+                    maxlength="2" minlength="2">
+                <div *ngIf="uf.invalid && (uf.dirty || uf.touched)" class="alert alert-danger">
+                    <div *ngIf="uf.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Cliente: </label>
+            <div class="col-5">
+                <input [(ngModel)]="model.destinatario.nome" id="nome" name="nome" class="form-control"
+                    formControlName="nome">
+                <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert alert-danger">
+                    <div *ngIf="nome.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Cpf/Cnpj: </label>
+            <div class="col-2">
+                <input [(ngModel)]="model.destinatario.cpfCnpj" id="cpfCnpj" name="cpfCnpj" class="form-control"
+                    formControlName="cpfCnpj">
+                <div *ngIf="cpfCnpj.invalid && (numero.dirty || cpfCnpj.touched)" class="alert alert-danger">
+                    <div *ngIf="cpfCnpj.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+
+            <label class="col-1 col-form-label" style="text-align:left;">Telefone: </label>
+            <div class="col-2">
+                <input type="tel" [(ngModel)]="model.destinatario.telefone" id="telefone" name="telefone"
+                    class="form-control" formControlName="telefone">
+                <div *ngIf="telefone.invalid && (telefone.dirty || telefone.touched)" class="alert alert-danger">
+                    <div *ngIf="telefone.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Pré-Order: </label>
+            <div class="col-3">
+                <input [(ngModel)]="model.cdPedido" id="cdPedido" name="cdPedido" class="form-control"
+                    formControlName="cdPedido">
+                <div *ngIf="cdPedido.invalid && (cdPedido.dirty || cdPedido.touched)" class="alert alert-danger">
+                    <div *ngIf="cdPedido.errors.required">campo obrigatório</div>
+                </div>
+            </div>
+            <label class="col-1 col-form-label" style="text-align:left;">Email: </label>
+            <div class="col-7">
+                <input [(ngModel)]="model.destinatario.email" id="email" name="email" class="form-control"
+                    formControlName="email">
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-1 col-form-label" style="text-align:left;">Observação: </label>
+            <div class="col-11">
+                <input [(ngModel)]="model.dsObservacao" id="dsObservacao" name="dsObservacao" class="form-control"
+                    formControlName="dsObservacao">
+            </div>
+        </div>
+    </form>
+</div>
+<div style="margin-top: 1%">
+    <m-agendamentoEntrega-produtos-wizard [value]="model"></m-agendamentoEntrega-produtos-wizard>
+</div>

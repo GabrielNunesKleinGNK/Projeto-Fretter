@@ -1,0 +1,119 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Novo FTP" [ngClass]="{ 'm-portlet--body-progress' : viewLoading, 'm-portlet--body-progress-overlay' : loadingAfterSubmit }">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="m-portlet__body">
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Importacao Configuracao Tipo :</label>
+						<div class="col-7">
+							<ng-select [items]="importacaoConfiguracaoTipoList"
+									bindLabel="nome"
+									bindValue="id"
+									placeholder="Selecione importacaoConfiguracaoTipo"
+									[(ngModel)]="model.importacaoConfiguracaoTipoId"
+									formControlName="importacaoConfiguracaoTipoId"
+									appendTo="body"
+									[ngClass]="{'ng-select-invalid':!model.importacaoConfiguracaoTipoId}">
+							</ng-select>	
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Transportador :</label>
+						<div class="col-7">
+							<ng-select [items]="transportadorList"
+								bindLabel="transportadorNome"
+								bindValue="id"
+								placeholder="Selecione uma Transportador"
+								[(ngModel)]="model.transportadorId"
+								formControlName="transportadorId"
+								appendTo="body"
+								[ngClass]="{'ng-select-invalid':!model.transportadorId}">
+					</ng-select>
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Arquivo Tipo :</label>
+						<div class="col-7">
+							<ng-select [items]="importacaoArquivoTipoList"
+									bindLabel="nome"
+									bindValue="id"
+									placeholder="Selecione importacaoArquivoTipo"
+									[(ngModel)]="model.importacaoArquivoTipoId"
+									formControlName="importacaoArquivoTipoId"
+									appendTo="body"
+									[ngClass]="{'ng-select-invalid':!model.importacaoArquivoTipoId}">
+							</ng-select>	
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Diretorio:</label>
+						<div class="col-7">
+							<input type="text" id="diretorio" name="diretorio" [ngClass]="{'form-control': true, 'is-invalid':diretorio.invalid && (diretorio.dirty || diretorio.touched) && diretorio.errors.required}" formControlName="diretorio" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Dir. Sucesso:</label>
+						<div class="col-7">
+							<input type="text" id="diretorioSucesso" name="diretorioSucesso" [ngClass]="{'form-control': true, 'is-invalid':diretorioSucesso.invalid && (diretorioSucesso.dirty || diretorioSucesso.touched) && diretorioSucesso.errors.required}" formControlName="diretorioSucesso" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Dir. Erro:</label>
+						<div class="col-7">
+							<input type="text" id="diretorioErro" name="diretorioErro" [ngClass]="{'form-control': true, 'is-invalid':diretorioErro.invalid && (diretorioErro.dirty || diretorioErro.touched) && diretorioErro.errors.required}" formControlName="diretorioErro" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Usuario:</label>
+						<div class="col-7">
+							<input type="text" id="usuario" name="usuario" [ngClass]="{'form-control': true, 'is-invalid':usuario.invalid && (usuario.dirty || usuario.touched) && usuario.errors.required}" formControlName="usuario" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Senha:</label>
+						<div class="col-7">
+							<input type="text" id="senha" name="senha" [ngClass]="{'form-control': true, 'is-invalid':senha.invalid && (senha.dirty || senha.touched) && senha.errors.required}" formControlName="senha" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Outro:</label>
+						<div class="col-7">
+							<input type="text" id="outro" name="outro" [ngClass]="{'form-control': true, 'is-invalid':outro.invalid && (outro.dirty || outro.touched) && outro.errors.required}" formControlName="outro" >
+			
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Compactado:</label>
+						<div class="col-7">
+							<mat-checkbox formControlName="compactado"></mat-checkbox>
+			
+						</div>
+					</div>
+						
+				</div>
+			</form>
+		</mat-tab>	
+	</mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>&nbsp;
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

@@ -1,0 +1,112 @@
+<mat-dialog-content class="mat-table__wrapper">
+  <div class="row">
+    <div class="col-xl-12">
+      <m-portlet [options]="{headLarge: true}">
+        <ng-container mPortletHeadTitle>
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              <span translate="y">Pesquisa de produtos</span>
+            </h3>
+          </div>
+        </ng-container>
+        <ng-container mPortletHeadTools>
+          <button class="closeButton" type="button" [mat-dialog-close]="" matTooltip="Close">
+            X
+          </button>
+        </ng-container>
+        <ng-container mPortletBody>
+          <div class="filtro">
+            <div class="row">
+              <div class="col-xl-6 col-lg-4 col-md-2 col-sm-2 ">
+                <label>Nome: </label>
+                <input class="form-control" [(ngModel)]="descricao">
+              </div>
+              <div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 align-self-end">
+                <button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button" (click)="pesquisar()">
+                  <mat-icon class="mt-2">search</mat-icon>
+                  <span class="ml-1">Pesquisar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </m-portlet>
+    </div>
+  </div>
+
+  <m-portlet [options]="{headLarge: true}">
+    <ng-container mPortletHeadTitle>
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <span translate="">Produtos</span>
+        </h3>
+      </div>
+    </ng-container>	
+    <ng-container mPortletBody>
+      <div class="mat-table__wrapper--800">
+        <div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				  <span>Aguarde, buscando registros na base... </span>
+				    <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        <div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+          Não foi encontrado registros para sua pesquisa
+  			</div>
+
+        <mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0" 
+				  class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="nome" matSortDirection="asc">
+
+          <ng-container matColumnDef="sku">
+            <mat-header-cell *matHeaderCellDef>SKU</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.codigo }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nome">
+            <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.nome }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="preco">
+            <mat-header-cell *matHeaderCellDef>Preço </mat-header-cell>
+            <mat-cell *matCellDef="let model">R$ {{ model.preco | number: '1.0-2' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="altura">
+            <mat-header-cell *matHeaderCellDef>Altura</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.altura | number: '1.0-2' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="largura">
+            <mat-header-cell *matHeaderCellDef>Largura</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.largura | number: '1.0-2' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="comprimento">
+            <mat-header-cell *matHeaderCellDef>Comprimento</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.comprimento | number: '1.0-2' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="peso">
+            <mat-header-cell *matHeaderCellDef>Peso Bruto</mat-header-cell>
+            <mat-cell *matCellDef="let model">{{ model.pesoBruto | number: '1.0-2' }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+            <mat-cell *matCellDef="let model">
+              <button mat-icon-button color="primary" matTooltip="Selecionar este Produto" (click)="selecionar(model)">
+                <mat-icon>check</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator #paginator [pageSize]="pageSize" [pageIndex]="currentPage" [pageSizeOptions]="[5, 10]"
+          [length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </ng-container>
+  </m-portlet>
+
+</mat-dialog-content>

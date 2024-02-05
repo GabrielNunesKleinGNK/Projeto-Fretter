@@ -1,0 +1,12 @@
+
+
+.text-elipsis{
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow:    ellipsis;
+}
+
+.mat-column-actions {
+    min-width: 5% !important;
+  }

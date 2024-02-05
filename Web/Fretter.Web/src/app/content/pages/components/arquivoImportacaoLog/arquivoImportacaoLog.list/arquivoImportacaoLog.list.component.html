@@ -1,0 +1,44 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Logs</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="dsNome"
+				matSortDirection="desc">
+				<ng-container matColumnDef="dsNome">
+					<mat-header-cell  *matHeaderCellDef mat-sort-header>Arquivo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dsNome}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="numeroPedido">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Pedido</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.numeroPedido}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dtImportacao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dtImportacao | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dtImportacaoDATE">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Período</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dtImportacaoDATE | date: 'dd/MM/yyyy' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Exibir log"
+							(click)="showObject(model)">
+							<mat-icon>zoom_in</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

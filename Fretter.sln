@@ -1,0 +1,104 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{73FA351B-71E6-4770-AE3F-9D8CC6D3974B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{AF31075F-61CA-4136-9440-9A8742A4DF70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{AE5AFEFC-32B9-4E4E-AD2A-271B83945A50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{926E3217-36F4-4BF1-A812-3FB28B9FC0BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Api", "Api\Fretter.Api\Fretter.Api.csproj", "{ABB17561-B47C-4573-AEE6-CEB2C12F4B93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Domain", "Domain\Fretter.Domain\Fretter.Domain.csproj", "{E6AF625D-4D70-4424-80CF-BA67DA2FC155}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{19A50778-E474-434D-A854-A6F9F8608D7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Application", "Application\Fretter.Application\Fretter.Application.csproj", "{A34E2A4A-3037-4F30-BE6E-FFC78D935848}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4BDF59BB-DBAB-4C59-A786-2A5A4E7424E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Repository", "Infra\Fretter.Repository\Fretter.Repository.csproj", "{18E4D189-0C93-4C8A-98C1-5794511D66E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Ioc", "Infra\Fretter.Ioc\Fretter.Ioc.csproj", "{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{BB4CE1A5-2EAE-4440-888F-444427BC71F6}"
+	ProjectSection(SolutionItems) = preProject
+		build_api_acr.sh = build_api_acr.sh
+		build_api_docker.sh = build_api_docker.sh
+		build_web_acr.sh = build_web_acr.sh
+		build_web_docker.sh = build_web_docker.sh
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Service", "Infra\Fretter.Service\Fretter.Service.csproj", "{49EEC615-68D9-4080-A43B-9FD03713DB70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.WebHook.Api", "Api\Fretter.WebHook.Api\Fretter.WebHook.Api.csproj", "{5A4927B6-8708-4E19-AEE9-7427C98F2197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Mensageria", "Infra\Fretter.Mensageria\Fretter.Mensageria.csproj", "{6F182985-7ED5-41B5-AE83-4A4FD377EE57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fretter.Database", "Infra\Fretter.Database\Fretter.Database.csproj", "{32E381EC-D504-49E2-8081-C866EF27F244}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABB17561-B47C-4573-AEE6-CEB2C12F4B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB17561-B47C-4573-AEE6-CEB2C12F4B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB17561-B47C-4573-AEE6-CEB2C12F4B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB17561-B47C-4573-AEE6-CEB2C12F4B93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6AF625D-4D70-4424-80CF-BA67DA2FC155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6AF625D-4D70-4424-80CF-BA67DA2FC155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6AF625D-4D70-4424-80CF-BA67DA2FC155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6AF625D-4D70-4424-80CF-BA67DA2FC155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34E2A4A-3037-4F30-BE6E-FFC78D935848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34E2A4A-3037-4F30-BE6E-FFC78D935848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34E2A4A-3037-4F30-BE6E-FFC78D935848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34E2A4A-3037-4F30-BE6E-FFC78D935848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E4D189-0C93-4C8A-98C1-5794511D66E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E4D189-0C93-4C8A-98C1-5794511D66E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E4D189-0C93-4C8A-98C1-5794511D66E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E4D189-0C93-4C8A-98C1-5794511D66E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EEC615-68D9-4080-A43B-9FD03713DB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EEC615-68D9-4080-A43B-9FD03713DB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EEC615-68D9-4080-A43B-9FD03713DB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EEC615-68D9-4080-A43B-9FD03713DB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4927B6-8708-4E19-AEE9-7427C98F2197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4927B6-8708-4E19-AEE9-7427C98F2197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4927B6-8708-4E19-AEE9-7427C98F2197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4927B6-8708-4E19-AEE9-7427C98F2197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F182985-7ED5-41B5-AE83-4A4FD377EE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F182985-7ED5-41B5-AE83-4A4FD377EE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F182985-7ED5-41B5-AE83-4A4FD377EE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F182985-7ED5-41B5-AE83-4A4FD377EE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E381EC-D504-49E2-8081-C866EF27F244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E381EC-D504-49E2-8081-C866EF27F244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E381EC-D504-49E2-8081-C866EF27F244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E381EC-D504-49E2-8081-C866EF27F244}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ABB17561-B47C-4573-AEE6-CEB2C12F4B93} = {AE5AFEFC-32B9-4E4E-AD2A-271B83945A50}
+		{E6AF625D-4D70-4424-80CF-BA67DA2FC155} = {AF31075F-61CA-4136-9440-9A8742A4DF70}
+		{A34E2A4A-3037-4F30-BE6E-FFC78D935848} = {926E3217-36F4-4BF1-A812-3FB28B9FC0BB}
+		{18E4D189-0C93-4C8A-98C1-5794511D66E5} = {73FA351B-71E6-4770-AE3F-9D8CC6D3974B}
+		{E193EF93-4E22-4D3A-9EDE-733F4FFCB23B} = {73FA351B-71E6-4770-AE3F-9D8CC6D3974B}
+		{49EEC615-68D9-4080-A43B-9FD03713DB70} = {73FA351B-71E6-4770-AE3F-9D8CC6D3974B}
+		{5A4927B6-8708-4E19-AEE9-7427C98F2197} = {AE5AFEFC-32B9-4E4E-AD2A-271B83945A50}
+		{6F182985-7ED5-41B5-AE83-4A4FD377EE57} = {73FA351B-71E6-4770-AE3F-9D8CC6D3974B}
+		{32E381EC-D504-49E2-8081-C866EF27F244} = {73FA351B-71E6-4770-AE3F-9D8CC6D3974B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E78A5B5-3ADC-43B4-AB42-1BFF44B34344}
+	EndGlobalSection
+EndGlobal

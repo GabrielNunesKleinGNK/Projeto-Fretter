@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Criticas - Erros ao ler o arquivo
+	<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">X</button>
+</h2>
+<mat-dialog-content>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table [hidden]="!dataSource || dataSource.data.length == 0" class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="linha">
+					<mat-header-cell *matHeaderCellDef>Linha</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.linha == 0 ? '--' : model.linha }}</mat-cell>
+				</ng-container>		
+				<ng-container matColumnDef="campo">
+					<mat-header-cell *matHeaderCellDef>Campo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.campo }}</mat-cell>
+				</ng-container>		
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.descricao }}</mat-cell>
+				</ng-container>				
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[10]" [length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</mat-dialog-content>

@@ -1,0 +1,112 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Base da Integração">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Código: </label>
+					<div class="col-6">
+						<input id="id" name="id" class="form-control" formControlName="id" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Canal de Venda: </label>
+					<div class="col-6">
+						<ng-select [items]="lstCanaisVenda" bindLabel="canalVendaNome" bindValue="id" placeholder="Todos"
+							[(ngModel)]="model.canalVendaId" formControlName="canalVendaId" appendTo="body" *ngIf="!model.visualizar">
+						</ng-select>
+						<input id="canalVendaId" name="canalVendaId" class="form-control" formControlName="canalVendaId" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Url Base: </label>
+					<div class="col-6">
+						<input id="urlBase" name="urlBase" class="form-control" formControlName="urlBase" *ngIf="!model.visualizar" [(ngModel)]="model.urlBase">
+						<input id="urlBase" name="urlBase" class="form-control" formControlName="urlBase" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Url Token: </label>
+					<div class="col-6">
+						<input id="urlToken" name="urlToken" class="form-control" formControlName="urlToken" *ngIf="!model.visualizar" [(ngModel)]="model.urlToken">
+						<input id="urlToken" name="urlToken" class="form-control" formControlName="urlToken" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Api Key: </label>
+					<div class="col-6">
+						<input id="apiKey" name="apiKey" class="form-control" formControlName="apiKey" *ngIf="!model.visualizar" [(ngModel)]="model.apiKey">
+						<input id="apiKey" name="apiKey" class="form-control" formControlName="apiKey" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Usuário: </label>
+					<div class="col-6">
+						<input id="usuario" name="usuario" class="form-control" formControlName="usuario" *ngIf="!model.visualizar" [(ngModel)]="model.usuario">
+						<input id="usuario" name="usuario" class="form-control" formControlName="usuario" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Senha: </label>
+					<div class="col-6">
+						<input id="senha" name="senha" class="form-control" formControlName="senha" *ngIf="!model.visualizar" [(ngModel)]="model.senha">
+						<input id="senha" name="senha" class="form-control" formControlName="senha" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Client Id: </label>
+					<div class="col-6">
+						<input id="clientId" name="clientId" class="form-control" formControlName="clientId" *ngIf="!model.visualizar" [(ngModel)]="model.clientId">
+						<input id="clientId" name="clientId" class="form-control" formControlName="clientId" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Client Secret: </label>
+					<div class="col-6">
+						<input id="clientSecret" name="clientSecret" class="form-control" formControlName="clientSecret" *ngIf="!model.visualizar" [(ngModel)]="model.clientSecret">
+						<input id="clientSecret" name="clientSecret" class="form-control" formControlName="clientSecret" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Client Scope: </label>
+					<div class="col-6">
+						<input id="clientScope" name="clientScope" class="form-control" formControlName="clientScope" *ngIf="!model.visualizar"[(ngModel)]="model.clientScope">
+						<input id="clientScope" name="clientScope" class="form-control" formControlName="clientScope" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Origem Importacao: </label>
+					<div class="col-6">
+						<ng-select [items]="lstEntregaOrigemImportacao" bindLabel="nome" bindValue="id" placeholder="Todos"
+							[(ngModel)]="model.entregaOrigemImportacaoId" formControlName="entregaOrigemImportacaoId" appendTo="body" *ngIf="!model.visualizar">
+						</ng-select>
+						<!-- <input id="entregaOrigemImportacaoId" name="entregaOrigemImportacaoId" class="form-control" formControlName="entregaOrigemImportacaoId" *ngIf="!model.visualizar" [(ngModel)]="model.entregaOrigemImportacaoId"> -->
+						<input id="entregaOrigemImportacaoId" name="entregaOrigemImportacaoId" class="form-control" formControlName="entregaOrigemImportacaoId" *ngIf="model.visualizar" disabled>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+		<mat-tab label="Config. para Consumo" >
+			<m-integracao [(value)]="model" [isView]="model.visualizar"></m-integracao>
+		</mat-tab>
+	</mat-tab-group>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Save changes" *ngIf="!model.visualizar">
+		Salvar
+	</button>
+</mat-dialog-actions>

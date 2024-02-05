@@ -1,0 +1,89 @@
+<div id="resumo" style="text-align: center; margin: 0 2%;" [formGroup]="modelForm"  >  
+	<section>
+        <div class="col-lg-8 col-md-8 row">
+            <figure style="margin-bottom: 0;">
+                <img  height="70%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7saHZCkFoadb-FRGjxKlxUiUg6_qX9U3IBAbPMv8k&s" />
+            </figure >
+            <div class="dadosEmpresa">
+                <label class="infos">CARREFOUR SA</label>
+				<label class="infos">CNPJ: 00000000000000</label>
+				<label class="infos">Loja: CENTRO DISTRUIBUIÇÃO ANHANGUERA - 1678 (CDA)</label>
+				<label class="infos">Endereço: AV. DR. MAURO LINDEMBERGUE MONTEIRO, 322 - VILA SIMIOES</label>
+				<label class="infos">Tel: 1212121212</label>
+			</div>
+        </div>
+		<div class="col-lg-4 col-md-4 row" style="align-items: center;">
+			<h4>Pré-Order:</h4>
+            <h4>{{model.cdPedido}}</h4>
+		</div>
+	</section>		
+    <hr/>
+    <section>
+	        <div class="col-lg-6 col-md-6" style="min-height: 165px;">
+				<h5 style="font-size: 14px;">Destinatário:</h5>
+					<div class="conteudo">
+                        <div class="conteudoInformacoes">
+                            <label class="conteudoInformaçoesLabelTitulo">Cliente:</label>
+                            <label class="conteudoInformaçoesLabelConteudo">{{model.destinatario.nome}}</label>
+                        </div>
+                        <div class="conteudoInformacoes">
+                            <label class="conteudoInformaçoesLabelTitulo">Endereço:</label>
+                            <label class="conteudoInformaçoesLabelConteudo">
+                                <label> {{model.destinatario.logradouro}} ,</label>
+                                <label> {{model.destinatario.numero}}</label>
+                                <label> - {{model.destinatario.bairro}}</label>
+                                <label> - {{model.destinatario.complemento}}</label>
+                            </label>
+                        </div>
+                        <div class="conteudoInformacoes">
+                            <label class="conteudoInformaçoesLabelTitulo">Ponto Ref:</label>
+                            <label class="conteudoInformaçoesLabelConteudo">{{model.destinatario.pontoReferencia}}</label>
+                        </div>
+                        <div class="conteudoInformacoes">
+                            <label class="conteudoInformaçoesLabelTitulo">Cidade:</label>
+                            <label class="conteudoInformaçoesLabelConteudo">
+                                <label>{{model.destinatario.cidade}}</label>
+                                <label>/{{model.destinatario.uf}}</label>
+                                <label> - {{model.destinatario.cep}}</label>
+                            </label>
+                        </div>
+                        <div class="conteudoInformacoes">
+                            <label class="conteudoInformaçoesLabelTitulo">Email:</label>
+                            <label class="conteudoInformaçoesLabelConteudo">{{model.destinatario.email}}</label>
+                        </div>
+					</div>
+			</div>
+			<div class="col-lg-6 col-md-6" style="min-height: 165px;">
+				<h5>Produtos:</h5>
+                <div class="conteudo">
+                    <div class="conteudoInformacoes" *ngFor="let prod of model.produtos">
+                        <label >{{prod.sku}}</label>
+                        <label > - {{prod.nome}}</label>
+                    </div>
+                </div>
+                <hr>
+                <h5>Agendado para:</h5>
+                <div class="conteudo">
+                    <div class="conteudoInformacoes">
+                        <label class="conteudoInformaçoesLabelTitulo">Agendada para:</label>
+                        <label class="conteudoInformaçoesLabelConteudo">{{model.dtAgendamento | date: 'dd/MM/yyyy'}}</label>
+                    </div>
+                    <div class="conteudoInformacoes">
+                        <label class="conteudoInformaçoesLabelTitulo">Período</label>
+                        <label class="conteudoInformaçoesLabelConteudo">{{model.periodoSelecionado}}</label>
+                    </div>
+                </div>
+			</div>
+    </section>
+    <hr/>
+    <section >
+        <div class="col-lg-12 col-md-12">
+            <h5>Observação:</h5>
+            <div class="conteudoMin">
+                <label>
+                    {{model.dsObservacao}}
+                </label>
+            </div>
+        </div>
+    </section>
+</div>

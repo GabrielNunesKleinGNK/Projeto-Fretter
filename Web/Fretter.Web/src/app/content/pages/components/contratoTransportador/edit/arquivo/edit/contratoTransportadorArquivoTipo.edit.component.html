@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Arquivo">
+			<form class="m-form" [formGroup]="modelForm" *ngIf="modelForm" style="width: 900px;">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Código:</label>
+					<div class="col-3">
+						<input type="number" id="id" name="id" class="form-control" formControlName="id"
+							[(ngModel)]="model.id" disabled />
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right; align-items: center;">Tipo de Arquivo:</label>
+					<div class="col-3">
+						<ng-select [items]="tipoArquivo" bindLabel="nome" bindValue="id" 
+							placeholder="Selecione tipo de arquivo" 
+							[(ngModel)]="model.importacaoArquivoTipoItem.importacaoArquivoTipoId"
+							(change)="obterListaArquivoTipoItem($event.id)"
+							formControlName="importacaoArquivoTipoId"
+							appendTo="body">
+							<ng-template ng-label-tmp let-item="item" let-clear="clear" 
+							*ngIf="tipoArquivo != null && tipoArquivo != undefined">
+								<span class="ng-value-label">{{item.nome}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)">×</span>
+							</ng-template>
+						</ng-select>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right; align-items: center;">Tipo de Cobrança:</label>
+					<div class="col-3">
+						<ng-select [items]="tipoArquivoItem" bindLabel="conciliacaoTipo.nome" bindValue="id" 
+							placeholder="Selecione tipo de cobrança" 
+							[(ngModel)]="model.importacaoArquivoTipoItemId"
+							formControlName="importacaoArquivoTipoItemId"
+							appendTo="body">							
+						</ng-select>
+						<div *ngIf="importacaoArquivoTipoItemId.invalid && (importacaoArquivoTipoItemId.dirty || importacaoArquivoTipoItemId.touched)" class="alert alert-danger">
+							<div *ngIf="importacaoArquivoTipoItemId.errors.required">Obrigatório informar o tipo</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right; align-items: center;">Alias:</label>
+					<div class="col-8" *ngIf="model.id == 0">
+							<div class="d-flex w-100 chip-input">
+								<mat-chip-list #chipList class="align-self-center pl-1 w-100">
+									<mat-chip *ngFor="let label of labels" (removed)="remove(label)">
+										{{ label.name }}
+										<button matChipRemove>
+											<mat-icon>cancel</mat-icon>
+										</button>
+									</mat-chip>
+									<input class="form-control"
+										placeholder="Novo Alias..."
+										[matChipInputFor]="chipList"
+										[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+										[matChipInputAddOnBlur]="addOnBlur"
+										(matChipInputTokenEnd)="add($event)">
+									<input id="aliasList" name="aliasList" class="form-control" formControlName="aliasList" required hidden>
+								</mat-chip-list>
+							</div>
+							<!-- <div *ngIf="aliasList.invalid && (aliasList.dirty || aliasList.touched)" class="alert alert-danger">
+								<div *ngIf="aliasList.errors.required">É obrigatório cadastrar no minimo 1 Alias</div>
+							</div> -->
+					</div>
+
+					<div class="col-3" *ngIf="model.id > 0">
+						<input id="alias" name="alias" class="form-control" formControlName="alias"
+							[(ngModel)]="model.alias" />
+					</div>
+					<div style="padding-top:1%;">
+						<mat-icon *ngIf="model.id > 0"
+							matTooltip="A opção de inserção multipla de alias só pode ser realizada quando for um novo De/Para."
+							style="color: coral;">
+							info
+						</mat-icon>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" 
+		[disabled]="viewLoading"
+		[class.spinner]="viewLoading" matTooltip="Save changes">
+		Adicionar
+	</button>
+</mat-dialog-actions>

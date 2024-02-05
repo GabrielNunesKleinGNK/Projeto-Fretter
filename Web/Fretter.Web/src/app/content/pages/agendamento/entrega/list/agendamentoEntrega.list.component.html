@@ -1,0 +1,110 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Gerenciamento de Agendamento de Entregas | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-3">
+							<label>Filial</label>
+							<ng-select [items]="lstCanais" bindLabel="canalNome" bindValue="id" placeholder="Todos"
+								[(ngModel)]="filtro.idCanal" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3">
+							<label>Pré-Order</label>
+							<input class="form-control" minlength="8" maxlength="8"
+								[(ngModel)]="filtro.cdPedido"/>
+						</div>
+						<!-- <div class="col-xl-3">
+							<label>Filial</label>
+							<ng-select [items]="periodos" bindLabel="dsNome" bindValue="id" placeholder="Todos"
+								[(ngModel)]="filtro.idPeriodo" appendTo="body">
+							</ng-select>
+						</div> -->
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 align-self-end">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span>Gerenciamento de Agendamento de Entregas</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Criar Novo Contrato" color="success" type="button" (click)="novo()">
+			<span>Cadastrar Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+			<mat-table *ngIf="!viewLoading && dataSource && dataSource.data.length > 0"
+			 class="lmat-elevation-z8"
+				[dataSource]="dataSource" matSort matSortActive="dataCadastro" matSortDirection="asc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="filial">
+					<mat-header-cell *matHeaderCellDef>Filial</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.canal.nomeFantasia }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="cliente">
+					<mat-header-cell *matHeaderCellDef>Cliente</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.destinatarios[0].nome }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="qtdeItens">
+					<mat-header-cell *matHeaderCellDef>Qtd. Itens</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.vlQuantidade}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="data">
+					<mat-header-cell *matHeaderCellDef>Agendado para</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.dtAgendamento | date: 'dd/MM/yyyy' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="periodo">
+					<mat-header-cell *matHeaderCellDef>Periodo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.periodoSelecionado }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Editar"
+							(click)="edit(model)"><mat-icon>create</mat-icon></button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" (page)="pageChange($event)"
+				showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

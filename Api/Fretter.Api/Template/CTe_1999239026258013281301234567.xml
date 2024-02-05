@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<correioslog>
+    <tipo_arquivo>Postagem</tipo_arquivo>
+    <versao_arquivo>2.3</versao_arquivo>
+    <plp>
+        <id_plp />
+        <valor_global />
+        <mcu_unidade_postagem />
+        <nome_unidade_postagem />
+        <cartao_postagem>0075506297</cartao_postagem>
+    </plp>
+    <remetente>
+        <numero_contrato>9912311922</numero_contrato>
+        <numero_diretoria>72</numero_diretoria>
+        <codigo_administrativo>12464988</codigo_administrativo>
+        <nome_remetente>
+            <![CDATA[CAmila Manfio]]>
+        </nome_remetente>
+        <logradouro_remetente>
+            <![CDATA[Manoel Bernardo da Silva]]>
+        </logradouro_remetente>
+        <numero_remetente>
+            <![CDATA[32]]>
+        </numero_remetente>
+        <complemento_remetente />
+        <bairro_remetente>
+            <![CDATA[Vila Operária]]>
+        </bairro_remetente>
+        <cep_remetente>
+            <![CDATA[19804160]]>
+        </cep_remetente>
+        <cidade_remetente>
+            <![CDATA[Assis]]>
+        </cidade_remetente>
+        <uf_remetente>SP</uf_remetente>
+        <telefone_remetente />
+        <fax_remetente />
+        <email_remetente />
+        <celular_remetente />
+    </remetente>
+    <forma_pagamento />
+    <objeto_postal>
+        <numero_etiqueta>OO140568000BR</numero_etiqueta>
+        <codigo_objeto_cliente />
+        <codigo_servico_postagem>03220</codigo_servico_postagem>
+        <cubagem>0,00</cubagem>
+        <peso>40</peso>
+        <rt1 />
+        <rt2 />
+        <destinatario>
+            <nome_destinatario>
+                <![CDATA[Gustavo Ferreira de Souza]]>
+            </nome_destinatario>
+            <telefone_destinatario />
+            <celular_destinatario />
+            <email_destinatario />
+            <logradouro_destinatario>
+                <![CDATA[Rua Capitão Altino]]>
+            </logradouro_destinatario>
+            <complemento_destinatario />
+            <numero_end_destinatario>
+                <![CDATA[120]]>
+            </numero_end_destinatario>
+            <cpf_cnpj_destinatario />
+        </destinatario>
+        <nacional>
+            <bairro_destinatario>
+                <![CDATA[Vila Souza]]>
+            </bairro_destinatario>
+            <cidade_destinatario>
+                <![CDATA[Assis]]>
+            </cidade_destinatario>
+            <uf_destinatario>SP</uf_destinatario>
+            <cep_destinatario>
+                <![CDATA[19804340]]>
+            </cep_destinatario>
+            <codigo_usuario_postal />
+            <centro_custo_cliente />
+            <valor_nota_fiscal />
+            <natureza_nota_fiscal />
+            <descricao_objeto />
+            <valor_a_cobrar>0,0</valor_a_cobrar>
+        </nacional>
+        <servico_adicional>
+            <valor_declarado>10000,00</valor_declarado>
+            <codigo_servico_adicional>019</codigo_servico_adicional>
+            <endereco_vizinho />
+        </servico_adicional>
+        <dimensao_objeto>
+            <tipo_objeto>002</tipo_objeto>
+            <dimensao_altura>9</dimensao_altura>
+            <dimensao_largura>10</dimensao_largura>
+            <dimensao_comprimento>0</dimensao_comprimento>
+            <dimensao_diametro />
+        </dimensao_objeto>
+        <data_postagem_sara />
+        <status_processamento>0</status_processamento>
+        <numero_comprovante_postagem />
+        <valor_cobrado />
+    </objeto_postal>
+</correioslog>  

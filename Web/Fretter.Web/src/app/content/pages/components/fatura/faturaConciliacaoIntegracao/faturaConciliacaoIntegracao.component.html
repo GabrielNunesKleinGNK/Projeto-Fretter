@@ -1,0 +1,203 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Informativo da Integração das Conciliações</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+				<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+					X
+				</button>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+<div class="cards_Resumo_div">
+	<div class="cards_Resumo" style="width: 25%;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon style="transform: scale(2);color:#2e73b7;" color="primary">poll</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoading"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#2e73b7; padding-left: 10%;">{{ modelList.qtdeTotal | number: '1.0-2'
+							}}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+						<p>Total</p>
+						<mat-radio-button checked="true" (click)="selecionarStatus(1)"></mat-radio-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon style="transform: scale(2);color:#34bfa3;"
+							color="primary">sentiment_satisfied</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoading"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#34bfa3; padding-left: 10%;">{{ modelList.qtdeSucesso | number:
+							'1.0-2' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+						<p>Sucesso</p>
+						<mat-radio-button (click)="selecionarStatus(2)"></mat-radio-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon style="transform: scale(2);color:#e90707;" color="primary">mood_bad</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoading"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#e90707; padding-left: 10%;">{{ modelList.qtdeInsucesso | number:
+							'1.0-2' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+						<p>Insucesso</p>
+						<mat-radio-button (click)="selecionarStatus(3)"></mat-radio-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cards_Resumo" style="width: 25%;cursor: pointer;">
+		<div class="m-widget1">
+			<div class="m-widget1__item">
+				<div class="row m-row--no-padding align-items-center">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4" style="text-align: right;align-items: center;">
+						<mat-icon style="transform: scale(2);color:#2e73b7;"
+							color="primary">sentiment_dissatisfied</mat-icon>
+						<mat-spinner [diameter]="40" [hidden]="!viewLoading"></mat-spinner>
+					</div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left; align-items: center;">
+						<h1 class="" style="color:#2e73b7; padding-left: 10%;">{{ modelList.qtdeNaoDefinida | number:
+							'1.0-2' }}</h1>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+						<p>Não definido</p>
+						<mat-radio-button (click)="selecionarStatus(4)"></mat-radio-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12">
+	<div class="row">
+		<div class="col-2">
+			<mat-form-field>
+				<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+			</mat-form-field>
+		</div>
+		<div class="col-10" style="text-align: right; padding-top: 10px;">
+			<span style="font-weight: bold; font-size: 13px;">
+				Data Ultimo Envio: {{ (modelList.dataUltimoEnvio | date: 'dd/MM/yyyy HH:mm') || '--' }}
+			</span>
+		</div>
+	</div>
+</div>
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Conciliações</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button [hidden]="esconderBotaoReenvioMassivo" mat-raised-button
+			matTooltip="Reenvia todas as Conciliações com Status de Insucesso e Não Definida" color="primary"
+			type="button" (click)="reenviarConciliacaoLista()">
+			<span translate="">Reenviar ({{ totalBotaoReenvio }})</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">Não foi encontrado
+				registros para sua pesquisa</div>
+			<mat-table class="lmat-elevation-z8" [hidden]="viewLoading || !dataSource || dataSource.data.length == 0"
+				[dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+
+				<ng-container matColumnDef="notaFiscal">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Nota Fiscal</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.notaFiscal }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="serie">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Serie</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.serie }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="valorFrete">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Custo do Frete</mat-header-cell>
+					<mat-cell *matCellDef="let model">R$ {{ model.valorFrete | number: '1.2-2' }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="valorAdicional">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Custo Adicional</mat-header-cell>
+					<mat-cell *matCellDef="let model">R$ {{ model.valorAdicional | number: '1.2-2' }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="httpStatus">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>HTTP Status</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ (model.httpStatus) || '--' }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item [hidden]="!model.enviado"
+								(click)="showObject(model.empresaIntegracaoItemDetalheId, 1)">
+								<mat-icon>call_made</mat-icon>
+								<span>JSON de Envio</span>
+							</button>
+							<button mat-menu-item [hidden]="!model.enviado"
+								(click)="showObject(model.empresaIntegracaoItemDetalheId, 2)">
+								<mat-icon>call_received</mat-icon>
+								<span>JSON de Retorno</span>
+							</button>
+							<button mat-menu-item (click)="reenviarConciliacao(model)">
+								<mat-icon>send</mat-icon>
+								<span>Reenviar</span>
+							</button>
+						</mat-menu>
+
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator #paginator [pageSize]="pageSize" [pageIndex]="currentPage" [pageSizeOptions]="[5, 10]"
+				[length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons>
+			</mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

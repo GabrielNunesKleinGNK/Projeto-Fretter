@@ -1,0 +1,131 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Config. de Consumo">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;" >Código: </label>
+					<div class="col-4">
+						<input id="id" name="id" class="form-control" formControlName="id" disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Tipo Integracao: </label>
+					<div class="col-4">
+						<ng-select [items]="lstIntegracaoTipo" bindLabel="nome" bindValue="id" placeholder="Todos"
+							[(ngModel)]="model.integracaoTipoId" formControlName="integracaoTipoId" appendTo="body">
+						</ng-select>
+						<div *ngIf="integracaoTipoId.invalid && (integracaoTipoId.dirty || integracaoTipoId.touched)" class="alert alert-danger">
+							<div *ngIf="integracaoTipoId.errors.required">O Integração Tipo é obrigatório</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Verbo: </label>
+					<div class="col-4">
+						<ng-select [items]="lstVerbos" bindLabel="verbo" bindValue="verbo" placeholder="Selecione um Verbo"
+							[(ngModel)]="model.verbo" formControlName="verbo" appendTo="body">
+						</ng-select>
+						<div *ngIf="verbo.invalid && (verbo.dirty || verbo.touched)" class="alert alert-danger">
+							<div *ngIf="verbo.errors.required">O verbo é obrigatório</div>
+						</div>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">URL: </label>
+					<div class="col-4">
+						<input id="url" name="url" class="form-control" formControlName="url" [(ngModel)]="model.url">
+						<div *ngIf="url.invalid && (url.dirty || url.touched)" class="alert alert-danger">
+							<div *ngIf="url.errors.required">A URL é obrigatório</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Quantas Threads: </label>
+					<div class="col-4">
+						<input id="paralelo" name="paralelo" class="form-control" formControlName="paralelo" [(ngModel)]="model.paralelo">
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Envio Config Id: </label>
+					<div class="col-4">
+						<input id="envioConfigId" name="envioConfigId" class="form-control" formControlName="envioConfigId" [(ngModel)]="model.envioConfigId">
+						<div *ngIf="envioConfigId.invalid && (envioConfigId.dirty || envioConfigId.touched)" class="alert alert-danger">
+							<div *ngIf="envioConfigId.errors.required">O Envio Config é obrigatório</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Producao: </label>
+					<div class="col-1" style="padding-top: 9px;">
+						<mat-checkbox formControlName="producao" [(ngModel)]="model.producao"></mat-checkbox>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Enviar por Body: </label>
+					<div class="col-1"style="padding-top: 9px; text-align:right;" >
+						<mat-checkbox formControlName="envioBody" [(ngModel)]="model.envioBody"></mat-checkbox>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Envia Histórico Ocorrência:</label>
+					<div class="col-1" style="padding-top: 9px;">
+						<mat-checkbox formControlName="enviaOcorrenciaHistorico" [(ngModel)]="model.enviaOcorrenciaHistorico"></mat-checkbox>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Integracao Gatilho:</label>
+					<div class="col-1" style="padding-top: 9px; text-align:right;">
+						<mat-checkbox formControlName="integracaoGatilho" [(ngModel)]="model.integracaoGatilho"></mat-checkbox>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Execução em Lote: </label>
+					<div class="col-1" style="padding-top: 9px;">
+						<mat-checkbox formControlName="lote" (click)="validateLoteClick()" [(ngModel)]="model.lote"></mat-checkbox>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;" *ngIf="model.lote" >Nº por lote:</label>
+					<div class="col-1" *ngIf="model.lote">
+						<input id="registros" name="registros" class="form-control" formControlName="registros" [(ngModel)]="model.registros">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Layout Header: </label>
+					<div class="col-4" >
+						<textarea id="layoutHeader" name="layoutHeader" class="form-control" [(ngModel)]="model.layoutHeader" formControlName="layoutHeader" placeholder=""></textarea>
+					</div>
+					<div class="col-6" >
+						<button *ngFor="let campo of lstCamposDePara" type="button" mat-raised-button color="primary" 
+						(click)="buscaCamposDeParaHeader(campo.campo)" 
+						[disabled]="viewLoading" matTooltip="{{campo.nome}}" style="margin: 3px;">
+							{{campo.nome}}
+						</button>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Layout: </label>
+					<div class="col-4">
+						<textarea id="layout" name="layout" class="form-control" [(ngModel)]="model.layout" formControlName="layout"></textarea>
+					</div>
+					<div class="col-6">
+						<button *ngFor="let campo of lstCamposDePara" type="button" mat-raised-button color="primary" 
+						(click)="buscaCamposDePara(campo.campo)" 
+						[disabled]="viewLoading" matTooltip="{{campo.nome}}" style="margin: 3px;">
+							{{campo.nome}}
+						</button>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>
+
+
+
+		

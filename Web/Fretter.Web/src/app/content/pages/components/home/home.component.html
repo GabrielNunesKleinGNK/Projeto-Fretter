@@ -1,0 +1,27 @@
+
+<div class="row" style="margin-bottom: 20px;">
+	<h4>Início</h4>
+</div>
+<div class="row" *ngIf="viewLoading" >
+	<div class="col-md-3" style="margin-top: 20px; margin-left:20px; background-color:grey;color:white;min-width: 250px;height: 90px;border-radius:3px">
+		<mat-spinner diameter="40" style="margin-top: 20px;margin-left:40%;"></mat-spinner>
+	</div>
+</div>
+
+<div class="row" *ngIf="!viewLoading" >
+	<div  *ngFor="let item of dataMenu" class="col-md-3" style="margin-top: 20px; margin-left:20px; background-color:#303946;color:white;min-width: 250px;height: 90px;border-radius:3px">
+		<a [routerLink]="item.page" class="m-menu__link m-menu__toggle" style="color: white;">
+			<div class="row" style="padding-bottom: 15px;margin-left:5px; margin-top: 5px;">
+				{{item.titleHeader}}
+			</div>
+			<div class="row">
+				<div class="col-md-2" style="margin-left:5px">
+					<i *ngIf="item.icon" style="font-size: 25px;" [ngClass]="item.icon"></i>
+				</div>
+				<div class="col-md-8">
+					<h5 class="panel-title" style="padding-top: 5px;">{{item.title}}</h5>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>

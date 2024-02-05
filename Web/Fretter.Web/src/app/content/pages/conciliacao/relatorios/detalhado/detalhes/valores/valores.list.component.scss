@@ -1,0 +1,38 @@
+.circulo {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    &.vermelho {
+        background: red;
+    }
+
+    &.verde {
+        background: green;
+    }
+
+}
+
+.positive {
+    color: green;
+    font-weight: 400;
+}
+
+.negative {
+    color: red;
+    font-weight: 400;
+}
+
+.mat-icon {
+    margin-top: 0px;
+    text-align: initial;
+    font-size: large;
+}
+
+.ng-select {
+    width: 100%;
+}
+
+#list {
+    padding: 0;
+}

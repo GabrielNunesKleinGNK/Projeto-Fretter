@@ -1,0 +1,42 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h2 class="m-portlet__head-text">
+				<span translate="USUARIO.LIST.TITULO">Detalhamento</span>
+			</h2>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<div class="m-portlet__head-title">
+			<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+				X
+			</button>
+		</div>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper--600">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource && dataSource.data.length === 0" class="p-2">
+				Não foi encontrado registros para sua pesquisa
+			</div>
+			<mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0" [dataSource]="dataSource"
+				matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.descricao}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="valor">
+					<mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+					<mat-cell *matCellDef="let model">R$ {{model.valor | number: '1.2-2'}}</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[15]" [length]="resultsLength" (page)="pageChange($event)"
+				showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

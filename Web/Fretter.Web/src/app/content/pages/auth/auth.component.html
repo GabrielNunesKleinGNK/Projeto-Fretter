@@ -1,0 +1,20 @@
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--desktop m-grid--ver-desktop m-grid--hor-tablet-and-mobile m-login m-login--6" id="m_login">
+	<div class="m-grid__item m-grid__item--fluid  m-grid__item--order-tablet-and-mobile-1 m-login__wrapper">
+		<!--begin::Head-->
+		<div class="m-login__head">
+			<!-- <span translate="AUTH.GENERAL.NO_ACCOUNT">Don't have an account?</span>
+			<a href="javascript:;" (click)="register()" class="m-link m--font-danger" translate="AUTH.GENERAL.SIGNUP_BUTTON">Sign Up</a> -->
+		</div>
+		<!--end::Head-->
+
+		<!--begin::Body-->
+		<div class="m-login__body">
+			<m-login *ngIf="action === 'login'" [(action)]="action"></m-login>
+
+			<m-register *ngIf="action === 'register'" [(action)]="action"></m-register>
+
+			<m-forgot-password *ngIf="action === 'forgot-password'" [(action)]="action"></m-forgot-password>
+		</div>
+		<!--end::Body-->
+	</div>
+</div>

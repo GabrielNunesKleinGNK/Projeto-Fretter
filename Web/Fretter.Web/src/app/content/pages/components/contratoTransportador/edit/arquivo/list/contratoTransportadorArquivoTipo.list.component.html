@@ -1,0 +1,79 @@
+<div class="col-xl-12" style="padding: 2%;">
+	<div mPortletBody>
+		<div class="filtro">
+			<div class="row">
+				<div class="col-xl-4">
+					<label>Tipo Arquivo</label>
+					<ng-select [items]="tipoArquivo" bindLabel="nome" bindValue="id"
+						placeholder="Selecione tipo de Arquivo" [(ngModel)]="filtroInterno.tipoArquivo"
+						appendTo="body">
+						<ng-template ng-label-tmp let-item="item" let-clear="clear">
+							<span class="ng-value-label">{{item.nome}}</span>
+							<span class="ng-value-icon right" (click)="clear(item)">×</span>
+						</ng-template>
+					</ng-select>
+				</div>
+				<div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 align-self-end">
+					<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+						(click)="pesquisar()">
+						<mat-icon class="mt-2">search</mat-icon>
+						<span class="ml-1">Pesquisar</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: true}">
+	<ng-container mPortletHeadTools style="background-color: white !important;">
+		<button mat-raised-button matTooltip="Nova Regra " color="primary" type="button" (click)="novo()">
+			<span translate="">Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody style="width: 900px;">
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="importacaoArquivoTipoId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Tipo Arquivo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.tipoArquivo}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="importacaoArquivoTipoItemId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Tipo Cobrança</mat-header-cell>
+					<mat-cell
+						*matCellDef="let model">{{model.tipoCobranca}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="alias">
+					<mat-header-cell *matHeaderCellDef>Alias</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.alias}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastro">
+					<mat-header-cell *matHeaderCellDef>Cadastrado</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.dataCadastro | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Editar" (click)="edit(model)">
+							<mat-icon>create</mat-icon>
+						</button>
+						<button mat-icon-button class="ml-2" color="warn" matTooltip="Deletar Config"
+							(click)="delete(model)">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[4, 8]" [length]="resultsLength" (page)="pageChange($event)"
+				showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Fretter.Database": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Server=fusiondb.eastus2.cloudapp.azure.com;Database=db_fusion;User Id=Fretter;Password=Ux$Fretter@12345;MultipleActiveResultSets=true;Connection Timeout=30;Trusted_Connection=false;Encrypt=false;\" \"Fretter\""
+    }
+  }
+}

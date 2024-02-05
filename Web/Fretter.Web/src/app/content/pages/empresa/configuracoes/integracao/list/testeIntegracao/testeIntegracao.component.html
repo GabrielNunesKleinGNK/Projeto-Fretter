@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Teste da Integração" >
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Base URL: </label>
+					<div class="col-4">
+						<input id="urlBase" name="urlBase" formControlName="urlBase" class="form-control" readonly
+						[(ngModel)]="model.urlBase">
+					</div>
+					<label class="col-1 col-form-label" style="text-align:right;"> URL: </label>
+					<div class="col-4">
+						<input id="url" name="url"  formControlName="url" class="form-control" 
+						matTooltip="Substitua os campos $SeuCampo$ pela informações"
+						[(ngModel)]="model.listaIntegracoes.url">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;"> Verbo: </label>
+					<div class="col-4">
+						<input id="verbo" name="verbo"  formControlName="verbo" class="form-control" readonly
+						[(ngModel)]="model.listaIntegracoes.verbo">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;"> Header: </label>
+					<div class="col-9">
+						<textarea id="layoutHeader" name="layoutHeader"  formControlName="layoutHeader" class="form-control" 
+						matTooltip="Substitua os campos $SeuCampo$ pela informações"
+						[(ngModel)]="model.listaIntegracoes.layoutHeader"></textarea>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;"> Body Layout: </label>
+					<div class="col-9">
+						<textarea id="layout" name="layout" formControlName="layout" class="form-control"
+						matTooltip="Substitua os campos $SeuCampo$ pela informações"
+						[(ngModel)]="model.listaIntegracoes.layout"></textarea>
+					</div>
+				</div> 
+				<div class="mat-tab-label mat-ripple mat-tab-label-active ng-star-inserted" 
+				style="border-bottom: 2px solid rgb(16, 8, 126); align-items: end;">
+					<p>Retorno do Teste</p>
+				</div>
+				<div class="form-group m-form__group row" style="padding-top: 10px !important;">
+					<label class="col-2 col-form-label" style="text-align:right;">Status: </label>
+					<div class="col-3">
+						<input id="statusCode" name="statusCode" class="form-control" formControlName="statusCode"
+						 [(ngModel)]="statusCode" readonly>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:left;">Tempo (ms): </label>
+					<div class="col-4">
+						<input id="tempo" name="tempo" class="form-control" formControlName="tempo"
+						 [(ngModel)]="tempo" readonly>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Body:</label>
+					<div class="col-9">
+						<textarea id="body" name="body" class="form-control" formControlName="body"
+						 [(ngModel)]="body" readonly></textarea>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Send">
+		Enviar
+	</button>
+</mat-dialog-actions>
+
+
+
+		

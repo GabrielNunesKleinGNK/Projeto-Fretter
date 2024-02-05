@@ -1,0 +1,100 @@
+<h2 mat-dialog-title>
+  <div>
+    <span>{{getTitle()}}</span>
+    <button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+      X
+    </button>
+  </div>
+</h2>
+
+<mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Regra">
+      <form class="m-form" [formGroup]="modelForm" style="width: 900px;">
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Regra:</label>
+          <div class="col-8">
+            <input id="nome" name="nome" class="form-control" formControlName="nome" [(ngModel)]="model.nome">
+            <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert alert-danger">
+              <div *ngIf="nome.errors.required">O nome da Regra é obrigatório</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Tipo de Regra:</label>
+          <div class="col-8">
+            <ng-select [items]="regrasTipo" bindLabel="descricaoRegraTipo" bindValue="id"
+              [(ngModel)]="model.regraTipoId" formControlName="regraTipoId" appendTo="body" readonly>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Filial:</label>
+          <div class="col-8">
+            <ng-select [items]="lstCanais" bindLabel="canalNome" bindValue="id" placeholder="Todas"
+              [(ngModel)]="model.canalId" formControlName="canalId" appendTo="body">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Transportador:</label>
+          <div class="col-8">
+            <ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id"
+              placeholder="Todos" (change)="getTransportadoresCnpjChange($event.id)" (clear)="limparComboTransportadorFilial()"
+              [(ngModel)]="model.transportadorId" formControlName="transportadorId" appendTo="body">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+          <label class="col-2 col-form-label" style="text-align:right;">Transp. Filial:</label>
+          <div class="col-8">
+            <ng-select [items]="transportadoresCnpj" bindLabel="descricao" bindValue="id"
+              placeholder="Todos" [(ngModel)]="model.transportadorCnpjId"
+              formControlName="transportadorCnpjId" appendTo="body">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">
+						Definir Vigência?:
+						<mat-icon matTooltip="Habilita a seleção de um périodo de data para qual a regra irá valer"
+							style="color: coral;">
+							info
+						</mat-icon>
+					</label>
+          <div class="col-1 align-self-center">
+						<mat-slide-toggle class="mt-2" id="definirVigencia" (change)="definirVigenciaChange()" [(ngModel)]="model.definirVigencia" formControlName="definirVigencia">
+						</mat-slide-toggle>
+					</div>
+        </div>
+        <div class="form-group m-form__group row" *ngIf="model.definirVigencia">
+          <label class="col-2 col-form-label" style="text-align:right;">Vigência:</label>
+          <div class="col-3">
+            <input type="date" id="dataInicio" class="form-control" formControlName="dataInicio" value="{{ model.dataInicio | date:'yyyy-MM-dd' }}">
+            <div *ngIf="dataInicio.invalid && (dataInicio.dirty || dataInicio.touched)" class="alert alert-danger">
+              <div *ngIf="dataInicio.errors.required">A data inicial é obrigatória</div>
+            </div>
+          </div>
+          <label class="col-2 col-form-label" style="text-align:center;">à</label>
+          <div class="col-3">
+            <input type="date" id="dataTermino" class="form-control" formControlName="dataTermino" value="{{ model.dataTermino | date:'yyyy-MM-dd' }}">
+            <div *ngIf="dataTermino.invalid && (dataTermino.dirty || dataTermino.touched)" class="alert alert-danger">
+              <div *ngIf="dataTermino.errors.required">A data final é obrigatória</div>
+            </div>
+          </div>
+        </div>
+      <m-clausulas *ngIf="combine" [clausulas]="clausulas" [operadoresComparacao]="regraTiposOperadores" [queries]="queries"></m-clausulas>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+    Cancelar
+  </button>
+  <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading"
+    [class.spinner]="viewLoading" matTooltip="Save changes">
+    Salvar
+  </button>
+</mat-dialog-actions>

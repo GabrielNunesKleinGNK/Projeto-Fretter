@@ -1,0 +1,204 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Entregas em aberto | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Data Inicio</label>
+							<input type="date" class="form-control" [(ngModel)]="filtro.dataInicio" />
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Data Fim</label>
+							<input type="date" class="form-control" [(ngModel)]="filtro.dataFim" />
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Transportador</label>
+							<ng-select [items]="transportadorList" bindLabel="transportadorNome" bindValue="id"
+								placeholder="Todos" [(ngModel)]="filtro.transportadorId" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Marketplace</label>
+							<ng-select [items]="marketplace" bindLabel="texto" bindValue="opcao" placeholder="Todos"
+								[(ngModel)]="filtro.entregasMarketplace" appendTo="body">
+							</ng-select>
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Dt.Ultima ocorrência</label>
+							<input type="date" class="form-control" [(ngModel)]="filtro.dataUltimaOcorrencia" />
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 ">
+							<label>Ultima Ocorrência</label>
+							<ng-select [items]="deParaList" bindLabel="descricao" bindValue="id" placeholder="Todos"
+								[(ngModel)]="filtro.ocorrenciaId" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+							<label>Pedidos</label>
+							<input type="text" (change)="validaQuantidadePedidos()"
+								placeholder="Os pedidos devem estar separados por ; e com limite de 50 pedidos"
+								class="form-control" [(ngModel)]="filtro.pedidos" />
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button" [class.spinner]="viewLoading"
+								(click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+							<button mat-raised-button matTooltip="Limpar Filtros" color="warn" type="button" 
+								(click)="limpar()">
+								<mat-icon class="mt-2">clear</mat-icon>
+								<span class="ml-1">Limpar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Gerenciamento de Ocorrências</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Lista Ocorrências" color="success" type="button"
+			(click)="abrirListaOcorrencia()">
+			Orientações
+			<mat-icon class="mt-2">text_format</mat-icon>
+		</button>
+		<button mat-raised-button matTooltip="Inserir ocorrencias para entregas selecionadas" color="primary"
+			type="button" (click)="adicionarOcorrenciaMassivo()" [disabled]="desabilitaMassivoTela">
+			Inserir Massivo
+			<mat-icon class="mt-2">playlist_add</mat-icon>
+		</button>
+		<button mat-raised-button matTooltip="Gerenciamento do arquivo" color="primary" type="button"
+			[matMenuTriggerFor]="menu" aria-label="">
+			Gerenciar arquivo
+			<mat-icon>more_vert</mat-icon>
+		</button>
+		<mat-menu #menu="matMenu">
+			<input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)"
+				accept=".xlsx,.xls" multiple="false" />
+			<button mat-menu-item matTooltip="Upload Arquivo" color="primary" type="button" (click)="download()">
+				Download Excel
+				<mat-icon>cloud_download</mat-icon>
+			</button>
+			<button mat-menu-item matTooltip="Upload Arquivo" color="primary" type="button" (click)="csvInput.click()">
+				Upload Excel
+				<mat-icon>backup</mat-icon>
+			</button>
+			<button mat-menu-item matTooltip="Acompanhar arquivos em processamento" color="primary" type="button"
+				(click)="buscarArquivos()">
+				Arq. Processamento
+				<mat-icon class="mt-2">update</mat-icon>
+			</button>
+		</mat-menu>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field *ngIf="dataSource != null && dataSource !== undefined && dataSource.length >0">
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtros">
+		</mat-form-field>
+		<div class="mat-table__wrapper">
+			<div *ngIf="dataSource === null || dataSource === undefined">Selecione um período e efetue a busca.</div>
+			<div *ngIf="dataSource !== null && dataSource !== undefined && dataSource.length === 0">Sem entregas para esse período.</div>
+			<mat-table class="lmat-elevation-z8" *ngIf="dataSource != null && dataSource !== undefined && dataSource.length >0" 
+				[dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<!-- <ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.(Fusion)</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Pedido </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoEntrega }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="canal">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Filial </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.canal }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="transportador">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Transportador </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.transportador }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="notaserie">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Nota/Série </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.nota}} / {{model.serie}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="diasSemAlteracao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sem Alteração</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span *ngIf="model.diasSemAlteracao !== null">
+							{{model.diasSemAlteracao}} Dias
+						</span>
+						<span *ngIf="model.diasSemAlteracao === null">
+							--
+						</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataUltimaOcorrencia">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Ultima Ocorrencia</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						{{model.dataUltimaOcorrencia | date: 'dd-MM-yyyy hh:mm'}}
+						-
+						{{model.ultimaOcorrencia}}
+						<!-- <button mat-icon-button color="primary" matTooltip="Ver dado da ultima ocorrência"
+							(click)="verUltimaOcorrencia(model)">
+							<mat-icon>search</mat-icon>
+						</button>&nbsp; -->
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="selecionar">
+					<mat-header-cell *matHeaderCellDef>
+						<input type="checkbox" id="checkTodos" (click)="selecionarTodos($event)" />
+						<span>Todas</span>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<div mat-icon-button color="green" matTooltip="Reenviar essa ocorrência">
+							<mat-icon><input type="checkbox" color="green" id="{{model.id}}" 
+									name="check" class="{{model.codigoEntrega}}"
+									(click)="insereRegistrosReprocessamentoMassivo($event)" /></mat-icon>
+						</div>
+						<!-- <input type="checkbox" id="check_{{model.id}}"/>
+						<mat-checkbox class="example-margin"></mat-checkbox> -->
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Adicionar nova ocorrência"
+							(click)="adicionarOcorrencia(model)">
+							<mat-icon>playlist_add</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button color="primary" matTooltip="Visualizar ocorrências"
+							(click)="buscarOcorrencias(model)">
+							<mat-icon>playlist_add_check</mat-icon>
+						</button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" [length]="resultsLength" (page)="pageChange($event)"
+				showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,41 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="EMPRESA.LIST.TITULO">QUANTIDADE DE AVALIAÇÕES POR REGIONAL</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<!-- <ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Filtrar dados" color="primary" type="button" (click)="pesquisar()">
+			<mat-icon>sync</mat-icon>&nbsp;Atualizar
+		</button>
+	</ng-container> -->
+	<ng-container mPortletBody>
+		<div class="row">
+			<div class="col-xl-12">
+				<div id="chartregionaldiv" style="min-height: 400px;"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-12">
+				<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="data">
+					<ng-container matColumnDef="regional">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Regional</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.regional}}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="quantidade">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Quantidade</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.quantidade | number: '1.0-0' }}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="pontos">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Pontuação Média</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.pontos | number: '1.2-2' }}</mat-cell>
+					</ng-container>
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+				</mat-table>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>

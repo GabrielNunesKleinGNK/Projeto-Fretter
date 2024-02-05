@@ -1,0 +1,547 @@
+[
+    {
+        "Key": "campoObrigatorio",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "{0} é obrigatório.",
+            "en": "{0} is required.",
+            "es": "{0} es obligatorio."
+        }
+    },
+    {
+        "Key": "campoObrigatorioId",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "{0}Id é obrigatório.",
+            "en": "{0}Id is required.",
+            "es": "{0}Id es obligatorio."
+        }
+    },
+    {
+        "Key": "formatoInvalido",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "{0} com formato inválido(a).",
+            "en": "{0} with invalid format.",
+            "es": "{0} con formato no válido."
+        }
+    },
+    {
+        "Key": "campoInvalido",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "{0} inválido(a).",
+            "en": "{0} invalid.",
+            "es": "{0 no válido."
+        }
+    },
+    {
+        "Key": "registroJaCadastrado",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "{0} já cadastrado(a).",
+            "en": "{0} already registered.",
+            "es": "{0} ya registrado."
+        }
+    },
+    {
+        "Key": "tamanhoMaximoCampo",
+        "Description": [
+            { "0": "Campo" },
+            { "1": "quantidade de caracteres" }
+        ],
+        "Values": {
+            "pt-BR": "{0} não pode ter mais que {1} caracteres.",
+            "en": "{0} can not be longer than {1} characters.",
+            "es": "{0} no puede tener más de {1} caracteres."
+        }
+    },
+    {
+        "Key": "campoNulo",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "O {0} está nulo.",
+            "en": "The {0} is null.",
+            "es": "El {0} es nulo."
+        }
+    },
+    {
+        "Key": "campoNuloId",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "O {0}Id está nulo.",
+            "en": "The {0}Id is null.",
+            "es": "El {0}Id es nulo."
+        }
+    },
+    {
+        "Key": "menorOuIgual",
+        "Description": [
+            { "0": "Campo" },
+            { "1": "valor" }
+        ],
+        "Values": {
+            "pt-BR": "{0} menor ou igual a {1}.",
+            "en": "{0} less than or equal to {1}",
+            "es": "{0} menor o igual a {1}"
+        }
+    },
+    {
+        "Key": "menorOuIgualId",
+        "Description": [
+            { "0": "Campo" },
+            { "1": "valor" }
+        ],
+        "Values": {
+            "pt-BR": "{0}Id menor ou igual a {1}.",
+            "en": "{0}Id less than or equal to {1}",
+            "es": "{0}Id menor o igual a {1}"
+        }
+    },
+    {
+        "Key": "naoPodeSerMaiorQue",
+        "Description": [
+            { "0": "Campo" },
+            { "1": "campo2" }
+        ],
+        "Values": {
+            "pt-BR": "{0} não pode ser maior que {1}.",
+            "en": "{0} can not be greater than {1}",
+            "es": "{0}no puede ser mayor que {1}"
+        }
+    },
+    {
+        "Key": "tamanhoDoCampoMaiorOuMenor",
+        "Description": [
+            { "0": "Campo" },
+            { "1": "campo2" },
+            { "2": "campo3" }
+        ],
+        "Values": {
+            "pt-BR": "O tamanho do campo {0} não pode ser maior que {1} ou menor que {2}.",
+            "en": "The size of field {0} can not be greater than {1} or less than {2}.",
+            "es": "El tamaño del campo {0} no puede ser mayor que {1} o menor que {2}."
+        }
+    },
+    {
+        "Key": "pessoaFisica",
+        "Values": {
+            "pt-BR": "Pessoa física"
+        }
+    },
+    {
+        "Key": "pessoaJuridica",
+        "Values": {
+            "pt-BR": "Pessoa jurídica"
+        }
+    },
+    {
+        "Key": "telefone",
+        "Values": {
+            "pt-BR": "Telefone"
+        }
+    },
+    {
+        "Key": "email",
+        "Values": {
+            "pt-BR": "Email"
+        }
+    },
+    {
+        "Key": "telefone",
+        "Values": {
+            "pt-BR": "Telefone"
+        }
+    },
+    {
+        "Key": "cliente",
+        "Values": {
+            "pt-BR": "Cliente"
+        }
+    },
+    {
+        "Key": "emAberto",
+        "Values": {
+            "pt-BR": "Em Aberto"
+        }
+    },
+    {
+        "Key": "pendente",
+        "Values": {
+            "pt-BR": "Pendente"
+        }
+    },
+    {
+        "Key": "concluido",
+        "Values": {
+            "pt-BR": "Concluido"
+        }
+    },
+    {
+        "Key": "finalizado",
+        "Values": {
+            "pt-BR": "Finalizado"
+        }
+    },
+    {
+        "Key": "cancelado",
+        "Values": {
+            "pt-BR": "Cancelado",
+            "en": "Canceled",
+            "es": "Cancelado"
+        }
+    },
+    {
+        "Key": "aprovado",
+        "Values": {
+            "pt-BR": "Aprovado"
+        }
+    },
+    {
+        "Key": "cobranca",
+        "Values": {
+            "pt-BR": "Cobrança"
+        }
+    },
+    {
+        "Key": "peditoSemItemNoCarrinho",
+        "Values": {
+            "pt-BR": "Pedido precisa ter Itens no carrinho."
+        }
+    },
+    {
+        "Key": "limiteDoPlanoNaoDefinido",
+        "Values": {
+            "pt-BR": "Plano sem limite de produto."
+        }
+    },
+    {
+        "Key": "dataInicio",
+        "Values": {
+            "pt-BR": "Data Início"
+        }
+    },
+    {
+        "Key": "dataFim",
+        "Values": {
+            "pt-BR": "Data Fim"
+        }
+    },
+    {
+        "Key": "dataAtual",
+        "Values": {
+            "pt-BR": "Data Fim"
+        }
+    },
+    {
+        "Key": "tipoEmailPedidoCancelado",
+        "Values": {
+            "pt-BR": "Pedido Cancelado",
+            "en": "Canceled Request",
+            "es": "Solicitud cancelada"
+        }
+    },
+    {
+        "Key": "tipoEmailPedidoReprovado",
+        "Values": {
+            "pt-BR": "Pedido Reprovado",
+            "en": "Order Rejected",
+            "es": "Solicitud Reprobada"
+        }
+    },
+    {
+        "Key": "tituloEmailPedidoReprovado",
+        "Values": {
+            "pt-BR": "Canal Revenda - Pedido Reprovado",
+            "en": "Channel Reseller - Request Disapproved",
+            "es": "Canal Revenda - Pedido reprobado"
+        }
+    },
+    {
+        "Key": "tituloEmailPedidoCancelado",
+        "Values": {
+            "pt-BR": "Canal Revenda - Pedido Cancelado",
+            "en": "Channel Reseller - Request Canceled",
+            "es": "Canal Revenda - Pedido Cancelado"
+        }
+    },
+    {
+        "Key": "tituloEmailPedidoAprovado",
+        "Values": {
+            "pt-BR": "Canal Revenda - Confirmação do pedido",
+            "en": "Channel Reseller - Order Confirmation",
+            "es": "Canal Revenda - Confirmación del pedido"
+        }
+    },
+    {
+        "Key": "aguardandoConfiguracao",
+        "Values": {
+            "pt-BR": "Aguardando configuração",
+            "en": "Waiting for setup",
+            "es": "Esperando la configuración"
+        }
+    },
+    {
+        "Key": "concluido",
+        "Values": {
+            "pt-BR": "Concluído",
+            "en": "Completed",
+            "es": "Terminado"
+        }
+    },
+    {
+        "Key": "ocorreuUmErro",
+        "Values": {
+            "pt-BR": "Ocorreu um erro, favor tente novamente",
+            "en": "An error occurred, please try again",
+            "es": "Se ha producido un error, por favor inténtelo de nuevo"
+        }
+    },
+    {
+        "Key": "numeracao_ipcorp",
+        "Values": {
+            "pt-BR": "Numeração IPCORP",
+            "en": "Numbering IPCORP",
+            "es": "Numeración IPCORP"
+        }
+    },
+    {
+        "Key": "numeracao_i91",
+        "Values": {
+            "pt-BR": "Numeração I91",
+            "en": "Numbering I91",
+            "es": "Numeración I91"
+        }
+    },
+    {
+        "Key": "softphone_mobile",
+        "Values": {
+            "pt-BR": "Softphone Mobile",
+            "en": "Softphone Mobile",
+            "es": "Softphone Mobile"
+        }
+    },
+    {
+        "Key": "softphone_desktop",
+        "Values": {
+            "pt-BR": "Softphone Desktop",
+            "en": "Softphone Desktop",
+            "es": "Softphone Desktop"
+        }
+    },
+    {
+        "Key": "osNomesUsuarioDevemSerDiferentes",
+        "Values": {
+            "pt-BR": "Os usuários devem ser diferentes",
+            "en": "Users must be different",
+            "es": "Los usuarios deben ser diferentes"
+        }
+    },
+    {
+        "Key": "planoPossuiClientesAssociados",
+        "Values": {
+            "pt-BR": "Há clientes associados a esse plano.",
+            "en": "There are customers associated with this plan.",
+            "es": "Hay clientes asociados a ese plan."
+        }
+    },
+    {
+        "Key": "senhaMuitoFraca",
+        "Values": {
+            "pt-BR": "A senha deve possuir no mínimo 6 caracteres, um numero e uma letra minúscula e minúsculas.",
+            "en": "The password must have a minimum of 6 characters, a lowercase letter and a lowercase letter.",
+            "es": "La contraseña debe tener al menos 6 caracteres, un número y una letra minúscula y minúscula."
+        }
+    },
+    {
+        "Key": "ativo",
+        "Values": {
+            "pt-BR": "Ativo",
+            "en": "Active",
+            "es": "Activo"
+        }
+    },
+    {
+        "Key": "emNegociacao",
+        "Values": {
+            "pt-BR": "Em negociação",
+            "en": "In negociation",
+            "es": "En negociacion"
+        }
+    },
+    {
+        "Key": "bloqueado",
+        "Values": {
+            "pt-BR": "Bloqueado",
+            "en": "Blocked",
+            "es": "Obstruido"
+        }
+    },
+    {
+        "Key": "usuarioRevendedor",
+        "Values": {
+            "pt-BR": "Revendedor",
+            "en": "Dealer",
+            "es": "Comerciante"
+        }
+    },
+    {
+        "Key": "usuarioCliente",
+        "Values": {
+            "pt-BR": "Cliente",
+            "en": "Client",
+            "es": "Cliente"
+        }
+    },
+    {
+        "Key": "chamadoAberto",
+        "Values": {
+            "pt-BR": "Aberto",
+            "en": "Open",
+            "es": "Abierto"
+        }
+    },
+    {
+        "Key": "chamadoEmAndamento",
+        "Values": {
+            "pt-BR": "Em andamento",
+            "en": "In progress",
+            "es": "En proceso"
+        }
+    },
+    {
+        "Key": "chamadoConcluido",
+        "Values": {
+            "pt-BR": "Concluído",
+            "en": "Completed",
+            "es": "Terminado"
+        }
+    },
+    {
+        "Key": "chamadoCancelado",
+        "Values": {
+            "pt-BR": "Cancelado",
+            "en": "Canceled",
+            "es": "Cancelado"
+        }
+    },
+    {
+        "Key": "emProcessamento",
+        "Values": {
+            "pt-BR": "Em processamento",
+            "en": "Processing",
+            "es": "En proceso"
+        }
+    },
+    {
+        "Key": "aguardandoPagamento",
+        "Values": {
+            "pt-BR": "Aguardando pagamento",
+            "en": "Awaiting payment",
+            "es": "Esperando el pago"
+        }
+    },
+    {
+        "Key": "liquidado",
+        "Values": {
+            "pt-BR": "Líquidado",
+            "en": "Liquid",
+            "es": "Terminado"
+        }
+    },
+    {
+        "Key": "historicoTipoUsuario",
+        "Values": {
+            "pt-BR": "Usuário",
+            "en": "User",
+            "es": "Usuario"
+        }
+    },
+    {
+        "Key": "historicoTipoRevendedor",
+        "Values": {
+            "pt-BR": "Revendedor",
+            "en": "Dealer",
+            "es": "Comerciante"
+        }
+    },
+    {
+        "Key": "historicoTipoArquivo",
+        "Values": {
+            "pt-BR": "Arquivo",
+            "en": "File",
+            "es": "Archivo"
+        }
+    },
+    {
+        "Key": "chamadoFinalizado",
+        "Description": [ { "0": "Campo" } ],
+        "Values": {
+            "pt-BR": "O chamado já está {0} e não pode ser editado",
+            "en": "Call is already {0} and can not be edited",
+            "es": "El llamado ya está {0} y no se puede editar"
+        }
+    },
+
+    {
+        "Key": "emOperacao",
+        "Values": {
+            "pt-BR": "Em Operação"
+        }
+    },
+
+    {
+        "Key": "erroAoCriarPhoneVeraz",
+        "Values": {
+            "pt-BR": "Ocorreu um erro ao criar phone Veraz.",
+            "en": "There was an error creating Phone Veraz.",
+            "es": "Ocorreu um erro ao criar teléfono veraz."
+        }
+    },
+    {
+        "Key": "emAtivacao",
+        "Values": {
+            "pt-BR": "Em Ativação"
+        }
+    },
+    {
+        "Key": "solicitacaoCancelamento",
+        "Values": {
+            "pt-BR": "Solicitação de Cancelamento",
+            "en": "Cancellation request",
+            "es": "Solicitud de cancelación"
+        }
+    },
+    {
+        "Key": "erroAoDeletarPhoneVeraz",
+        "Values": {
+            "pt-BR": "Ocorreu um erro ao deletar phone Veraz.",
+            "en": "There was an error deleting phone Veraz.",
+            "es": "There was an error deleting phone Veraz."
+        }
+    },
+    {
+        "Key": "agrupamentoPorData",
+        "Values": {
+            "pt-BR": "Data",
+            "en": "Date",
+            "es": "Fecha"
+        }
+    },
+    {
+        "Key": "agrupamentoPorCliente",
+        "Values": {
+            "pt-BR": "Cliente",
+            "en": "Client",
+            "es": "Cliente"
+        }
+    },
+    {
+        "Key": "ativarTerminalCancelado",
+        "Values": {
+            "pt-BR": "Não é possível ativar um terminal cancelado.",
+            "en": "You can not activate a canceled terminal.",
+            "es": "No se puede habilitar un terminal cancelado."
+        }
+    }
+]

@@ -1,0 +1,60 @@
+.mat-icon {
+  margin-top: 5px;
+}
+
+.spanTotalizador {
+  margin-right: 30px;
+}
+
+input[type=checkbox] {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.filterButtonSelected {
+  background-color: rgb(163, 163, 163) !important;
+}
+
+.m-widget-conciliacao {
+  box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08) !important;
+  background-color: #fff !important;  
+  box-sizing: border-box !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  padding-top: 10px !important;
+  padding-bottom: 0px !important;
+}
+
+.item-footer {
+  background-color: lightgrey !important;
+  padding: 4px;
+  font-weight: bold;
+}
+
+.iconPulseLoad {
+  animation: mymove 1s infinite;
+  color: white;
+}
+
+@keyframes mymove {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0
+  }
+}
+
+
+table {
+  width: 100%;
+}
+
+.mat-column-serie {
+  max-width: 5% !important;
+}
+
+.mat-column-transportador {
+  min-width: 15% !important;
+}

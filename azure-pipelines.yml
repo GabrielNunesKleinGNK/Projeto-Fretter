@@ -1,0 +1,218 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  branches:
+      include:
+      - master
+
+resources:
+- repo: self
+  clean: true
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'd62e4ce8-724c-49c1-bbe9-100f4b7b2bcd'
+  containerRegistry: 'uxregistry.azurecr.io'
+  tag: '$(Build.BuildNumber)'
+  
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Versionamento
+  displayName: 'Versionamento GIT'
+  jobs:  
+  - job: Versionamento  
+    pool:
+     name: Azure Pipelines
+    steps:
+    - checkout: self
+      persistCredentials: true
+    - task: gitversion/setup@0
+      displayName: GitVersion Setup
+      inputs:
+        versionSpec: '5.x'
+    - task: gitversion/execute@0
+      displayName: GitVersion Execute
+      inputs:
+        useConfigFile: true
+        configFilePath: 'GitVersion.yml'
+    - task: GitTag@6
+      displayName: 'Tag Repository'
+      condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        workingdir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
+        tag: '$(tag)'
+        tagMessage: 'Tag gerada automaticamente - $(tag)'
+        forceTagCreation: true
+
+- stage: Build
+  displayName: Build and push stage
+  dependsOn: Versionamento
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+     name: Azure Pipelines
+    steps:
+    - task: Docker@2
+      displayName: Build Fretter.Api
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Api'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Api/Fretter.Api/Dockerfile'
+        buildContext: $(Build.Repository.LocalPath)
+        tags: |
+          latest
+          $(tag)
+          
+    - task: Docker@2
+      displayName: Push Fretter.Api
+      condition: ne(variables['Build.Reason'], 'PullRequest')
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Api'
+        command: 'push'
+        tags: |
+          latest
+          $(tag)
+          
+    - task: Docker@2
+      displayName: Build Fretter.Webhook.Api
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Webhook.Api'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Api/Fretter.WebHook.Api/Dockerfile'
+        buildContext: $(Build.Repository.LocalPath)
+        tags: |
+          latest
+          $(tag)
+          
+    - task: Docker@2
+      displayName: Push Fretter.Webhook.Api
+      condition: ne(variables['Build.Reason'], 'PullRequest')
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Webhook.Api'
+        command: 'push'
+        tags: |
+          latest
+          $(tag)
+
+    - task: Docker@2
+      displayName: Build Fretter.Service
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Service'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Infra/Fretter.Service/Dockerfile'
+        buildContext: $(Build.Repository.LocalPath)
+        tags: |
+          latest
+          $(tag)
+    - task: Docker@2
+      displayName: Push Fretter.Service
+      condition: ne(variables['Build.Reason'], 'PullRequest')
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Service'
+        command: 'push'
+        tags: |
+          latest
+          $(tag)
+    - task: Docker@2
+      displayName: Build Fretter.Web
+      env:
+        NODE_OPTIONS: --max_old_space_size=16384
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Web'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Web/Fretter.Web/Dockerfile'
+        buildContext: $(Build.Repository.LocalPath)
+        tags: |
+          latest
+          $(tag)
+    - task: Docker@2
+      displayName: Push Fretter.Web
+      condition: ne(variables['Build.Reason'], 'PullRequest')
+      inputs:
+        containerRegistry: 'UXREGISTRY_2'
+        repository: 'Fretter.Web'
+        command: 'push'
+        tags: |
+          latest
+          $(tag)
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '3.1.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build Database
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: '$(Build.SourcesDirectory)/Infra/Fretter.Database'
+        arguments: '-o $(Pipeline.Workspace)/Stage/Database'
+        zipAfterPublish: false
+        modifyOutputPath: false
+    - task: PublishPipelineArtifact@1
+      condition: ne(variables['Build.Reason'], 'PullRequest')
+      displayName: Publica Artefatos
+      inputs:
+        targetPath: '$(Pipeline.Workspace)/Stage'
+        artifact: 'FretterArtifacts'
+        publishLocation: 'pipeline'
+
+- stage: ReleaseNotes
+  displayName: Release Notes
+  dependsOn: Build
+  jobs:
+  - job: ReleaseNotes
+    displayName: Release Notes
+    pool:
+     name: Azure Pipelines
+    steps:
+    - task: XplatGenerateReleaseNotes@3
+      displayName: Gerar Release Notes
+      continueOnError: true
+      condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        outputfile: '$(Pipeline.Workspace)/RN_$(tag).md'
+        templateLocation: 'File'
+        templatefile: '$(Build.SourcesDirectory)/ReleaseNotesTemplate.md'
+        dumpPayloadToConsole: false
+        dumpPayloadToFile: false
+        replaceFile: true
+        getParentsAndChildren: false
+        getAllParents: false
+        getIndirectPullRequests: false
+        stopOnError: false
+        considerPartiallySuccessfulReleases: false
+        checkForManuallyLinkedWI: true
+        wiqlFromTarget: 'WorkItems'
+
+    - task: PowerShell@2
+      displayName: Formatar Release Notes
+      continueOnError: true
+      condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        targetType: 'inline'
+        script: |
+          $data = (Get-Content -Path $(Pipeline.Workspace)/RN_$(tag).md -Encoding UTF8) -join "%0D%0A"
+          Write-Host "##vso[task.setvariable variable=textReleaseNotes;]$data"
+
+    - task: PostToOffice365Connector@1
+      displayName: Postar Release Notes (Teams)
+      continueOnError: true
+      condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        url: 'https://quattrovertici.webhook.office.com/webhookb2/66766f45-34f4-4f3d-989b-106c21297b7a@86e398a6-83e4-403c-bb7a-4660c0014dbd/IncomingWebhook/02c3d02308be4b39b35744e6ac4ac7a1/fc632387-aa4b-40c3-803c-fc85d06687b7'
+        title: 'Fretter - $(tag)'
+        msg: '$(textReleaseNotes)'
+

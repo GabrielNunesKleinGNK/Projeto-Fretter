@@ -1,0 +1,34 @@
+.mat-column-nomeArquivo{
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 20% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-retorno,  .mat-column-percentualAtualizacao{
+   max-width: 10%;
+}
+
+.mat-column-id{
+   max-width: 6%;
+}
+
+.mat-column-qtAdvertencia{
+   max-width: 8%;
+}
+
+.mat-column-ultimaAtualizacao{
+   max-width: 15%;
+}
+
+.mat-column-atualizar{
+   max-width: 4%;
+}

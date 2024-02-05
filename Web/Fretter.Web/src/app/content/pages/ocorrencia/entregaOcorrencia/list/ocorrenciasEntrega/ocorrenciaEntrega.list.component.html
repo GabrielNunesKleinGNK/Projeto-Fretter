@@ -1,0 +1,60 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Ocorrências da entrega</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools>
+		<div class="m-portlet__head-title">
+			<button class="closeButton" type="button" [mat-dialog-close]="" matTooltip="Close">
+				<span style="float:left;">X</span>
+			</button>
+		</div>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtros">
+		</mat-form-field>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="entregaId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Entrega (Fusion) </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.entregaId }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="ocorrencia">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.ocorrencia }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataOcorrencia">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Ocorrência </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataOcorrencia | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="sigla">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sigla </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.sigla}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="finalizar">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Finalizadora</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.finalizar ? 'Sim' : 'Não' }}</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

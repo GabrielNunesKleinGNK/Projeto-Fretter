@@ -1,0 +1,39 @@
+<m-portlet [options]="{headLarge: false}" [hidden]="!viewList">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span>Criticas - Erros ao ler o arquivo</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Download" color="success" type="button" (click)="exportarExcel()">
+			<mat-icon fontSet="fas" fontIcon="fa-file-excel" [hidden]="viewLoadingExcel"></mat-icon>			
+			<span  [hidden]="viewLoadingExcel">Exportar para Excel</span>
+			<mat-icon class="iconPulseLoad" [hidden]="!viewLoadingExcel">autorenew</mat-icon>
+			<span  [hidden]="!viewLoadingExcel">Processando...</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table [hidden]="!dataSource || dataSource.data.length == 0" class="lmat-elevation-z8" [dataSource]="dataSource" matSort 
+				matSortActive="id" matSortDirection="desc">
+                <ng-container matColumnDef="linha">
+					<mat-header-cell *matHeaderCellDef>Linha</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.linha }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="posicao">
+					<mat-header-cell *matHeaderCellDef>Posição</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.posicao }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.descricao }}</mat-cell>
+				</ng-container>				
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

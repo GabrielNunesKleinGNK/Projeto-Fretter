@@ -1,0 +1,82 @@
+.iconPulseLoad {
+    animation: mymove 1s infinite;
+    color:white;
+  }
+
+.mat-column-transportador {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-codigoEntrega {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-codigoPedido {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-acoes {
+    max-width: 4% !important;
+}
+
+.circulo {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    &.vermelho {
+        background: red;
+    }
+
+    &.verde {
+        background: green;
+    }
+
+}
+
+.mat-icon {
+    margin-top: 0px;
+    text-align: initial;
+    font-size: large;
+}
+
+.ng-select {
+    width: 100%;
+}
+
+#list {
+    padding: 0;
+}

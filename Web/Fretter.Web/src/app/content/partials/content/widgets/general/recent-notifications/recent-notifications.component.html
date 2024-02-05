@@ -1,0 +1,36 @@
+<m-portlet>
+	<!-- use ng-container[mPortletHeadTitle] for the title -->
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				Entradas Recentes
+			</h3>
+		</div>
+	</ng-container>
+
+	<!-- use ng-container[mPortletHeadTools] for the top right toolbar content -->
+
+	<!-- use ng-container[mPortletBody] for the body content -->
+	<ng-container mPortletBody>
+		<!--Begin::Timeline 3 -->
+		<div class="m-timeline-3">
+			<div class="m-timeline-3__items">
+				<div class="m-timeline-3__item m-timeline-3__item--info" *ngFor="let item of data">
+					<span class="m-timeline-3__item-time">{{item.dataEntrada | date: 'HH:mm'}}</span>
+					<div class="m-timeline-3__item-desc">
+						<span class="m-timeline-3__item-text">
+							{{item.usuarioNome}}
+						</span>
+						<br>
+						<span class="m-timeline-3__item-user-name">
+							<a href="#" class="m-link m-link--metal m-timeline-3__item-link">
+								{{item.clienteNome}}
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End::Timeline 3 -->
+	</ng-container>
+</m-portlet>

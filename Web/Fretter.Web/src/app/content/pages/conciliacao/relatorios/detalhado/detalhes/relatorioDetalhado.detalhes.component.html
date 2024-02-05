@@ -1,0 +1,179 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Detalhes">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Cód.
+						Conciliação:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label">{{model.codigoConciliacao}} </label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Transportador:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label">{{model.transportador}}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Entrega:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.codigoEntrega}} </label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Pedido:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.codigoPedido }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Status:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.statusConciliacao}}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Divergência
+						Peso:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"
+							[style.color]="model.possuiDivergenciaPeso ? 'red' : 'green'">
+							{{model.possuiDivergenciaPeso ? 'Sim' : 'Não'}}
+						</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Divergência
+						Tarifa:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"
+							[style.color]="model.possuiDivergenciaTarifa  ? 'red' : 'green'">
+							{{model.possuiDivergenciaTarifa ? 'Sim' : 'Não'}}
+						</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Emissão:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.dataEmissao | date: 'dd/MM/yyyy'}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Cadastro:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.dataCadastro | date: 'dd/MM/yyyy HH:mm' }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Frete:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.valorCustoFrete | currency: 'BRL'}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Real:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"
+							style="text-decoration: solid;cursor: pointer;font-weight: bold;"
+							(click)="getArquivoConciliacao(model.codigoConciliacao)">
+							{{model.valorCustoReal | currency: 'BRL'}}</label>
+					</div>
+				</div>
+				<!-- <div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Adicional:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.valorCustoAdicional | currency: 'BRL'}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Finalizado:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.finalizado ? 'Sim' : 'Não' }}</label>
+					</div>
+				</div> -->
+				<div class="form-group m-form__group row">					
+					<div class="col-11">
+						<label class="col-12 col-form-label" style="font-weight: bold;">Dados da Entrega Importada</label>
+						<mat-divider></mat-divider>
+					</div>
+					<div class="col-1"></div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Cod.
+						Mic.Serviço:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.microServicoId }}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Canal
+						Venda:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.canalVenda }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Canal
+						Cnpj:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.canalCNPJ}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Ent.
+						Valor:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.entregaValorDeclarado | currency: 'BRL'}}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Ent.
+						Peso:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.entregaPeso | number:'1.1-2'}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Ent.
+						Altura:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.entregaAltura | number:'1.1-2' }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Ent.
+						Comprimento:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.entregaComprimento | number:'1.1-2'}}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Ent.
+						Largura:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.entregaLargura | number:'1.1-2' }}</label>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+		<mat-tab label="Valores">
+			<m-relatorioDetalhado-detalhesValores [model]="model"></m-relatorioDetalhado-detalhesValores>
+		</mat-tab>
+		<mat-tab label="Pesos">
+			<m-relatorioDetalhado-detalhesPesos [model]="model"></m-relatorioDetalhado-detalhesPesos>
+		</mat-tab>
+		<mat-tab label="Recotações" *ngIf="model.listRecotacoes != undefined && model.listRecotacoes.length > 0">
+			<m-relatorioDetalhado-detalhesRecotacoes [model]="model"></m-relatorioDetalhado-detalhesRecotacoes>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-raised-button matTooltip="Solicita o recálculo do frete" 
+		color="primary" type="button" (click)="enviarRecalculoFrete()" [disabled]="model.desabilitaEnvioRecalcular">
+	<span [hidden]="viewLoadingRecalculoFrete">Recalcular</span>
+	<span [hidden]="!viewLoadingRecalculoFrete">Processando...</span>
+</button>
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Close">
+		Fechar
+	</button>
+</mat-dialog-actions>

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>
+    <div>
+        <span>Agendamento de pedido</span>
+        <button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+            X
+        </button>
+    </div>
+</h2>
+
+<mat-dialog-content style="min-height:550px; min-width: 1000px; max-width: 1200px;">
+    <ng-container mPortletBody>
+        <mat-horizontal-stepper [linear]="isLinear" #stepper >
+            <mat-step [stepControl]="false" label="Disponibilidade" [completed]="stepOneCompleted">
+                <ng-container mPortletBody>
+                    <m-agendamentoEntrega-disponibilidade-wizard [value]="model">
+                    </m-agendamentoEntrega-disponibilidade-wizard>
+                </ng-container>
+                <ng-container mPortletFooter>
+                    <ng-container mPortletFooterTools>
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col-12 m--align-right">
+                                <button mat-button matStepperPrevious type="button">Voltar</button>
+                                <button type="button" mat-button (click)="validaStep1(stepper)">Próximo</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </mat-step>
+
+            <mat-step [stepControl]="false" label="Dados para o Agendamento" [completed]="stepTwoCompleted">
+                <ng-container mPortletBody>
+                    <m-agendamentoEntrega-dadosAgendamento-wizard [value]="model">
+                    </m-agendamentoEntrega-dadosAgendamento-wizard>
+                </ng-container>
+                <ng-container mPortletFooter>
+                    <ng-container mPortletFooterTools>
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col-12 m--align-right">
+                                <button mat-button matStepperPrevious type="button">Voltar</button>
+                                <button type="button" mat-button (click)="validaStep2(stepper)">Próximo</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </mat-step>
+
+            <mat-step [stepControl]="false" label="Resumo">
+                <ng-container mPortletBody>
+                    <m-agendamentoEntrega-resumo-wizard [value]="model">
+                    </m-agendamentoEntrega-resumo-wizard>
+                </ng-container>
+                <ng-container mPortletFooter>
+                    <ng-container mPortletFooterTools>
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col-12 m--align-right">
+                                <button id="step3" mat-button matStepperPrevious type="button">Voltar</button>
+                                <button mat-button type="button" (click)="onSubmit()">Finalizar</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </ng-container>
+</mat-dialog-content>

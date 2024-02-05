@@ -1,0 +1,68 @@
+<!-- <m-portlet [options]="{headLarge: false}"> -->
+<h2 mat-dialog-title>Empresas Importadas
+	<button class="close" mat-button (click)="close()">X</button>
+</h2>
+<mat-dialog-content>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="CodigoEmpresa">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Emp.</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.empresaId }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Nome">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.nome }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Cnpj">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.cnpj }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Cep">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>CEP</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.cep }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Email">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.email || '--' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Token">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Token</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button *ngIf="model.token" mat-icon-button color="primary" matTooltip="Copiar Token"
+							(click)="copiarToken(model)" class="ml-2">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+						<button *ngIf="!model.token" mat-icon-button color="primary" matTooltip="Descricao do Erro"
+							(click)="exibirErro(model)" class="ml-2">
+							<mat-icon>info</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="Sucesso">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<mat-icon *ngIf="model.sucessoEmpresa" color="primary" matTooltip="Sucesso Empresa">done
+						</mat-icon>
+						<mat-icon *ngIf="!model.sucessoEmpresa" color="warn" matTooltip="Insucesso Empresa">close
+						</mat-icon>
+						<mat-icon *ngIf="model.sucessoCanal" color="primary" matTooltip="Sucesso Canal Venda">done
+						</mat-icon>
+						<mat-icon *ngIf="!model.sucessoCanal" color="warn" matTooltip="Insucesso Canal Venda">close
+						</mat-icon>
+						<mat-icon *ngIf="model.sucessoPermissao" color="primary" matTooltip="Sucesso Permissão">done
+						</mat-icon>
+						<mat-icon *ngIf="!model.sucessoPermissao" color="warn" matTooltip="Insucesso Permissão">close
+						</mat-icon>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</mat-dialog-content>
+
+<!-- </m-portlet> -->

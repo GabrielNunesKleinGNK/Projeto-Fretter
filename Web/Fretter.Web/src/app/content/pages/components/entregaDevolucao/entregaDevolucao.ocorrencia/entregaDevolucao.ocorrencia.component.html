@@ -1,0 +1,68 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="ENTREGADEVOLUCAO.LIST.TITULO">{{getTitle()}}</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Atualizar lista de ocorrências" color="primary" type="button"
+			(click)="atualizarListaDeOcorrencias()">
+			<mat-icon>sync</mat-icon>
+		</button>		
+	</ng-container>
+	<ng-container mPortletBody>
+		<form class="m-form" style="width: 700px">
+			<div *ngIf="dataSource && dataSource.data.length === 0" style="padding: 3% 6%;">Não existem ocorrências para
+				essa entrega.</div>
+			<mat-dialog-content *ngIf="dataSource && dataSource.data.length > 0">
+				<mat-tab-group>
+					<mat-tab label="Ocorrências da Entrega">
+						<div class="mat-table__wrapper">
+							<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+								matSortDirection="desc">
+								<ng-container matColumnDef="id">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.id }}</mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="entregaDevolucao">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Cod. Entrega</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.entregaDevolucao }}</mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="ocorrencia">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Ocorrência</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.ocorrencia}}</mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="observacao">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Observacao</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.observacao }}</mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="sigla">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Sigla</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.sigla }}</mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="dataOcorrencia">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>Data da Ocorrência
+									</mat-header-cell>
+									<mat-cell *matCellDef="let model">{{model.dataOcorrencia | date: 'dd/MM/yyyy'}}
+									</mat-cell>
+								</ng-container>
+
+								<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+								<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+							</mat-table>
+							<mat-paginator *ngIf="dataSource && dataSource.data.length > 0"
+								[pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+						</div>
+					</mat-tab>
+				</mat-tab-group>
+			</mat-dialog-content>			
+		</form>
+	</ng-container>
+</m-portlet>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button (click)="close()" matTooltip="Fechar">
+		Fechar					
+	</button>
+</mat-dialog-actions>

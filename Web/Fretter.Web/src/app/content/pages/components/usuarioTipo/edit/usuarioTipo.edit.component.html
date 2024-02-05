@@ -1,0 +1,47 @@
+<mat-dialog-content>
+<div class="m-portlet" [ngClass]="{ 'm-portlet--body-progress' : viewLoading, 'm-portlet--body-progress-overlay' : loadingAfterSubmit }">
+	<div class="m-portlet__head">
+		<div class="m-portlet__head-caption">
+			<div class="m-portlet__head-title">
+				<span class="m-portlet__head-icon">
+					<i class="la la-gear"></i>
+				</span>
+				<h3 class="m-portlet__head-text">{{getTitle()}}</h3>
+			</div>
+		</div>
+	</div>
+	<form class="m-form" [formGroup]="modelForm" style="width: 800px">
+		<div class="m-portlet__body">
+			<div class="m-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+			<!-- <m-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</m-alert> -->
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Descricao:</label>
+				<div class="col-8">
+					<input type="text" id="descricao" name="descricao" [ngClass]="{'form-control': true, 'is-invalid':descricao.invalid && (descricao.dirty || descricao.touched) && descricao.errors.required}" formControlName="descricao" >
+	
+				</div>
+			</div>
+				
+		</div>
+		<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+			<div class="m-form__actions m-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+							Cancelar
+						</button>&nbsp;
+						<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+							Salvar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</mat-dialog-content>

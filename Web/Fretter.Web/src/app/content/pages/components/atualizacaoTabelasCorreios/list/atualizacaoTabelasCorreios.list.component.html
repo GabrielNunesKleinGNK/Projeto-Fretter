@@ -1,0 +1,82 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Arquivos</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)"
+			accept=".xlsx,.xls" multiple="false" />
+		<button mat-raised-button matTooltip="Upload Arquivo" color="primary" type="button" (click)="csvInput.click()">
+			<mat-icon>backup</mat-icon>
+			<span class="ml-1">Upload Excel</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div [hidden]="!viewLoading" class="m-splash-screen" style="position: relative;">
+			<span class="m-5">Aguarde, Importando arquivo... </span>
+			<mat-spinner diameter="40" class="mb-5"></mat-spinner>
+		</div>
+		<div [hidden]="viewLoading" class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="tabelaArquivoStatusId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<p class="spanVerde" *ngIf="model.tabelaArquivoStatusId == 3">{{ model.tabelaArquivoStatus.status }}</p>
+						<p class="spanAzul" *ngIf="model.tabelaArquivoStatusId == 2 || model.tabelaArquivoStatusId == 1">
+							{{ model.tabelaArquivoStatus.status }}
+						</p>
+						<button  *ngIf="model.tabelaArquivoStatusId == 4" color="success"
+							mat-icon-button class="spanVermelho" matTooltip="Erro" (click)="exibirDado(model.erro)">
+							{{ model.tabelaArquivoStatus.status }}
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="url">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Visualizar Arquivo</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button  color="success"
+						mat-icon-button  matTooltip="Abrir arquivo" (click)="openInNewTab(model.url)">
+							<mat-icon>open_in_new</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="criacao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Criação</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.criacao | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="importacaoDados">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Importação</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.importacaoDados | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="atualizacaoTabelas">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Atualização</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.atualizacaoTabelas | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button *ngIf="model.tabelaArquivoStatusId != 3 && model.tabelaArquivoStatusId != 4" 
+						mat-icon-button color="primary" matTooltip="Atualizar Status" (click)="pesquisar()">
+							<mat-icon>cached</mat-icon>
+						</button>
+						<button *ngIf="model.tabelaArquivoStatusId != 3"
+						mat-icon-button color="primary" matTooltip="Reprocessar" (click)="reprocessar(model)">
+							<mat-icon>repeat</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

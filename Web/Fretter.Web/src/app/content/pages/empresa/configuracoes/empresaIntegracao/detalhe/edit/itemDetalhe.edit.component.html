@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >Reenviar Ocorrência</span>
+		<button class="closeButton" id="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Reprocessar ocorrência">
+			<form class="m-form" [formGroup]="modelForm" style="width: 1100px">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Código: </label>
+					<div class="col-2">
+						<input id="id" name="id" class="form-control" formControlName="id" disabled>
+					</div>
+					<label class="col-1 col-form-label" style="text-align:right;">Chave: </label>
+					<div class="col-2">
+						<input id="chave" name="chave" class="form-control" formControlName="chave" disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Cód. Integração: </label>
+					<div class="col-2">
+						<input id="codigoIntegracao" name="codigoIntegracao" class="form-control" formControlName="codigoIntegracao" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Url:</label>
+					<div class="col-9">
+						<input id="requestURL" name="requestURL" class="form-control" formControlName="requestURL"  [(ngModel)]="model.requestURL" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Status Response: </label>
+					<div class="col-2">
+						<input id="httpStatus" name="httpStatus" class="form-control" formControlName="httpStatus" [(ngModel)]="model.httpStatus" disabled>
+					</div>
+					<label class="col-1 col-form-label" style="text-align:right;">Sucesso: </label>
+					<div class="col-2">
+						<input id="sucesso" name="sucesso" class="form-control" formControlName="sucesso" [(ngModel)]="model.sucesso" disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Status Code: </label>
+					<div class="col-2">
+						<input id="httpStatusCode" name="httpStatusCode" class="form-control" formControlName="httpStatusCode" [(ngModel)]="model.httpStatusCode" disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Body: </label>
+					<div class="col-3">
+						<textarea id="jsonBody" name="jsonBody" class="form-control" formControlName="jsonBody" 
+							[(ngModel)]="model.jsonBody" disabled>
+						</textarea>
+					</div>
+					<div class="col-1"></div>
+					<label class="col-2 col-form-label" style="text-align:right;">Retorno: </label>
+					<div class="col-3">
+						<textarea id="jsonRetorno" name="jsonRetorno" class="form-control" formControlName="jsonRetorno" 
+							[(ngModel)]="model.jsonRetorno" disabled>
+						</textarea>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Send">
+		Reenviar
+	</button>
+</mat-dialog-actions>

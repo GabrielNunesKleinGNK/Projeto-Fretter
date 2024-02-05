@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  fretter.webhook.api:
+    image: ${DOCKER_REGISTRY-}fretterwebhook
+    build:
+      context: .
+      dockerfile: Api/Fretter.WebHook.Api/Dockerfile

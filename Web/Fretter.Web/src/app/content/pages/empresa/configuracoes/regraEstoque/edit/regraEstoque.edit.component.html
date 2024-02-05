@@ -1,0 +1,96 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Configuração">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Código:</label>
+					<div class="col-2">
+						<input id="codigo" name="codigo" class="form-control" disabled formControlName="codigo">
+					</div>
+				</div>
+				<div *ngIf="model.empresa" class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Empresa:</label>
+					<div class="col-7">
+						<input id="empresa" name="empresa" class="form-control" disabled [value]="model.empresa?.nomeFantasia">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label align-self-center" style="text-align:right;">Canal:</label>
+					<div class="col-4">
+						<label style="text-align:right;">Origem (De): </label>
+						<ng-select [items]="listCanais" bindLabel="canalNome" bindValue="id" placeholder="Selecione uma Origem"
+							[(ngModel)]="model.canalIdOrigem" formControlName="canalOrigemId" appendTo="body">
+						</ng-select>
+						<div *ngIf="canalOrigemId.invalid && (canalOrigemId.dirty || canalOrigemId.touched)" class="alert alert-danger">
+							<div *ngIf="canalOrigemId.errors.required">Canal Origem é obrigatório</div>
+						</div>
+						<div *ngIf="!canalOrigemId.invalid && modelForm.hasError('mismatch') && (canalOrigemId.dirty || canalOrigemId.touched)" class="alert alert-danger">
+							<div>Canal Origem não pode ser o mesmo do Destino</div>
+						</div>
+					</div>
+					<div class="col-1 align-self-center">
+						<button mat-icon-button color="primary" matTooltip="Trocar Canais" (click)="trocarCanais()" 
+								[disabled]="!(model.canalIdDestino && model.canalIdOrigem)">
+							<mat-icon [style.color]="(model.canalIdDestino && model.canalIdOrigem) ? '#4bb309' : 'grey'">compare_arrows</mat-icon>
+						</button>
+					</div>
+					<div class="col-4">
+						<label style="text-align:right;">Destino (Para): </label>
+						<ng-select [items]="listCanais" bindLabel="canalNome" bindValue="id" placeholder="Selecione um Destino"
+							[(ngModel)]="model.canalIdDestino" formControlName="canalDestinoId" appendTo="body">
+						</ng-select>
+						<div *ngIf="canalDestinoId.invalid && (canalDestinoId.dirty || canalDestinoId.touched)" class="alert alert-danger">
+							<div *ngIf="canalDestinoId.errors.required">Canal Destino é obrigatório</div>
+						</div>
+						<div *ngIf="!canalDestinoId.invalid && modelForm.hasError('mismatch') && (canalDestinoId.dirty || canalDestinoId.touched)" class="alert alert-danger">
+							<div>Canal Destino não pode ser o mesmo da Origem</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Grupo Produto:</label>
+					<div class="col-9">
+						<ng-select [items]="listGrupos" bindLabel="descricao" bindValue="id" placeholder="Selecione um grupo"
+							[(ngModel)]="model.grupoId" formControlName="grupoId" appendTo="body">
+						</ng-select>
+					</div>
+					
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Skus:</label>
+					<div class="col-9">
+						<textarea id="skus" name="skus" class="form-control" formControlName="skus" placeholder="Exemplo: 15975;5689;1457A"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group m-form__group row justify-content-center">
+					<div *ngIf="modelForm.hasError('grupoOuSku') && ((grupoId.dirty || grupoId.touched) || (skus.dirty || skus.touched))" class="alert alert-danger">
+						<div>É obrigatório selecionar um grupo ou definir os SKUs individualmente</div>
+					</div>
+				</div>
+
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()">
+		Salvar
+	</button>
+</mat-dialog-actions>

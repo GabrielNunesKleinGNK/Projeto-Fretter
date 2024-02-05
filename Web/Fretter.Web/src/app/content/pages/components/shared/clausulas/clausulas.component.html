@@ -1,0 +1,124 @@
+<form class="m-form" [formGroup]="modelForm" style="width: 900px;">
+	<div class="form-group m-form__group row">
+		<label class="col-2 col-form-label" style="text-align:right;">Grupo de Regra:</label>
+		<div class="col-3">
+		  <input type="text" id="descricaoGrupo" class="form-control" formControlName="descricaoGrupo" [(ngModel)]="model.descricaoGrupo">
+		  <div *ngIf="descricaoGrupo.invalid && (descricaoGrupo.dirty || descricaoGrupo.touched)"
+		  class="alert alert-danger">
+		  <div *ngIf="descricaoGrupo.errors.required">O Grupo é obrigatório</div>
+	  </div>
+		</div>
+		<label class="col-2 col-form-label" style="text-align:right;">
+			E/Ou:
+			<mat-icon matTooltip="O operador só poderá se alterado quando não houver nenhuma regra montada"	style="color: coral;">
+				info
+			</mat-icon>
+		</label>
+		<div class="col-3">
+			<ng-select [items]="operadoresLogicos" bindLabel="descricao" bindValue="id" placeholder="E/Ou"
+				appendTo="body" formControlName="operadorLogicoId" [(ngModel)]="model.operadorLogicoId">
+			</ng-select>
+			<div *ngIf="operadorLogicoId.invalid && (operadorLogicoId.dirty || operadorLogicoId.touched)"
+				class="alert alert-danger">
+				<div *ngIf="operadorLogicoId.errors.required">Campo obrigatório</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-2 col-form-label" style="text-align:right;">Clausula:</label>
+		<div class="col-8">
+			<ng-select [items]="clausulas" bindLabel="nome" bindValue="id" appendTo="body"
+				(change)="montarCampoValue($event == undefined ? 0 : $event.id)" formControlName="clausulaId"
+				[(ngModel)]="model.clausulaId">
+			</ng-select>
+			<div *ngIf="clausulaId.invalid && (clausulaId.dirty || clausulaId.touched)" class="alert alert-danger">
+				<div *ngIf="clausulaId.errors.required">A Cláusula obrigatória</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-2 col-form-label" style="text-align:right;">Operador:</label>
+		<div class="col-8">
+			<ng-select [items]="operadoresComparacao" bindLabel="nome" bindValue="id" appendTo="body"
+				formControlName="operadorComparacaoId" [(ngModel)]="model.operadorComparacaoId">
+			</ng-select>
+			<div *ngIf="operadorComparacaoId.invalid && (operadorComparacaoId.dirty || operadorComparacaoId.touched)" class="alert alert-danger">
+				<div *ngIf="operadorComparacaoId.errors.required">O operador é obrigatório</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row" *ngIf="!hiddenValue">
+		<label class="col-2 col-form-label" style="text-align:right;">Valor:</label>
+		<div class="col-8">
+			<input [type]="tipoDado" class="form-control" formControlName="valorClausula" [OnlyNumber]="somenteNumeros" [(ngModel)]="model.valorClausula"
+				[OnlyLetter]="somenteLetras" />
+			<div *ngIf="valorClausula.invalid && (valorClausula.dirty || valorClausula.touched)"
+				class="alert alert-danger">
+				<div *ngIf="valorClausula.errors.required">O valor é obrigatório</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row" *ngIf="!hiddenRangeValue">
+		<label class="col-2 col-form-label" style="text-align:right;">Valor Inicial:</label>
+		<div class="col-3">
+			<input [type]="tipoDado" class="form-control" formControlName="valorClausulaInicial" [OnlyNumber]="somenteNumeros" [(ngModel)]="model.valorClausulaInicial"
+				[OnlyLetter]="somenteLetras" />
+			<div *ngIf="valorClausulaInicial.invalid && (valorClausulaInicial.dirty || valorClausulaInicial.touched)"
+				class="alert alert-danger">
+				<div *ngIf="valorClausulaInicial.errors.required">O valor inicial é obrigatório</div>
+			</div>
+		</div>
+		<label class="col-2 col-form-label" style="text-align:right;">Valor Final:</label>
+		<div class="col-3">
+			<input [type]="tipoDado" class="form-control" formControlName="valorClausulaFinal" [OnlyNumber]="somenteNumeros" [(ngModel)]="model.valorClausulaFinal"
+				[OnlyLetter]="somenteLetras" />
+			<div *ngIf="valorClausulaFinal.invalid && (valorClausulaFinal.dirty || valorClausulaFinal.touched)"
+				class="alert alert-danger">
+				<div *ngIf="valorClausulaFinal.errors.required">O valor final é obrigatório</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<div class="col-10" style="text-align:right;">
+			<button mat-raised-button color="success" type="button" matTooltip="Adicionar Clausula"
+				(click)="addNovaClausula()">
+				<mat-icon>add_circle_outline</mat-icon>
+			</button>
+		</div>
+	</div>
+</form>
+<div class="form-group m-form__group row mat-table__wrapper">
+	<mat-table class="lmat-elevation-z8" [hidden]=" !dataSource || dataSource.data.length == 0" 
+		[dataSource]="dataSource" matSort matSortActive="operadorLogico" matSortDirection="asc">
+
+		<ng-container matColumnDef="operadorLogico">
+			<mat-header-cell *matHeaderCellDef>E/Ou</mat-header-cell>
+			<mat-cell *matCellDef="let model">{{ model.descricaoOperadorLogico }}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="descricaoClausula">
+			<mat-header-cell *matHeaderCellDef>Clausula</mat-header-cell>
+			<mat-cell *matCellDef="let model">{{ model.descricaoClausula }}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="operadorComparacao">
+			<mat-header-cell *matHeaderCellDef>Operador</mat-header-cell>
+			<mat-cell *matCellDef="let model">{{ model.descricaoOperadorComparacao }}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="valor">
+			<mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+			<mat-cell *matCellDef="let model">{{  model.valorClausula == undefined || model.valorClausula == null ? 
+				model.valorClausulaInicial + ' à ' + model.valorClausulaFinal : model.valorClausula  }}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="acoes">
+			<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+			<mat-cell *matCellDef="let model">
+				<button mat-icon-button color="warn" matTooltip="Remover Clausula" (click)="removeClausula(model)">
+					<mat-icon>delete</mat-icon>
+				</button>
+				&nbsp;
+			</mat-cell>
+		</ng-container>
+		
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+	</mat-table>
+</div>

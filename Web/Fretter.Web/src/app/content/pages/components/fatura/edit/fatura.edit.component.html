@@ -1,0 +1,138 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Fatura">
+			<form class="m-form" [formGroup]="modelForm" style="width: 1000px">
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Transportador</label>
+					<div class="col-10">
+						<label class="col-12 col-form-label">
+							{{model.transportador.nome}} </label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Periodo:</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label" *ngIf="model.faturaPeriodo!=null">
+							De {{model.faturaPeriodo.dataInicio | date: 'dd/MM/yyyy' }}
+							a {{model.faturaPeriodo.dataFim | date: 'dd/MM/yyyy'}}
+						</label>
+						<label class="col-12 col-form-label" *ngIf="model.faturaPeriodo==null">
+							Gerada Manualmente
+						</label>
+					</div>
+
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Vencimento:</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label"> {{model.dataVencimento | date: 'dd/MM/yyyy' }}
+						</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Dt.
+						Cadastro:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.dataCadastro | date: 'dd/MM/yyyy HH:mm' }}
+						</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Adicional:</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label">
+							R$ {{model.valorCustoAdicional | number: '1.2-2'}} </label>
+					</div>
+
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Real:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label">
+							R$ {{model.valorCustoReal | number: '1.2-2'}} </label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Vl Doccob:</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label" *ngIf="model.valorDocumento <= 0">
+							--
+						</label>
+						<label class="col-12 col-form-label" *ngIf="model.valorDocumento > 0">
+							R$ {{model.valorDocumento |number: '1.2-2' }}
+						</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Custo
+						Frete:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label">
+							R$ {{model.valorCustoFrete | number: '1.2-2'}}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Qtd
+						Sucesso:</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label"> {{model.quantidadeSucesso | number: '1.0-2' }}</label>
+					</div>
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Qtd
+						Entregas:</label>
+					<div class="col-4">
+						<label class="col-12 col-form-label"> {{model.quantidadeEntrega | number: '1.0-2' }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;font-weight: bold;">Status</label>
+					<div class="col-3">
+						<label class="col-12 col-form-label"
+							style="font-weight: bold;">{{model.faturaStatus.descricao}}</label>
+					</div>
+
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;font-weight: bold;">Ações:</label>
+					<div class="col-3">
+						<ng-select [items]="lstStatusAcao" bindLabel="nome" bindValue="id"
+							placeholder="Selecione uma ação" [(ngModel)]="acaoSelecionada"
+							formControlName="acaoSelecionada" appendTo="body">
+						</ng-select>
+					</div>
+				</div>
+				<div class="form-group m-form__group row" *ngIf="validaMotivo()">
+					<label for="example-text-input" class="col-2 col-form-label"
+						style="text-align:right;">Motivo:</label>
+					<div class="col-8">
+						<textarea maxlength="240" class="form-control textarea" matInput
+							placeholder="Motivo da ação (Obrigatório)" [(ngModel)]="motivo"
+							formControlName="motivo"></textarea>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+		<mat-tab label="Histórico">
+			<m-faturaHistorico [faturaId]="model.id"></m-faturaHistorico>
+		</mat-tab>
+		<mat-tab label="Arquivos de Cobrança" style="overflow: visible !important;padding-top: 0px !important;"
+			*ngIf="model.valorDocumento==0">
+			<m-arquivoCobranca [faturaId]="model.id"></m-arquivoCobranca>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+		[disabled]="viewLoading || !acaoSelecionada" matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

@@ -1,0 +1,61 @@
+<!-- <m-portlet [options]="{headLarge: false}"> -->
+<ng-container mPortletHeadTitle style="background-color: white;">
+	<div class="m-portlet__head-title">
+		<h3 class="m-portlet__head-text">
+			<span translate=""></span>
+		</h3>
+	</div>
+</ng-container>
+<ng-container mPortletBody>
+	<div class="mat-table__wrapper">
+		<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+			matSortDirection="desc">
+			<ng-container matColumnDef="entregaDevolucaoId">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.id }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="codigoColeta">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Coleta</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.codigoColeta }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="codigoRastreio">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Rastreio</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.codigoRastreio}}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="mensagem">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Det. Envio</mat-header-cell>
+				<mat-cell *matCellDef="let model">
+					<button mat-icon-button color="primary" matTooltip="Detalhe da Entrega"
+						(click)="json(model.mensagem)">
+						<mat-icon>code</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="xmlRetorno">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Det. Retorno</mat-header-cell>
+				<mat-cell *matCellDef="let model">
+					<button mat-icon-button color="primary" matTooltip="Retorno da Transportadora"
+						(click)="xml(model.xmlRetorno)">
+						<mat-icon>developer_mode</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="entregaDevolucaoStatusAnteriorId">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>De</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.statusAnterior.nome }}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="entregaDevolucaoStatusAtualId">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Para</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.statusAtual.nome}}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="inclusao">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Alterado</mat-header-cell>
+				<mat-cell *matCellDef="let model">{{model.inclusao | date: 'dd/MM/yyyy'}}</mat-cell>
+			</ng-container>
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+		</mat-table>
+		<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+	</div>
+</ng-container>
+<!-- </m-portlet> -->

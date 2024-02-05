@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="" matTooltip="Close">
+			<span style="float:left;">X</span>
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Nova Ocorrência"
+			[ngClass]="{ 'm-portlet--body-progress' : viewLoading, 'm-portlet--body-progress-overlay' : loadingAfterSubmit }">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="m-portlet__body">
+					<div class="form-group m-form__group row">
+						<label class="col-2 col-form-label" style="text-align:right;">Importação Entrega:</label>
+						<div class="col-9 row">
+							<div class="col-5 row">
+								<input type="date" class="form-control" id="dataInicio" name="dataInicio"
+									formControlName="dataInicio" [(ngModel)]="model.dataInicio">
+								<div *ngIf="dataInicio.invalid && (dataInicio.dirty || dataInicio.touched)"
+									class="alert alert-danger">
+									<div *ngIf="dataInicio.errors.required">Campo obrigatório</div>
+								</div>
+							</div>
+							<label class="col-2 col-form-label" style="text-align:center;">até</label>
+							<div class="col-5 row">
+								<input type="date" class="form-control" id="dataFim" name="dataFim"
+									formControlName="dataFim" [(ngModel)]="model.dataFim">
+								<div *ngIf="dataFim.invalid && (dataFim.dirty || dataFim.touched)"
+									class="alert alert-danger">
+									<div *ngIf="dataFim.errors.required">Campo obrigatório</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="form-group m-form__group row">
+						<label class="col-2 col-form-label" style="text-align:right;">
+							Qtde linhas arquivo :</label>
+						<div class="col-4 row">
+							<ng-select class="col-12 row" [items]="listaLimites" bindLabel="texto"
+								bindValue="value" placeholder="Selecione uma ocorrência"
+								[(ngModel)]="model.paginaLimite" formControlName="paginaLimite" appendTo="body">
+							</ng-select>
+							<div *ngIf="paginaLimite.invalid && (paginaLimite.dirty || paginaLimite.touched)"
+								class="alert alert-danger">
+								<div *ngIf="paginaLimite.errors.required">Campo obrigatório</div>
+							</div>
+						</div>
+						<label class="col-3 col-form-label" style="text-align:right;">
+							Entregas Marketplace :</label>
+						<div class="col-2 row">
+							<ng-select class="col-12 row" [items]="marketplace" bindLabel="texto"
+								bindValue="opcao" placeholder="Selecione uma opção"
+								[(ngModel)]="model.entregasMarketplace" formControlName="entregasMarketplace"
+								appendTo="body">
+							</ng-select>
+							<div *ngIf="entregasMarketplace.invalid && (entregasMarketplace.dirty || entregasMarketplace.touched)"
+								class="alert alert-danger">
+								<div *ngIf="entregasMarketplace.errors.required">Campo obrigatório</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group m-form__group row">
+						<label class="col-2 col-form-label" style="text-align:right;">Pedidos (Opcional):</label>
+						<div class="col-8 row">
+							<textarea type="text" (change)="validaQuantidadePedidos()"
+								placeholder="Os pedidos devem estar separados por ; e com limite de 50 pedidos"
+								id="pedidos" name="pedidos"
+								formControlName="pedidos"
+								style="min-height: 150px;"
+								class="form-control" [(ngModel)]="model.pedidos"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="" matTooltip="Cancel changes">
+		Cancelar
+	</button>&nbsp;
+	<button type="button" mat-raised-button color="primary" (click)="download(model)" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Save changes">
+		Download
+	</button>
+</mat-dialog-actions>

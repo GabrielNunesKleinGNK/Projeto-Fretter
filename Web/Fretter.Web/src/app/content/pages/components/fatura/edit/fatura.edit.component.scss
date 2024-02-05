@@ -1,0 +1,21 @@
+
+
+::ng-deep {
+    .mat-tab-body-content {
+        overflow: visible !important;
+        padding-top: 0px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+    .mat-tab-body-wrapper{
+        margin-top: 5px;
+    }
+}
+
+.textarea{
+    padding: 10px 10px;
+    border: 1px solid #CCCCCC; 
+    border-radius: 3px;
+    min-height: 20%;
+    min-height: 50%;
+}

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Fusion - Fretter</title>
+	<base href="/">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="./assets/demo/default/media/img/logo/favicon.ico">
+	<link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto:300,400,500,600,700"
+		rel="stylesheet">
+
+	<style type="text/css">
+		body,
+		html {
+			height: 100%;
+		}
+
+		html {
+			position: initial !important;
+			overflow-y: initial !important;
+		}
+		
+		.m-splash-screen {
+			background-color: #f2f3f8;
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			width: 100%;
+			z-index: 99999;
+		}
+
+		.m-header .m-header-head {
+			transition: width 0.2s ease !important;
+			background-color: #303946!important
+		}
+
+		.m-portlet .m-portlet__head {
+			border-bottom: 1px solid #ebedf2 !important;
+			background-color: #303946!important;
+			max-height: 4rem !important;
+		}
+
+		.m-portlet .m-portlet__head .m-portlet__head-text {
+			color: #fff !important;
+		}
+
+		.mat-flat-button.mat-primary,
+		.mat-raised-button.mat-primary,
+		.mat-fab.mat-primary,
+		.mat-mini-fab.mat-primary {
+			background-color: #2d5e90 !important;
+			;
+		}
+
+		.mat-flat-button.mat-success,
+		.mat-raised-button.mat-success,
+		.mat-fab.mat-success,
+		.mat-mini-fab.mat-success {
+			color: whitesmoke;
+			background-color: #1fa131 !important;
+			;
+		}
+
+		.mat-dialog-container {
+			box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+			display: block;
+			padding: 0px !important;
+			border-radius: 0px;
+			overflow: hidden !important;
+		}
+
+		.m-form .m-form__group {
+			margin-bottom: 0 !important;
+			padding-top: 5px !important;
+			padding-bottom: 5px !important;
+		}
+
+		.mat-dialog-content {
+			display: block !important;
+			margin: 0 0px !important;
+			max-height: 65vh !important;
+			overflow-x:hidden !important;
+			padding: 0 5px !important;
+		}
+
+		.m-menu__link-icon {
+			color: #030303 !important;
+		}
+		.m-menu__item.m-menu__item--active .m-menu__link-icon {
+			color: #303946!important;
+		}
+
+		.m-menu__item.m-menu__item--active>.m-menu__link .m-menu__link-text {
+			color: #303946!important;
+		}
+
+		.mat-progress-spinner circle,
+		.mat-spinner circle {
+			stroke: #303946!important;
+		}
+
+		.m-login.m-login--6 .m-login__wrapper .m-login__body .m-login__signin {
+			max-width: 100%;
+			margin-bottom: 1em;
+			background: #fff;
+			box-sizing: border-box;
+			border: none;
+			padding: 1em;
+			box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 0px 2px rgba(0, 0, 0, 0.14);
+			width: 450px;
+		}
+
+		.mat-button.mat-primary,
+		.mat-icon-button.mat-primary,
+		.mat-stroked-button.mat-primary {
+			color: #2d5e90 !important;
+		}
+
+		.m-badge.m-badge--yellow {
+			background-color: yellow;
+			color: #111;
+		}
+
+		.m-badge.m-badge--green {
+			background-color: #25A92D;
+			color: #fff;
+		}
+
+		.mat-button.mat-primary {
+			color: #2d5e90 !important;
+		}
+
+		.mat-icon-button.mat-primary {
+			color: #303946!important;
+		}
+
+		.mat-stroked-button.mat-primary {
+			color: #303946!important;
+		}
+
+		.root {
+			--primary: #303946;
+		}
+
+		.m-portlet .m-portlet__body {
+			padding: 0px !important;
+		}
+		
+		.m-portlet .m-portlet__body .filtro {
+			padding: 15px 20px !important;
+		}
+
+		.mat-tab-body-content {
+			overflow: visible !important;
+			padding-top: 5px !important;
+		}
+
+		.m-widget1 {
+			box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08) !important;
+			background-color: #fff !important;
+			margin-bottom: 2.2rem !important;
+			box-sizing: border-box !important;
+		}
+
+		.m-login__signin .ng-star-inserted {
+			padding: 0;
+		}
+
+		.mat-dialog-actions {
+			margin-bottom: 0px !important;
+			padding: 12px!important;
+		}
+
+		.mat-dialog-title{
+			padding: 12px!important;
+			background-color: #303946!important;
+			color: white!important;
+			margin: 0 0 0px!important;
+		}
+	</style>
+
+</head>
+
+<body m-root></body>
+
+</html>

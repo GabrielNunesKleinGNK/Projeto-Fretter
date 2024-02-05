@@ -1,0 +1,136 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTools style="background-color: white !important;">
+		<button mat-raised-button matTooltip="Nova Config " color="primary" type="button" (click)="novo()"
+			*ngIf="!isView">
+			<span translate="">Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<!-- <ng-container matColumnDef="integracaoTipoId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Integ. Tipo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.integracaoTipoId  }}</mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="url">
+					<mat-header-cell *matHeaderCellDef>URL</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" style="margin-left: 0px !important;" class="ml-2">
+							<mat-icon style="color: #38bb64 !important;" matTooltip="Visualizar URL"
+								*ngIf="model.url !== null && model.url !== '' && model.url !== undefined"
+								(click)="visualizarDado(model.url)">remove_red_eye</mat-icon>
+							<mat-icon style="color: #b42319 !important;"
+								*ngIf="model.url == null || model.url == '' || model.url == undefined"
+								matTooltip="Não contém URL">not_interested</mat-icon>
+						</button>
+						<button *ngIf="model.url !== null && model.url !== '' && model.url !== undefined"
+							mat-icon-button color="primary" matTooltip="Copiar URL" style="margin-left: 0px !important;"
+							(click)="copiarTexto(model.url)" class="ml-2">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="verbo">
+					<mat-header-cell *matHeaderCellDef>Verbo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.verbo}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="lote">
+					<mat-header-cell *matHeaderCellDef>Lote</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.lote == true ? "Sim" : "Não"}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="layoutHeader">
+					<mat-header-cell *matHeaderCellDef>Layout Header</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary">
+							<mat-icon style="color: #38bb64 !important;" matTooltip="Visualizar Layout Header"
+								*ngIf="model.layoutHeader !== null && model.layoutHeader !== '' && model.layoutHeader !== undefined"
+								(click)="visualiarDado(model.layoutHeader)">remove_red_eye</mat-icon>
+							<mat-icon style="color: #b42319 !important;"
+								*ngIf="model.layoutHeader == null || model.layoutHeader == '' || model.layoutHeader == undefined"
+								matTooltip="Não contém Layout Header">not_interested</mat-icon>
+						</button>
+						<button *ngIf="model.layoutHeader !== null && model.layoutHeader !== '' && model.layoutHeader !== undefined"
+							mat-icon-button color="primary" matTooltip="Copiar Layout Header"
+							(click)="copiarTexto(model.layoutHeader)">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="layout">
+					<mat-header-cell *matHeaderCellDef>Layout</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" style="margin-left: 0px !important;" class="ml-2">
+							<mat-icon style="color: #38bb64 !important;" matTooltip="Visualizar Layout"
+								*ngIf="model.layout !== null && model.layout !== '' && model.layout !== undefined"
+								(click)="visualizarDado(model.layout)">remove_red_eye</mat-icon>
+							<mat-icon style="color: #b42319 !important;"
+								*ngIf="model.layout === null || model.layout == '' || model.layout == undefined"
+								matTooltip="Não contém Layout">not_interested</mat-icon>
+						</button>
+						<button *ngIf="model.layout !== null && model.layout !== '' && model.layout !== undefined"
+							mat-icon-button color="primary" matTooltip="Copiar Layout"
+							style="margin-left: 0px !important;" (click)="copiarTexto(model.layout)" class="ml-2">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<!-- <ng-container matColumnDef="registros">
+					<mat-header-cell *matHeaderCellDef>Qtde. Registros</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.registros}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="paralelo">
+					<mat-header-cell *matHeaderCellDef>Paralelo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.paralelo}}</mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="producao">
+					<mat-header-cell *matHeaderCellDef>Produção</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.producao == true ? "Sim" : "Não"}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="envioBody">
+					<mat-header-cell *matHeaderCellDef>Envio Body</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.envioBody == true ? "Sim" : "Não"}}</mat-cell>
+				</ng-container>
+				<!-- <ng-container matColumnDef="enviaOcorrenciaHistorico">
+					<mat-header-cell *matHeaderCellDef>Ocorren. Histórico</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.enviaOcorrenciaHistorico == true ? "Sim" : "Não"}}
+					</mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="envioConfigId">
+					<mat-header-cell *matHeaderCellDef>Envio Config</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.envioConfigId}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="integracaoGatilho">
+					<mat-header-cell *matHeaderCellDef>Gatilho</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{(model.integracaoGatilho == true || model.integracaoGatilho ==
+						null) ? "Sim" : "Não"}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button class="ml-2" style="color: #3777b6 !important;" matTooltip="Editar Config"
+							(click)="edit(model)" *ngIf="!isView">
+							<mat-icon>create</mat-icon>
+						</button>
+						<button mat-icon-button class="ml-2" color="warn" matTooltip="Deletar Config" (click)="delete(model)"
+							*ngIf="!isView">
+							<mat-icon>delete</mat-icon>
+						</button>
+						<button mat-icon-button class="ml-2" style="color: #2faf2b !important;" matTooltip="Teste da nova Config"
+							(click)="testarIntegracao(model)" *ngIf="!isView">
+							<mat-icon>send</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

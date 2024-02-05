@@ -1,0 +1,57 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="EMPRESA.LIST.TITULO">PARA GERAR UMA FATURA MANUAL SELECIONE O MÉTODO DE GERAÇÃO:</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Buscar Conciliação por Periodo" color="primary" type="button"
+			(click)="validaTipoProcesso(1)">
+			<mat-icon>search</mat-icon><span translate="">Busca Entregas</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Upload DOCCOB" class="info" type="button" (click)="validaTipoProcesso(2)">
+			<mat-icon>file_upload</mat-icon><span translate="">Upload DOCCOB</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="filtro" *ngIf="tipoProcesso == 1">
+			<div class="row">
+				<div class="col-xl-2">
+					<label>De</label>
+					<input type="date" class="form-control" #myDate [value]="filtro.dataInicio | date:'yyyy-MM-dd'"
+						(input)="filtro.dataInicio=parseDate($event.target.value)" />
+				</div>
+
+				<div class="col-xl-2">
+					<label>Até</label>
+					<input type="date" class="form-control" #myDate [value]="filtro.dataTermino | date:'yyyy-MM-dd'"
+						(input)="filtro.dataTermino=parseDate($event.target.value)" />
+				</div>
+				<div class="col-xl-3">
+					<label>Transportador</label>
+					<ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id"
+						placeholder="Todos" [(ngModel)]="filtro.transportadorId" appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-2">
+					<label>Status </label>
+					<ng-select [items]="filtro.statusConciliacao" bindLabel="nome" bindValue="id" placeholder=""
+						[(ngModel)]="filtro.statusConciliacaoId" appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 align-self-end mb-1">
+					<button mat-raised-button matTooltip="Buscar por Período" color="primary" type="button"
+						(click)="pesquisar()" [disabled]="viewLoading">
+						<mat-icon class="iconPulseLoad" [hidden]="!viewLoading">search</mat-icon>
+						<mat-icon [hidden]="viewLoading">search</mat-icon>&nbsp;
+						&nbsp;Pesquisar
+					</button>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>

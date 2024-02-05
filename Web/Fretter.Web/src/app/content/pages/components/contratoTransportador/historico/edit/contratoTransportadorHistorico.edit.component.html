@@ -1,0 +1,164 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Configuração">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px;">
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Código:</label>
+					<div class="col-8">
+						<input id="codigo" name="codigo" class="form-control" disabled formControlName="codigo">
+					</div>
+				</div>
+				
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Descricao:</label>
+					<div class="col-8">
+						<input id="descricao" name="descricao" disabled class="form-control" formControlName="descricao" required>
+						<div *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)" class="alert alert-danger">
+							<div *ngIf="descricao.errors.required">Descricao é obrigatório</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Transportador:</label>
+					<div class="col-8">
+						<input id="transportadorId" name="transportadorId" class="form-control" 
+							formControlName="transportadorId"
+							[(ngModel)]="model.transportador.nomeFantasia" required disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Cnpj:</label>
+					<div class="col-8">
+						<input id="transportadorCnpjId" name="transportadorCnpjId" class="form-control"
+							formControlName="transportadorCnpjId"
+							[(ngModel)]="model.transportadorCnpj.descricao" required disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Cobrança:</label>
+					<div class="col-8">
+						<input id="transportadorCnpjCobrancaId" name="transportadorCnpjCobrancaId" class="form-control" 
+							formControlName="transportadorCnpjCobrancaId"
+							[(ngModel)]="model.transportadorCnpjCobranca.descricao" required disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Ciclo Fatura:</label>
+					<div class="col-8">
+						<input id="faturaCicloId" name="faturaCicloId" class="form-control" 
+							formControlName="faturaCicloId"
+							[(ngModel)]="model.faturaCiclo.descricao" required disabled>
+					</div>
+				</div>
+				
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Vigência:</label>
+					<div class="col-3">
+						<input id="vigenciaInicial" name="vigenciaInicial" class="form-control" 
+							formControlName="vigenciaInicial" type="date" 
+							value="{{ model.vigenciaInicial | date:'yyyy-MM-dd' }}" required disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:center;">à</label>
+					<div class="col-3">
+						<input id="vigenciaFinal" name="vigenciaFinal" class="form-control" 
+							formControlName="vigenciaFinal" type="date" 
+							value="{{ model.vigenciaFinal | date:'yyyy-MM-dd' }}" required disabled>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">Micro Serviço:</label>
+					<div class="col-3">
+						<input id="microServicoId" name="microServicoId" class="form-control" 
+							formControlName="microServicoId"
+							[(ngModel)]="model.microServicoId" required disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Qtd. Tentativas:</label>
+					<div class="col-3">
+						<input id="quantidadeTentativas" name="quantidadeTentativas" class="form-control" 
+							formControlName="quantidadeTentativas"
+							type="number" min="0" step="1" required disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">
+						Taxa TA (%):
+						<mat-icon 
+							matTooltip="Taxa de Tentativa Adicional"
+							style="color: coral;">
+							info
+						</mat-icon>
+					</label>
+					<div class="col-3">
+						<input id="taxaTentativaAdicional" name="taxaTentativaAdicional" class="form-control" 
+							formControlName="taxaTentativaAdicional"
+							type="number" min="0" max="100" step="1" required disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">
+						Taxa RR (%):
+						<mat-icon 
+							matTooltip="Taxa de Retorno ao Remetente"
+							style="color: coral;">
+							info
+						</mat-icon>
+					</label>
+					<div class="col-3">
+						<input id="taxaRetornoRemetente" name="taxaRetornoRemetente" class="form-control"  
+							formControlName="taxaRetornoRemetente"
+							type="number" min="0" max="100" step="1" required disabled>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-3 col-form-label" style="text-align:right;">
+						Permite Tolerância ?:
+						<mat-icon 
+							matTooltip="Uma tolerância de valores poderá ser configurada para avaliação de divergência da conciliação"
+							style="color: coral;">
+							info
+						</mat-icon>
+					</label>
+					<div class="col-3 align-self-center">
+						<mat-slide-toggle class="mt-2" 
+							[(ngModel)]="model.permiteTolerancia" 
+							(change)="permiteToleranciaChange($event)"
+							formControlName="permiteTolerancia"
+							[disabled]="true">
+						</mat-slide-toggle>
+					</div>
+					<div style="display: contents" [hidden]="!model.permiteTolerancia">
+						<label class="col-2 col-form-label align-self-center" style="text-align:right;">Tipo de Tolerância:</label>
+						<div class="col-3 align-self-center">
+							<input id="toleranciaTipoId" name="toleranciaTipoId" class="form-control"  
+								formControlName="toleranciaTipoId"
+								type="number" min="0" max="100" step="1" required disabled>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row" [hidden]="!model.toleranciaTipoId">
+					<label class="col-3 col-form-label" style="text-align:right;">Tolerância Min. :</label>
+					<div class="col-3">
+						<input id="toleranciaInferior" name="toleranciaInferior" class="form-control" 
+							formControlName="toleranciaInferior" type="number" min="0" step="1" required
+							[(ngModel)]="model.toleranciaInferior" disabled>
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Tolerância Max. :</label>
+					<div class="col-3">
+						<input id="toleranciaSuperior" name="toleranciaSuperior" class="form-control" 
+							formControlName="toleranciaSuperior" type="number" min="0" step="1" required
+							[(ngModel)]="model.toleranciaSuperior" disabled>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+</mat-dialog-actions>

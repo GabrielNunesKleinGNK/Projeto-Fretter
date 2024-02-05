@@ -1,0 +1,34 @@
+table{
+    width: 100%;
+}
+
+.mat-column-Id {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-width: 5%;
+  }
+
+//   .mat-column-Descricao, .mat-column-Status {
+//     word-wrap: break-word !important;
+//     white-space: unset !important;
+//     flex: 0 0 20% !important;
+//     overflow-wrap: break-word;
+//     word-wrap: break-word;
+  
+//     word-break: break-word;
+  
+//     -ms-hyphens: auto;
+//     -moz-hyphens: auto;
+//     -webkit-hyphens: auto;
+//     hyphens: auto;
+//   }

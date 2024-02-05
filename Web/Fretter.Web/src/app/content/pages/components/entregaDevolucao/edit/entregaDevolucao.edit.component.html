@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Entrega Devolucao">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Entrega:</label>
+					<div class="col-6">
+						<label class="col-12 col-form-label">{{model.entregaId}} </label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label"
+						style="text-align:right;">Código Coleta:</label>
+					<div class="col-6">
+                        <label class="col-12 col-form-label"> {{model.codigoColeta }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label"
+						style="text-align:right;">Código Rastreio:</label>
+					<div class="col-6">
+						<label class="col-12 col-form-label">{{model.codigoRastreio}}</label>
+					</div>
+				</div>
+                <div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label"
+						style="text-align:right;">Validade:</label>
+					<div class="col-6">
+						<label class="col-12 col-form-label">{{model.validade | date: 'dd/MM/yyyy'}}</label>	
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label"
+						style="text-align:right;">Observação:</label>
+					<div class="col-6">
+						<label class="col-12 col-form-label">{{model.observacao }}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label"
+						style="text-align:right;">Inclusão:</label>
+					<div class="col-6">
+                        <label class="col-12 col-form-label">{{model.inclusao | date: 'dd/MM/yyyy'}}</label>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Status:</label>
+					<div class="col-6">
+						<label class="col-12 col-form-label"> {{model.status.nome}}</label>
+					</div>
+				</div>
+
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Ações:</label>
+					<div class="col-6">
+						<ng-select [items]="lstStatusAcao" bindLabel="nome" bindValue="id" placeholder="Selecione uma ação"
+						[(ngModel)]="acaoSelecionada" formControlName="acaoSelecionada" appendTo="body">
+					</ng-select>
+					</div>
+				</div>
+				<div class="form-group m-form__group row" *ngIf="validaMotivo()">
+					<label for="example-text-input" class="col-4 col-form-label" style="text-align:right;">Motivo:</label>
+					<div class="col-6"> 
+						<textarea maxlength="512" class="form-contro textarea" matInput placeholder="Motivo da ação (Obrigatório)" [(ngModel)]="motivo" formControlName="motivo"></textarea>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+		<mat-tab label="Histórico">
+			<m-entregaDevolucaoHistorico [entregaDevolucaoId]="model.id"></m-entregaDevolucaoHistorico>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading || !acaoSelecionada"
+		matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

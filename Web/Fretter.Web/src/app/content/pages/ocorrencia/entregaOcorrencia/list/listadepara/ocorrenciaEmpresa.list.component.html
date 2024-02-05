@@ -1,0 +1,89 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Orientações de preenchimento do arquivo</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools></ng-container>
+	<ng-container mPortletHeadTools>
+		<div class="m-portlet__head-title">
+			<button class="closeButton" type="button" [mat-dialog-close]="" matTooltip="Close">
+				<span style="float:left;">X</span>
+			</button>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-tab-group>
+			<mat-tab label="Preenchimento do arquivo">
+				<form class="m-form" style="width: 900px">
+					<div class="m-portlet__body">
+						<h4 class="col-11"  style="text-align:center; padding: 2% 0;">Orientações de preenchimento do arquivo</h4>
+					</div>
+					<div class="m-portlet__body">
+						<div class="form-group m-form__group">
+							<label class="col-11 col-form-label">
+								Os campos deverão ser preenchidos da seguinte forma:
+							</label>
+							<label class="col-11 col-form-label">
+								1. Campos das colunas <strong>A</strong> a <strong>G</strong> são obtidas no download do arquivo e <strong>"NÃO DEVEM SER ALTERADOS"</strong>
+							</label>
+							<label class="col-11 col-form-label">
+								2. Campos da coluna <strong>H</strong> devem ser preenchidos com o código da ocorrência que pode ser obtido na próxima guia dessa tela <strong>"DE X PARA"</strong>
+							</label>
+							<label class="col-11 col-form-label">
+								3. Campos da coluna <strong>I</strong> devem ser preenchidos com a data da ocorrência que deve ser preenchido <strong>'dd/mm/yyyy hh:mm'</strong>
+							</label>
+							<label class="col-11 col-form-label">
+								4. Campos da coluna <strong>J</strong> devem ser preenchidos caso tenha alguma observação sobre a ocorrência (não obrigatório)
+							</label>
+						</div>
+						<div class="form-group m-form__group">
+							<strong class="col-11 col-form-label">
+								Obs: A única coluna opcional é a J.
+							</strong>
+						</div>
+					</div>
+				</form>
+			</mat-tab>
+			<mat-tab label="De X Para">
+				<mat-form-field>
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtros">
+				</mat-form-field>
+				<div class="mat-table__wrapper">
+					<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+						matSortDirection="desc" label="De X Para">
+						<ng-container matColumnDef="id" class="col-lg-2 col-md-2 col-sm-2">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+							<mat-cell *matCellDef="let model">{{model.codigo}}</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="descricao">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao </mat-header-cell>
+							<mat-cell *matCellDef="let model">{{model.descricao }}</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="sigla">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Sigla </mat-header-cell>
+							<mat-cell *matCellDef="let model">{{model.sigla }}</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="finalizadora" class="col-md-2 col-lg-2 col-sm-2">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Finalizadora? </mat-header-cell>
+							<mat-cell *matCellDef="let model">{{model.finalizadora ? "Sim" : "Não"}}</mat-cell>
+						</ng-container>
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+					</mat-table>
+					<mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+				</div>
+			</mat-tab>
+		</mat-tab-group>
+	</ng-container>
+</m-portlet>

@@ -1,0 +1,115 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Itens</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools style="background-color: white !important;">
+		<button mat-raised-button matTooltip="Será apresentado uma lista contendo a quantidade de itens selecionada no passo anterior" color="primary" type="button" (click)="load()">
+			<span translate="">Preencher</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody [formGroup]="dadosProdutoForm" style="scroll-behavior: smooth;">
+		<div class="mat-table__wrapper" style="overflow-x: hidden;">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id"
+				matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.id" id="id" name="id" class="form-control" 
+						formControlName="id" *ngIf="controleEdicaoProdutos(model)" disabled>
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.id}}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="sku">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sku</mat-header-cell>
+					<mat-cell *matCellDef="let model" style="min-width: 9%;">
+						<input [(ngModel)]="model.sku" id="sku" name="sku" class="form-control" 
+						formControlName="sku">
+						<button mat-icon-button class="" style="color: #2faf2b !important;" matTooltip="Buscar sku"
+							(click)="buscarSku(model)" *ngIf="!controleEdicaoProdutos(model)" >
+							<mat-icon>search</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="nome">
+					<mat-header-cell *matHeaderCellDef>Produto</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.nome" id="nome" name="nome" class="form-control" 
+						formControlName="nome" *ngIf="controleEdicaoProdutos(model)">
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.nome}}</label>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="altura">
+					<mat-header-cell *matHeaderCellDef>Altura</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.altura" type="number" id="altura" name="altura" class="form-control" min="1" step=".01"
+						formControlName="altura" *ngIf="controleEdicaoProdutos(model)">
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.altura | number: '1.0-2'}}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="largura">
+					<mat-header-cell *matHeaderCellDef>Largura</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.largura" type="number" id="largura" name="largura" class="form-control" min="1" step=".01"
+						formControlName="largura" *ngIf="controleEdicaoProdutos(model)">
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.largura | number: '1.0-2'}}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="comprimento">
+					<mat-header-cell *matHeaderCellDef>Comprimento</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.comprimento" type="number" id="comprimento" name="comprimento" class="form-control" min="1" step=".01"
+						formControlName="comprimento" *ngIf="controleEdicaoProdutos(model)">
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.comprimento | number: '1.0-2'}}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="peso">
+					<mat-header-cell *matHeaderCellDef>Peso</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.peso" type="number" id="peso" name="peso" class="form-control" min="1" step=".01"
+						formControlName="peso" *ngIf="controleEdicaoProdutos(model)">
+						<label *ngIf="!controleEdicaoProdutos(model)">{{model.peso | number: '1.0-2'}}</label>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="valorProduto">
+					<mat-header-cell *matHeaderCellDef>Valor Item</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.valorProduto" type="number" id="valorProduto" name="valorProduto" class="form-control" min="1" step=".01"
+						formControlName="valorProduto" *ngIf="controleEdicaoProdutos(model)" (change)="atualizaValorTotalItem()">
+						<label *ngIf="!controleEdicaoProdutos(model)">R$ {{model.valorProduto | number: '1.0-2' }}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="valorTotal">
+					<mat-header-cell *matHeaderCellDef>Valor Total</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<input [(ngModel)]="model.valorTotal" type="number" id="valorTotal" name="valorTotal" class="form-control" min="1" step=".01"
+						formControlName="valorTotal" *ngIf="controleEdicaoProdutos(model)" disabled>
+						<label *ngIf="!controleEdicaoProdutos(model)">R$ {{model.valorTotal | number: '1.0-2'}}</label>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button class="" style="color: #3777b6 !important;" matTooltip="Editar produto"
+							(click)="editarItem(model)" *ngIf="!controleEdicaoProdutos(model)">
+							<mat-icon>create</mat-icon>
+						</button>
+						<button mat-icon-button class="" style="color: #2faf2b !important;" matTooltip="Salvar alterações"
+							(click)="atualizarItem(model)" *ngIf="controleEdicaoProdutos(model)" >
+							<mat-icon>done</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<!-- <mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator> -->
+		</div>
+	</ng-container>
+</m-portlet>

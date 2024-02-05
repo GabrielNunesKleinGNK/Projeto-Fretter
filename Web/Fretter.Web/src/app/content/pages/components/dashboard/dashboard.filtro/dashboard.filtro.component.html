@@ -1,0 +1,71 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="EMPRESA.LIST.TITULO">Dashboard | Filtros</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Filtrar dados" color="primary" type="button" (click)="pesquisar()">
+			<mat-icon>sync</mat-icon>&nbsp;Atualizar
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="filtro">
+			<div class="row">
+				<div class="col-xl-4">
+					<label>Periodo</label>
+					<ng-select [items]="filtro.periodos"
+						bindLabel="nome"
+						bindValue="id"
+						placeholder=""
+						[(ngModel)]="filtro.periodoId"
+						(change)="filtroPeriodoChange($event)"
+						appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-4" *ngIf="filtro.periodoId == 11">
+					<div class="row">
+						<div class="col-6">
+							<label>Data Inicial</label>
+							<input id="dataInicio" name="dataInicio" type="date"
+								[(ngModel)]="filtro.DataInicio" 
+								(change)="filtroDataChange($event)"
+								class="form-control">
+						</div>
+						<div class="col-6">
+							<label>Data Final</label>
+							<input id="dataTermino" name="dataTermino" type="date" [(ngModel)]="filtro.DataTermino"
+								(change)="filtroDataChange($event)"
+								class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4">
+					<label>Transportador</label>
+					<ng-select [items]="transportadores"
+						bindLabel="transportadorNome"
+						bindValue="id"
+						placeholder="Todos"
+						[(ngModel)]="filtro.transportadorId"
+						(change)="filtroTransportadorChange($event)"
+						appendTo="body">
+					</ng-select>
+				</div>
+				<div class="col-xl-4">
+					<label>Canal</label>
+					<ng-select [items]="canais"
+						bindLabel="canalNome"
+						bindValue="id"
+						placeholder="Todos"
+						[(ngModel)]="filtro.canalId"
+						(change)="filtroCanalChange($event)"
+						appendTo="body">
+					</ng-select>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>
+

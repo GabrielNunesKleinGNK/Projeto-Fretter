@@ -1,0 +1,109 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >{{getTitle()}}</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Configuração">
+			<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Código:</label>
+					<div class="col-2">
+						<input id="codigo" name="codigo" class="form-control" disabled formControlName="codigo">
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Tipo:</label>
+					<div class="col-4">
+						<ng-select [items]="tipos" bindLabel="descricao" bindValue="id" placeholder="Selecione um tipo"
+							[(ngModel)]="model.configuracaoCteTipoId" formControlName="configuracaoCteTipoId" appendTo="body"
+							[searchable]="false" [clearable]="false" [multiple]="false" 
+							[ngClass]="{'ng-select-invalid': !model.configuracaoCteTipoId && (configuracaoCteTipoId.dirty || configuracaoCteTipoId.touched) }"
+							[hidden]="model.id > 0">
+						</ng-select>
+						<input [value]="obterNomeTipo()" class="form-control" type="text" disabled [hidden]="!(model.id > 0)">
+						<div *ngIf="configuracaoCteTipoId.invalid && (configuracaoCteTipoId.dirty || configuracaoCteTipoId.touched)" class="alert alert-danger">
+							<div *ngIf="configuracaoCteTipoId.errors.required">Obrigatório selecionar um Tipo</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Transportador:</label>
+					<div class="col-9">
+						<ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id" 
+							placeholder="Selecione um Transportador"
+							(change)="transportadoresChange($event)" [clearable]="false" [multiple]="false"
+							[(ngModel)]="model.transportadorId" formControlName="transportadorId" appendTo="body" 
+							[ngClass]="{'ng-select-invalid': !model.transportadorId && (transportadorId.dirty || transportadorId.touched) }">
+						</ng-select>
+						<div *ngIf="transportadorId.invalid && (transportadorId.dirty || transportadorId.touched)" class="alert alert-danger">
+							<div *ngIf="transportadorId.errors.required">Obrigatório selecionar um Transportador</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Cnpj:</label>
+					<div class="col-9">
+						<ng-select [items]="transportadoresCnpj" bindLabel="descricao" bindValue="id" 
+							placeholder="Selecione o CNPJ do Transportador" [clearable]="false" [multiple]="false"
+							[(ngModel)]="model.transportadorCnpjId" formControlName="transportadorCnpjId" appendTo="body" 
+							[ngClass]="{'ng-select-invalid':!model.transportadorCnpjId && (transportadorCnpjId.dirty || transportadorCnpjId.touched)}">
+						</ng-select>
+						<div *ngIf="transportadorCnpjId.invalid && (transportadorCnpjId.dirty || transportadorCnpjId.touched)" class="alert alert-danger">
+							<div *ngIf="transportadorCnpjId.errors.required">Obrigatório selecionar CNPJ</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">
+						Alias:
+						<mat-icon 
+							matTooltip="Será considerado o maior valor que for encontrado na CTe entre os Alias"
+							style="color: coral;">
+							info
+						</mat-icon>
+					</label>
+					<div class="col-9">
+						<div class="d-flex w-100 chip-input">
+							<mat-chip-list #chipList class="align-self-center pl-1 w-100">
+								<mat-chip *ngFor="let label of labels" (removed)="remove(label)">
+									{{ label.name }}
+									<button matChipRemove>
+										<mat-icon>cancel</mat-icon>
+									</button>
+								</mat-chip>
+								<input class="form-control"
+									placeholder="Novo Alias..."
+									[matChipInputFor]="chipList"
+									[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+									[matChipInputAddOnBlur]="addOnBlur"
+									(matChipInputTokenEnd)="add($event)">
+								<input id="alias" name="alias" class="form-control" formControlName="alias" required hidden>
+							</mat-chip-list>
+						</div>
+						<div *ngIf="alias.invalid && (alias.dirty || alias.touched)" class="alert alert-danger">
+							<div *ngIf="alias.errors.required">É obrigatório cadastrar no minimo 1 Alias</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" [class.spinner]="viewLoading"
+		matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

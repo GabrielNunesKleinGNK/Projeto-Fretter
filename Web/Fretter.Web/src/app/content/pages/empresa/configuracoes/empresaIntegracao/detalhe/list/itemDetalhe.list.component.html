@@ -1,0 +1,174 @@
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Filtrar Arquivos</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<!-- Filtro -->
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+							<label>Transportador</label>
+							<ng-select [items]="lstTransportadores"
+							bindLabel="transportadorNome"
+							bindValue="id"
+							placeholder="Selecione um Transportador"
+							[(ngModel)]="filtro.transportadorId"
+							appendTo="body">
+						    </ng-select>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+							<label>Filial</label>
+							<ng-select [items]="lstCanais"
+							bindLabel="canalNome"
+							bindValue="id"
+							placeholder="Selecione uma Filial"
+							[(ngModel)]="filtro.canalId"
+							appendTo="body">
+						    </ng-select>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+							<label>Descrição Ocorrência</label>
+							<input id="descricao" [(ngModel)]="filtro.descricao" class="form-control">
+						</div>
+						<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
+							<label>Sigla</label>
+							<input id="sigla" [(ngModel)]="filtro.sigla" class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>Ocorrência Id (Fusion)</label>
+							<input id="ocorrenciaId" [(ngModel)]="filtro.ocorrenciaId" class="form-control">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>Data Ocorrência</label>
+							<input id="dataOcorrencia" [(ngModel)]="filtro.dataOcorrencia" type="date" class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>Data Envio</label>
+							<input id="dataEnvioInicio" [(ngModel)]="filtro.dataEnvioInicio" type="date"  class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>&nbsp;</label>
+							<input id="dataEnvioFim" [(ngModel)]="filtro.dataEnvioFim" type="date" class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+							<label>Sucesso?</label>
+							<ng-select [items]="lstStatus"
+								bindLabel="nome"
+								bindValue="value"
+								placeholder="Status"
+								[(ngModel)]="filtro.sucesso"
+								appendTo="body">
+						    </ng-select>
+						</div>
+						<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Limpar Filtros" color="warn" type="button"
+								(click)="limpar()">
+								<mat-icon class="mt-2">clear</mat-icon>
+								<span class="ml-1">Limpar</span>
+							</button>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>						
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+<!-- List -->
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="">Reprocessamento de ocorrências</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button [disabled]="desativarEnvioMassivo || viewLoading" mat-raised-button matTooltip="Reprocessamento massivo" 
+				color="primary" type="button" (click)="reprocessarMassivo()" [class.spinner]="viewLoading">
+			<span translate="">Reprocessar</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar Arquivos">
+		</mat-form-field>
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative; z-index: 0;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<mat-table class="lmat-elevation-z8" 
+				[hidden]="viewLoading === true"
+				[dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+                <ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód.</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="entregaId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Entrega</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.entregaId}}</mat-cell>
+				</ng-container>
+                <ng-container matColumnDef="ocorrenciaId">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Ocorrencia (Fusion)</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.ocorrenciaId}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.descricao}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="sigla">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sigla</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.sigla}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataEnvio">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Envio</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataEnvio | date: 'dd/MM/yyyy'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="sucesso">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sucesso</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.sucesso == true ? "Sim" : "Não"}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="statusCode">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód. Retorno</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.statusCode}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="reprocessamento">
+					<mat-header-cell *matHeaderCellDef>Selecionar</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<div mat-icon-button color="green" matTooltip="Reenviar essa ocorrência" (click)="insereRegistrosReprocessamentoMassivo(model.entregaOcorrenciaId, $event.target.checked)">
+							<mat-icon><input type="checkbox"/></mat-icon>
+						</div>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="green" matTooltip="Reenviar essa ocorrência" (click)="reprocessar(model.id)">
+							<mat-icon>refresh</mat-icon>
+						</button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" [length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

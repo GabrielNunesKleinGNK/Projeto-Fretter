@@ -1,0 +1,13 @@
+.iconPulseLoad {
+    animation: mymove 1s infinite;
+    color:white;
+  }
+  
+  @keyframes mymove {
+    from {opacity:1;}
+    to {opacity:0}
+  }
+
+  .mat-icon{
+    margin-top: 5px;   
+   }

@@ -1,0 +1,284 @@
+/* You can add global styles to this file, and also import other style files */
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+
+
+.mat-table__wrapper {
+	width: 100%;
+	overflow-x: auto;
+
+
+	mat-cell,
+	mat-header-cell {
+		min-height: 100%;
+	}
+
+
+}
+
+.mat-cell:first-of-type,
+mat-footer-cell:first-of-type,
+mat-header-cell:first-of-type {
+	margin-left: 10px !important;
+	justify-content: center !important;
+	padding: 0 !important;
+}
+
+.mat-table__wrapper .mat-table {
+	min-width: 1000px;
+	width: 100%;
+}
+
+.mat-table__wrapper .mat-table {
+	min-width: 1000px;
+	width: 100%;
+}
+
+.mat-table__wrapper--dashboard .mat-table {
+	min-width: 600px !important;
+}
+
+.mat-table__wrapper--600 .mat-table {
+	min-width: 600px !important;
+}
+
+.mat-table__wrapper--800 .mat-table {
+	min-width: 800px !important;
+}
+
+.mat-table__wrapper .mat-table .email-cell {
+	word-wrap: normal;
+	width: 180px;
+	flex: auto;
+}
+
+.mat-dialog-actions__wrapper .mat-dialog-actions {
+	margin-bottom: 0px !important;
+}
+
+.m-mat-dialog-container__wrapper .mat-dialog-container {
+	padding: 0;
+	overflow: hidden !important;
+
+	.m-portlet {
+		margin-bottom: 0;
+	}
+
+	.alert {
+		border-radius: 0 !important;
+		width: 1032px;
+	}
+}
+
+.alert {
+	padding: 1px 5px !important;
+	margin-bottom: 0px !important;
+}
+
+.mat-table__wrapper--sub .mat-table {
+	min-width: 400px;
+
+	.mat-cell:last-child {
+		flex: 0 0 100px;
+	}
+
+	.mat-header-cell:last-child {
+		flex: 0 0 100px;
+	}
+}
+
+.ml-auto {
+	margin-left: auto;
+}
+
+.example-full-width {
+	width: 100%;
+}
+
+.mat-radio-button {
+	padding-right: 16px;
+}
+
+.col-xl-3 {
+	box-sizing: border-box;
+}
+
+.m-form--alert {
+	margin-top: 30px;
+}
+
+.mat-column-checkbox {
+	flex: 0 0 68px;
+}
+
+.mat-column-id {
+	flex: 0 0 68px;
+}
+
+.mat-column-main {
+	flex: 0 0 568px;
+}
+
+.mat-column-actions {
+	flex: 0 0 5%;
+}
+
+.mat-table__bottom {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.mat-column-vinCode {
+	flex: 0 0 170px;
+}
+
+.m-portlet-mx-0 {
+	margin: -1.1rem -2.2rem 0;
+	overflow-x: hidden;
+}
+
+.mat-table__wrapper .mat-table .mat-row-editing.mat-row-inactive {
+	height: 0;
+	min-height: 0;
+	padding: 0 !important;
+	border-bottom: 0 !important;
+}
+
+
+.ng-select-invalid:not(form) {
+	border: 1px solid #f4516c;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+	border-left: 5px solid #42A948;
+	/* green */
+}
+
+.mat-tooltip {
+	font-size: 14px !important;
+}
+
+
+.mat-header-row {
+	border: 0;
+	border-bottom: 1px solid #828282;
+	background: #f0f0f0;
+	color: black;
+	font-weight: bold;
+	cursor: move !important;
+	min-height: 35px !important;
+	grid-column-gap: 1%;
+	display: flex !important;
+	flex-wrap: wrap !important;
+	justify-content: space-between !important;
+}
+
+.mat-row {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	justify-content: space-between !important;
+}
+
+.mat-header-cell {
+	color: black;
+	font-weight: bold;
+	cursor: move !important;
+	display: flex !important;
+	flex-wrap: wrap !important;
+	justify-content: space-between !important;
+}
+
+.mat-row:nth-child(even) {
+	background-color: #fff;
+	grid-column-gap: 1%;
+}
+
+.mat-row:nth-child(odd) {
+	background-color: #f2f2f2;
+	grid-column-gap: 1%;
+}
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+	border-bottom-style: none !important;
+}
+
+.btn-danger {
+	color: #fff !important;
+	background-color: #f4516c !important;
+	border-color: #f4516c !important;
+}
+
+.btn-success {
+	color: #fff !important;
+	background-color: #34bfa3 !important;
+	border-color: #34bfa3 !important;
+}
+
+.full-width-dialog .mat-dialog-container {
+	max-width: 100vw !important;
+}
+
+.m-widget1 {
+	min-height: 90% !important;
+}
+
+.cards_Resumo_div {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	justify-content: space-between !important;
+}
+
+
+.cards_Resumo {
+	min-height: 90% !important;
+}
+
+.cards_Resumo+.cards_Resumo {
+	min-height: 100% !important;
+	margin-left: 1%;
+}
+
+.closeButton {
+	border-radius: 100% !important;
+	border: none !important;
+	font-size: 14px !important;
+	text-align: center !important;
+	background-color: transparent;
+	color: white !important;
+	font-weight: bold !important;
+	float: right !important;
+	cursor: pointer !important;
+}
+
+.closeButton:hover {
+	background-color: #52647c;	
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.spinner:before {
+	content: '';
+	box-sizing: border-box;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20px;
+	height: 20px;
+	margin-top: -10px;
+	margin-left: -10px;
+	border-radius: 50%;
+	border: 2px solid #ffffff;
+	border-top-color: #000000;
+	animation: spinner .8s linear infinite;
+}

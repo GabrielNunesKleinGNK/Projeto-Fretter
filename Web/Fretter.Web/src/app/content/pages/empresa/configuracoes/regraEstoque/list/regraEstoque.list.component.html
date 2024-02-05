@@ -1,0 +1,104 @@
+
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Regra Estoque | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>	
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-3">
+							<label>Canal Origem</label>
+							<ng-select [items]="listCanais"
+								bindLabel="canalNome"
+								bindValue="id"
+								placeholder="Todos"
+								[(ngModel)]="filtro.canalIdOrigem"
+								appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3">
+							<label>Canal Destino</label>
+							<ng-select [items]="listCanais"
+								bindLabel="canalNome"
+								bindValue="id"
+								placeholder="Todos"
+								[(ngModel)]="filtro.canalIdDestino"
+								appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-5 mt-2 align-self-end">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button" (click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+	
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>		
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="USUARIO.LIST.TITULO">Regras de Estoque</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Criar nova regra de estoque" color="success" type="button" (click)="novo()">
+			<span translate="USUARIO.LIST.BTNEW">Cadastrar Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<div *ngIf="dataSource && dataSource.data.length === 0">Não foi encontrado registros para sua pesquisa</div>
+			<mat-table *ngIf="dataSource && dataSource.data.length > 0" class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="canalOrigem">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Canal Origem</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.canalOrigem.nomeFantasia}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="canalDestino">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Canal Destino</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.canalDestino.nomeFantasia}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="grupo">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Grupo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.grupo?.descricao || '--' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="skus">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Skus</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.skus}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastro">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastro  | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+				
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model" style="flex-basis: auto;">
+						<button mat-icon-button color="primary" matTooltip="Editar Usuario" (click)="edit(model)"><mat-icon>create</mat-icon></button>&nbsp;
+						<button mat-icon-button color="warn" matTooltip="Deletar Usuario" (click)="delete(model)"><mat-icon>delete</mat-icon></button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

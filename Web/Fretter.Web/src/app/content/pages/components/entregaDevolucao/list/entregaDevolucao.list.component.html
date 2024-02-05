@@ -1,0 +1,164 @@
+<!-- Filtro -->
+<div class="row">
+	<div class="col-xl-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Entega Devolução | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletHeadTools>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+
+					<div class="row">
+						<div class="col-xl-3">
+							<label>Periodo</label>
+							<ng-select [items]="filtro.periodos" bindLabel="nome" bindValue="id" placeholder=""
+								ng-options="g.descricao for g in filtro.periodos track by g.id"
+								[(ngModel)]="filtro.periodoId" (change)="filtroPeriodoChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-3">
+							<label>Status</label>
+							<ng-select [items]="lstStatus" bindLabel="nome" bindValue="id" placeholder="Todos"
+								[(ngModel)]="filtro.entregaDevolucaoStatusId" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+							<label>Entrega</label>
+							<input id="entrega" [(ngModel)]="filtro.gerencialId" class="form-control">
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+							<label>Danfe</label>
+							<input id="danfe" [(ngModel)]="filtro.danfe" class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+							<label>&nbsp;</label>
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="pesquisar()" class="form-control">
+								<mat-icon>search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="ENTREGADEVOLUCAO.LIST.TITULO">Gerenciamento de Entrega Devolução</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Download Entrega Devolucao" color="primary" type="button"
+			(click)="download()">
+			<mat-icon>file_download</mat-icon>
+			<span translate="ENTREGADEVOLUCAO.LIST.BTNEW">Download</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field *ngIf="dataSource && dataSource.data.length > 0">
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar Entregas">
+		</mat-form-field>
+		<div class="mat-table__wrapper">
+			<div *ngIf="dataSource && dataSource.data.length === 0">Não foi encontrado registros para sua pesquisa</div>
+			<mat-table *ngIf="dataSource && dataSource.data.length > 0" class="lmat-elevation-z8"
+				[dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="entrega">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Entrega</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span *ngIf="model.entrega.codigoPedido != null">{{model.entrega.codigoPedido }}</span>
+						<span *ngIf="model.entrega.codigoPedido == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoColeta">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo Coleta</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoColeta}}
+						<button *ngIf="model.codigoColeta" mat-icon-button color="primary" matTooltip="Copiar Codigo"
+							(click)="copiarCodigo(model)" class="ml-2">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoEntregaSaidaItem">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Código do Item</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoEntregaSaidaItem}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoRastreio">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Rastreio</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span style="text-decoration: underline" *ngIf="model.entregaReversa != null">
+							<a href="https://fusion.uxsolutions.com.br/Tracking/PorCdEntrega/{{model.entregaReversa?.empresa?.tokenConsultaId}}/{{model.entregaReversa?.empresa?.cnpj}}/{{model.entregaReversa?.codigoPedido}}/{{model.entregaReversa?.codigoRastreio}}"
+								target="_blank">
+								{{model.codigoRastreio }}
+							</a>
+						</span>
+						<span *ngIf="model.entregaReversa == null">{{model.codigoRastreio || "--"}}</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="ultimaOcorrencia">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Ult. Ocorrência</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span *ngIf="model.entregaReversa != null">{{model.entregaReversa?.ocorrencia }}</span>
+						<span *ngIf="model.entregaReversa == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataOcorrencia">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Dt. Ocorrência</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span *ngIf="model.entregaReversa != null">{{model.entregaReversa?.dataOcorrencia | date:
+							'dd/MM/yyyy HH:mm'}}</span>
+						<span *ngIf="model.entregaReversa == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="validade">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Validade</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<span *ngIf="model.validade != null">{{model.validade | date: 'dd/MM/yyyy'}}</span>
+						<span *ngIf="model.validade == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="inclusao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Inclusao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.inclusao | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="entregaDevolucaoStatus">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.status.nome }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Detlahes da Devolucao"
+							(click)="edit(model)">
+							<mat-icon>edit</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button color="primary" matTooltip="Historico de Status"
+							(click)="ocorrencias(model.ocorrencias, model.id)">
+							<mat-icon>list</mat-icon>
+						</button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator *ngIf="dataSource && dataSource.data.length > 0" [pageSizeOptions]="[20, 50, 100, 200]"
+				showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

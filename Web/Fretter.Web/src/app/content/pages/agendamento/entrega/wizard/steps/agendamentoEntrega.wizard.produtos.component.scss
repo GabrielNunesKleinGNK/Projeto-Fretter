@@ -1,0 +1,15 @@
+.mat-column-actions{
+    min-width: 6% !important;
+    max-width: 9% !important;
+}
+
+.mat-column-sku, .mat-column-nome {
+    min-width: 9% !important;
+    max-width: 15% !important;
+}
+
+.cdk-column-altura, .mat-column-largura, 
+.mat-column-comprimento, .mat-column-peso,
+.mat-column-valorUnitario, .mat-column-total {
+    max-width: 8% !important;
+}

@@ -1,0 +1,226 @@
+<div class="row">
+	<div class="col-12">
+		<m-portlet [options]="{headLarge: false}">
+			<ng-container mPortletHeadTitle>
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<span translate="y">Relatório Detalhado | Filtros</span>
+					</h3>
+				</div>
+			</ng-container>
+			<ng-container mPortletBody>
+				<div class="filtro">
+					<div class="row">
+						<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4">
+							<label>Periodo
+							</label>
+							<div class="d-flex">
+								<ng-select [items]="periodos" bindLabel="nome" bindValue="id" [(ngModel)]="periodoId"
+									(change)="periodoChanged($event)" appendTo="body">
+								</ng-select>
+								<mat-icon fontSet="fas" fontIcon="fa-question-circle"
+									[matTooltip]="getTextoPeriodoSelecionado()" matTooltipPosition="right"
+									class="align-self-center ml-2">
+								</mat-icon>
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-4" *ngIf="periodoId == 11">
+							<div class="row">
+								<div class="col-6">
+									<label>Data Inicial</label>
+									<input id="dataInicial" name="dataInicial" type="date"
+										[(ngModel)]="filtro.DataInicial" class="form-control">
+								</div>
+								<div class="col-6">
+									<label>Data Final</label>
+									<input id="dataFinal" name="dataFinal" type="date" [(ngModel)]="filtro.DataFinal"
+										class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-4">
+							<label>Cód. Entrega</label>
+							<input id="codigoEntrega" name="codigoEntrega" type="text"
+								[(ngModel)]="filtro.CodigoEntrega" class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4">
+							<label>Cód. Pedido</label>
+							<input id="codigoPedido" name="codigoPedido" type="text" [(ngModel)]="filtro.CodigoPedido"
+								class="form-control">
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4">
+							<label>Status</label>
+							<ng-select [items]="conciliacaoStatus" bindLabel="nome" bindValue="id" placeholder="Todos"
+								[(ngModel)]="filtro.StatusId" (change)="filtroStatusChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+					</div>
+					<div class="row mt-3">
+					</div>
+					<div class="row mt-3">
+						<div class="col-xl-2 col-lg-2 col-md-2 col-sm-4">
+							<label>Faturas</label>
+							<div class="d-flex">
+								<ng-select [items]="faturas" [(ngModel)]="filtro.FaturaId" bindValue="id"
+									bindLabel="faturaFormatada" placeholder="Todos" appendTo="body">
+								</ng-select>
+								<mat-icon fontSet="fas" fontIcon="fa-question-circle"
+									matTooltip="So considera Faturas automaticas" matTooltipPosition="right"
+									class="align-self-center ml-2">
+								</mat-icon>
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+							<label>Transportador</label>
+							<ng-select [items]="transportadores" bindLabel="transportadorNome" bindValue="id"
+								placeholder="Todos" [(ngModel)]="filtro.TransportadorId"
+								(change)="filtroTransportadorChange($event)" appendTo="body">
+							</ng-select>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-8">
+							<label>Codigo Danfe</label>
+							<input id="codigoDanfe" name="codigoDanfe" type="text" [(ngModel)]="filtro.CodigoDanfe"
+								class="form-control">
+						</div>
+						<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="warn" type="button"
+								(click)="limpar()">
+								<mat-icon class="mt-2">clear</mat-icon>
+								<span class="ml-1">Limpar</span>
+							</button>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 align-self-end mb-1">
+							<button mat-raised-button matTooltip="Pesquisar Filtros" color="primary" type="button"
+								(click)="pesquisar()">
+								<mat-icon class="mt-2">search</mat-icon>
+								<span class="ml-1">Pesquisar</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</m-portlet>
+	</div>
+</div>
+
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span>Relatório Detalhado</span>
+			</h3>
+		</div>
+	</ng-container>
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button id="btRecalcularFrete" matTooltip="Recalcular o Frete dos itens selecionados" 
+			color="primary" type="button" [disabled]="desabilitarBotaoRecalculo" (click)="enviarRecalculoFrete()">
+			<span [hidden]="viewLoadingRecalculoFrete">Recalcular Frete</span>
+			<span [hidden]="!viewLoadingRecalculoFrete">Processando...</span>
+		</button>
+		<button mat-raised-button matTooltip="Download" color="success" type="button" (click)="exportarExcel()">
+			<mat-icon fontSet="fas" fontIcon="fa-file-excel" [hidden]="viewLoadingExcel"></mat-icon>			
+			<span  [hidden]="viewLoadingExcel">Exportar para Excel</span>
+			<mat-icon class="iconPulseLoad" [hidden]="!viewLoadingExcel">autorenew</mat-icon>
+			<span  [hidden]="!viewLoadingExcel">Processando...</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+
+		<div class="mat-table__wrapper">
+			<div *ngIf="viewLoading" class="m-splash-screen d-flex p-3" style="position: relative;">
+				<span>Aguarde, buscando registros na base... </span>
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+			<div *ngIf="!viewLoading && dataSource.data.length === 0" class="p-2">Não foi encontrado
+				registros para sua pesquisa</div>
+			<mat-table [hidden]="viewLoading || dataSource.data.length == 0" class="lmat-elevation-z8"
+				[dataSource]="dataSource" matSort [matSortDisableClear]="true"
+				(matSortChange)="handleSortChange($event)">
+				<ng-container matColumnDef="codigoConciliacao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoConciliacao}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="transportador">
+					<mat-header-cell *matHeaderCellDef>Transportador</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.transportador}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="tipoCobranca">
+					<mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.tipoCobranca}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoEntrega">
+					<mat-header-cell *matHeaderCellDef>Cód. Entrega</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoEntrega}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoPedido">
+					<mat-header-cell *matHeaderCellDef>Cód. Pedido</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoPedido}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="divergenciaPeso">
+					<mat-header-cell *matHeaderCellDef>Diverg. Peso ?</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.possuiDivergenciaPeso ? 'Sim' : 'Não' }}
+						<div class="ml-2 circulo" [ngClass]="model.possuiDivergenciaPeso ? 'vermelho' : 'verde'"></div>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="divergenciaTarifa">
+					<mat-header-cell *matHeaderCellDef>Diverg. Tarifa ?</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{ model.possuiDivergenciaTarifa ? 'Sim' : 'Não' }}
+						<div class="ml-2 circulo" [ngClass]="model.possuiDivergenciaTarifa ? 'vermelho' : 'verde'">
+						</div>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="valorCustoFrete">
+					<mat-header-cell *matHeaderCellDef>Custo Frete</mat-header-cell>
+					<mat-cell *matCellDef="let model" class="text-align-rigth">
+						<span *ngIf="model.valorCustoFrete != null">{{model.valorCustoFrete | currency: 'BRL'}}</span>
+						<span *ngIf="model.valorCustoFrete == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="valorCustoAdicional">
+					<mat-header-cell *matHeaderCellDef>Adicional</mat-header-cell>
+					<mat-cell *matCellDef="let model" class="text-align-rigth">
+						<span *ngIf="model.valorCustoAdicional != null">{{model.valorCustoAdicional | currency:
+							'BRL'}}</span>
+						<span *ngIf="model.valorCustoAdicional == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="valorCustoReal">
+					<mat-header-cell *matHeaderCellDef>Custo Real</mat-header-cell>
+					<mat-cell *matCellDef="let model" class="text-align-rigth">
+						<span *ngIf="model.valorCustoReal != null">{{model.valorCustoReal | currency: 'BRL'}}</span>
+						<span *ngIf="model.valorCustoReal == null">--</span>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataEmissao">
+					<mat-header-cell *matHeaderCellDef>Dt. Emissão</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataEmissao | date: 'dd/MM/yyyy'}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="status">
+					<mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+					<mat-cell *matCellDef="let model"> <span
+							style="font-weight: 400;">{{model.statusConciliacao}}</span></mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="acoes">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Detalhes" (click)="edit(model)">
+							<mat-icon>search</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="selecionarTudo">
+					<div *matHeaderCellDef>
+						<mat-checkbox id="checkTodos" (change)="selecionarTodos()" [checked]="todosSelecionado"></mat-checkbox>
+					</div>
+					<div *matCellDef="let model">
+						<mat-checkbox (change)="selecionarItem()" [disabled]="model.desabilitaEnvioRecalcular" [(ngModel)]="model.selecionado"></mat-checkbox>
+					</div>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" [length]="paginatorLength"
+				(page)="handlePageChange($event)" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

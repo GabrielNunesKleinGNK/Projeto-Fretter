@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >XML de Retorno</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+    <form class="m-form" style="width: 700px;height: 430px;">
+        <div class="col-12">
+            <br />
+        </div>
+        <div class="col-12">
+            <textarea matInput [value]="xmlData" style="height: 400px">
+            </textarea>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="success" (click)="copiaXML()" matTooltip="Copiar XML">
+        Copiar
+        <mat-icon>content_copy</mat-icon>
+    </button>
+</mat-dialog-actions>

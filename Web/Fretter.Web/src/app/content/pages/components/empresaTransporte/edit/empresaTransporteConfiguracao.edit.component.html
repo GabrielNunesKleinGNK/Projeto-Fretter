@@ -1,0 +1,179 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<form class="m-form" [formGroup]="modelForm" style="width: 900px">
+		<div class="m-portlet__body">
+			<div class="form-group m-form__group row">
+				<label class="col-1">&nbsp;</label>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label class="col-2 col-form-label" style="text-align:right;">Tipo:</label>
+				<div class="col-3">
+					<ng-select [items]="lstEmpresaTransporteTipo" bindLabel="nome" bindValue="id" placeholder="Todos"
+						[(ngModel)]="model.empresaTransporteTipoItem.empresaTransporteTipoId" (change)="filtroTransporteTipoChange($event)" formControlName="empresaTransporteTipoId"
+						appendTo="body">
+					</ng-select>
+					<div *ngIf="empresaTransporteTipoId.invalid && (empresaTransporteTipoId.dirty || empresaTransporteTipoId.touched)"
+						class="alert alert-danger">
+						<div *ngIf="empresaTransporteTipoId.errors.required">O Tipo é obrigatório</div>
+					</div>
+				</div>
+				<label class="col-2 col-form-label" style="text-align:right;">Transportador:
+				</label>
+				<div class="col-3">
+					<ng-select [items]="lstEmpresaTransporteItem" bindLabel="transportador.nomeFantasia" bindValue="id"
+						placeholder="Todos" [(ngModel)]="model.empresaTransporteTipoItemId"
+						formControlName="empresaTransporteTipoItemId" appendTo="body">
+					</ng-select>
+					<div *ngIf="empresaTransporteTipoItemId.invalid && (empresaTransporteTipoItemId.dirty || empresaTransporteTipoItemId.touched)"
+						class="alert alert-danger">
+						<div *ngIf="empresaTransporteTipoItemId.errors.required">O Transportador é obrigatório</div>
+					</div>
+				</div>
+				<label class="col-1"></label>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label class="col-2 col-form-label" style="text-align:right;">Código: </label>
+				<div class="col-3">
+					<input id="id" name="id" class="form-control" formControlName="id" disabled>
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Dt.
+					Atualização:
+				</label>
+				<label class="col-3 col-form-label label-data-atualizacao">
+					{{ model.dataValidacao | date:'dd-MM-yyyy HH:mm' }}
+				</label>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Código
+					Contrato:</label>
+				<div class="col-3">
+					<input id="codigoContrato" name="codigoContrato" class="form-control"
+						formControlName="codigoContrato" [(ngModel)]="model.codigoContrato">
+					<div *ngIf="codigoContrato.invalid && (codigoContrato.dirty || codigoContrato.touched)"
+						class="alert alert-danger">
+						<div *ngIf="codigoContrato.errors.required">O código contrato é obrigatório</div>
+					</div>
+				</div>
+				<label class="col-2 col-form-label" style="text-align:right;">
+					Cód. Integração:
+				</label>
+				<div class="col-3">
+					<input id="codigoContrato" name="codigoIntegracao" class="form-control"
+						formControlName="codigoIntegracao" [(ngModel)]="model.codigoIntegracao">
+					<div *ngIf="codigoIntegracao.invalid && (codigoIntegracao.dirty || codigoIntegracao.touched)"
+						class="alert alert-danger">
+						<div *ngIf="codigoIntegracao.errors.required">O código integração é obrigatório</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Cartão:</label>
+				<div class="col-8">
+					<input id="codigoCartao" name="codigoCartao" class="form-control" formControlName="codigoCartao"
+						[(ngModel)]="model.codigoCartao">
+					<div *ngIf="codigoCartao.invalid && (codigoCartao.dirty || codigoCartao.touched)"
+						class="alert alert-danger">
+						<div *ngIf="codigoCartao.errors.required">O cartão é obrigatório</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Usuário:</label>
+				<div class="col-8">
+					<input id="usuario" name="usuario" class="form-control" formControlName="usuario"
+						[(ngModel)]="model.usuario">
+					<div *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)" class="alert alert-danger">
+						<div *ngIf="usuario.errors.required">O usuário é obrigatório</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Senha:</label>
+				<div class="col-8">
+					<input id="senha" name="senha" class="form-control" formControlName="senha"
+						[(ngModel)]="model.senha">
+					<div *ngIf="senha.invalid && (senha.dirty || senha.touched)" class="alert alert-danger">
+						<div *ngIf="senha.errors.required">A senha é obrigatório</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Vigência:</label>
+				<div class="col-4">
+					<input id="vigenciaInicial" name="vigenciaInicial" class="form-control"
+						formControlName="vigenciaInicial" type="date"
+						value="{{ model.vigenciaInicial | date:'yyyy-MM-dd' }}">
+					<div *ngIf="vigenciaInicial.invalid && (vigenciaInicial.dirty || vigenciaInicial.touched)"
+						class="alert alert-danger">
+						<div *ngIf="vigenciaInicial.errors.required">A vigência inicial é obrigatório</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<input id="vigenciaFinal" name="vigenciaFinal" class="form-control" formControlName="vigenciaFinal"
+						type="date" value="{{ model.vigenciaFinal | date:'yyyy-MM-dd' }}">
+					<div *ngIf="vigenciaFinal.invalid && (vigenciaFinal.dirty || vigenciaFinal.touched)"
+						class="alert alert-danger">
+						<div *ngIf="vigenciaFinal.errors.required">A vigência final é obrigatório</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Dias de
+					validade:</label>
+				<div class="col-2">
+					<input id="diasValidade" name="diasValidade" class="form-control" type="number"
+						formControlName="diasValidade" [(ngModel)]="model.diasValidade">
+					<div *ngIf="diasValidade.invalid && (diasValidade.dirty || diasValidade.touched)"
+						class="alert alert-danger">
+						<div *ngIf="diasValidade.errors.required">Os dias validade é obrigatório</div>
+					</div>
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:rigth;">Produção:</label>
+				<div class="col-1" style="margin-top: 1%;">
+					<mat-checkbox disabled formControlName="producao" [(ngModel)]="model.producao">
+					</mat-checkbox>
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:rigth;">Validado:</label>
+				<div class="col-1" style="margin-top: 1%; text-align:right;">
+					<mat-checkbox formControlName="valido" [(ngModel)]="model.valido"></mat-checkbox>
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-1"></label>
+				<label for="example-text-input" class="col-2 col-form-label" style="text-align:right;">Retorno
+					de validação:</label>
+				<div class="col-8">
+					<textarea type="text" id="retornoValidacao" name="retornoValidacao"
+						[(ngModel)]="model.retornoValidacao" style="min-height: 50px;" disabled
+						[ngClass]="{'form-control': true, 'is-invalid':retornoValidacao.invalid && (retornoValidacao.dirty || retornoValidacao.touched) && retornoValidacao.errors.required}"
+						formControlName="retornoValidacao">
+							</textarea>
+				</div>
+			</div>
+		</div>
+	</form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading"
+		[class.spinner]="viewLoading" matTooltip="Save changes">
+		Salvar
+	</button>
+</mat-dialog-actions>

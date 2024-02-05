@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>
+	<div>
+		<span >Json do Historico</span>
+		<button class="closeButton"  type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+    <form class="m-form" style="width: 700px">
+        <ngx-json-viewer [json]="jsonEntrega" [expanded]="false"></ngx-json-viewer>        
+    </form>
+</mat-dialog-content>

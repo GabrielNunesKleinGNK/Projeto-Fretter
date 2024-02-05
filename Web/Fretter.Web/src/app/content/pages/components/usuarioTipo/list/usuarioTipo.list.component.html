@@ -1,0 +1,46 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="USUARIOTIPO.LIST.TITULO">Gerenciamento de UsuarioTipos</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools>
+		<button mat-raised-button matTooltip="Create new UsuarioTipo" color="primary" type="button" (click)="novo()">
+			<span translate="USUARIOTIPO.LIST.BTNEW">Cadastrar Novo</span>
+		</button>
+	</ng-container>
+	<ng-container mPortletBody>
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar UsuarioTipos">
+		</mat-form-field>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="descricao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Descricao</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.descricao  }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastro">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Data Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastro  | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+				</ng-container>
+				
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+					<mat-cell *matCellDef="let model">
+						<button mat-icon-button color="primary" matTooltip="Editar Usuario Tipo" (click)="edit(model)"><mat-icon>create</mat-icon></button>&nbsp;
+						<button mat-icon-button color="warn" matTooltip="Deletar Usuario Tipo" (click)="delete(model)"><mat-icon>delete</mat-icon></button>&nbsp;
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

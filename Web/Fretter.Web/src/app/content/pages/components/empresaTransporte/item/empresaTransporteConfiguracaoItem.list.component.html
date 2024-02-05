@@ -1,0 +1,57 @@
+<m-portlet [options]="{headLarge: false}">
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				<span translate="IMPORTACAOCONFIGURACAO.LIST.TITULO">{{getTitle()}}</span>
+			</h3>
+		</div>
+	</ng-container>	
+	<ng-container mPortletHeadTools style="background-color: white !important;">
+		<ng-container mPortletHeadTools>
+			<button class="closeButton" type="button"  matTooltip="Close" [mat-dialog-close]="data.animal">
+				X
+			</button>
+		</ng-container>
+	</ng-container>
+	<ng-container mPortletBody>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.id}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoServico">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód. Serviço</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoServico }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoServicoCategoria">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoServicoCategoria }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="codigoIntegracao">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cód. Integração</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.codigoIntegracao }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="nome">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Descrição </mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.nome }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="vigenciaInicial">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Vigência Inicial</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.vigenciaInicial | date: 'dd/MM/yyyy' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="vigenciaFinal">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Vigência Final</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.vigenciaFinal | date: 'dd/MM/yyyy' }}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dataCadastroServico">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Dt. Cadastro</mat-header-cell>
+					<mat-cell *matCellDef="let model">{{model.dataCadastroServico | date: 'dd/MM/yyyy HH:mm' }}</mat-cell>
+				</ng-container>							
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" (page)="pageChange($event)" showFirstLastButtons></mat-paginator>
+		</div>
+	</ng-container>
+</m-portlet>

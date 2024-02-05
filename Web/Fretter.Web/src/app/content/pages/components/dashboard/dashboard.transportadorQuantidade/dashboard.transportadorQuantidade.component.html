@@ -1,0 +1,31 @@
+<!--begin:: Widgets/Authors Profit-->
+<m-portlet>
+	<!-- use ng-container[mPortletHeadTitle] for the title -->
+	<ng-container mPortletHeadTitle>
+		<div class="m-portlet__head-title">
+			<h3 class="m-portlet__head-text">
+				TOP TRANSPORTADOR POR QUANTIDADE (UN)
+			</h3>
+		</div>
+	</ng-container>
+	<!-- use ng-container[mPortletBody] for the body content -->
+	<ng-container mPortletBody>
+		<div class="m-widget4" *ngFor="let transportador of transportadores">
+			<div class="m-widget4__item">
+				<div class="m-widget4__img m-widget4__img--logo">
+					<!-- <img [src]="user.avatar" alt=""> -->
+				</div>
+				<div class="m-widget4__info">
+					<span class="m-widget4__title">
+						{{transportador.transportador}}
+					</span>
+					<br>
+				</div>
+				<span class="m-widget4__ext">
+					<span class="m-widget4__number m--font-success">{{transportador.quantidade | number: '1.0-2'}}</span>
+				</span>
+			</div>
+		</div>
+	</ng-container>
+</m-portlet>
+<!--end:: Widgets/Authors Profit-->

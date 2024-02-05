@@ -1,0 +1,45 @@
+<ng-container mPortletBody>
+	<div class="col-12">
+		<div class="mat-table__wrapper">
+			<div class="col-12">
+				<mat-table [hidden]="viewLoading || !dataSource || dataSource.data.length == 0"
+					class="lmat-elevation-z8" [dataSource]="dataSource" matSort [matSortDisableClear]="true"
+					(matSortChange)="handleSortChange($event)">
+					<ng-container matColumnDef="valorCustoFrete">
+						<mat-header-cell *matHeaderCellDef>Custo Frete</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.valorCustoFrete | currency: 'BRL' }}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="valorCustoAdicional">
+						<mat-header-cell *matHeaderCellDef>Custo Adicional</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.valorCustoAdicional | currency: 'BRL' }}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="valorCustoReal">
+						<mat-header-cell *matHeaderCellDef>Custo Real</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.valorCustoReal | currency: 'BRL'}}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="tabelaDescricao">
+						<mat-header-cell *matHeaderCellDef>Tabela Recotação</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{ model.tabelaDescricao }}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="dataProcessamento">
+						<mat-header-cell *matHeaderCellDef>Data Processamento</mat-header-cell>
+						<mat-cell *matCellDef="let model">{{model.dataProcessamento | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="actions">
+						<mat-header-cell *matHeaderCellDef>Retorno Cotação</mat-header-cell>
+						<mat-cell *matCellDef="let model">
+							<button mat-icon-button color="primary" matTooltip="Exibir log"
+								(click)="showObject(model)">
+								<mat-icon>zoom_in</mat-icon>
+							</button>
+						</mat-cell>
+					</ng-container>
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+				</mat-table>
+				<mat-paginator [pageSizeOptions]="[20, 50, 100, 200]" [length]="paginatorLength"
+					(page)="handlePageChange($event)" showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+	</div>
+</ng-container>

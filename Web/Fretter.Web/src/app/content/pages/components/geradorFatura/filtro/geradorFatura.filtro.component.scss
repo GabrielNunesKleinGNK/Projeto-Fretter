@@ -1,0 +1,21 @@
+.m-portlet .m-portlet__body {
+    padding: 10px 10px !important;
+}
+
+.info{
+    background-color: #17a2b8;
+    color: white;
+}
+.mat-icon{
+ margin-top: 5px;   
+}
+
+.iconPulseLoad {
+    animation: mymove 1s infinite;
+    color:white;
+  }
+  
+  @keyframes mymove {
+    from {opacity:1;}
+    to {opacity:0}
+  }

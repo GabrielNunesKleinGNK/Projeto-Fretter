@@ -1,0 +1,26 @@
+mode: Mainline
+commit-message-incrementing: Disabled
+branches:
+  develop:
+    tag: useBranchName
+    increment: Minor
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: true
+    regex: (releases?|sprints?)[/-]
+    source-branches: []
+    tracks-release-branches: true
+    is-release-branch: false
+    is-mainline: false
+  release:
+    tag: rc
+    increment: Minor
+    regex: dontusethis
+  pull-request:
+    tag: pr
+    regex: (pull|pull\-requests|pr)[/-]
+    track-merge-target: true
+  hotfix:
+    tag: useBranchName
+    regex: (hotfix(es)?|fix(es)?)[/-]
+ignore:
+  sha: []

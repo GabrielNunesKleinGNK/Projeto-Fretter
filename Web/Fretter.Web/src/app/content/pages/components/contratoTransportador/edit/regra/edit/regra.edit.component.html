@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>
+	<div>
+		<span>{{getTitle()}}</span>
+		<button class="closeButton" type="button" [mat-dialog-close]="data.animal" matTooltip="Close">
+			X
+		</button>
+	</div>
+</h2>
+<mat-dialog-content>
+	<mat-tab-group>
+		<mat-tab label="Regra">
+			<form class="m-form" [formGroup]="modelForm" *ngIf="modelForm" style="width: 900px;">
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Código:</label>
+					<div class="col-3">
+						<input type="number" id="id" name="id" class="form-control" formControlName="id"
+							[(ngModel)]="model.id" disabled />
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right; align-items: center;">Tipo:</label>
+					<div class="col-3">
+						<ng-select [items]="conciliacaoTipo" bindLabel="nome" bindValue="id" 
+							placeholder="Selecione o tipo" 							
+							[(ngModel)]="model.conciliacaoTipoId"
+							formControlName="conciliacaoTipoId"
+							appendTo="body">
+							<ng-template ng-label-tmp let-item="item" let-clear="clear" *ngIf="conciliacaoTipo != null && tipoArquivo != undefined">
+								<span class="ng-value-label">{{item.nome}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)">×</span>
+							</ng-template>
+							<div *ngIf="conciliacaoTipoId.invalid && (conciliacaoTipoId.dirty || conciliacaoTipoId.touched)" class="alert alert-danger">
+								<div *ngIf="conciliacaoTipoId.errors.required">Obrigatório informar o Tipo</div>
+							</div>	
+						</ng-select>
+						<div *ngIf="conciliacaoTipoId.invalid && (conciliacaoTipoId.dirty || conciliacaoTipoId.touched)" class="alert alert-danger">
+							<div *ngIf="conciliacaoTipoId.errors.required">Obrigatório informar o Tipo</div>
+						</div>	
+					</div>			
+				</div>				
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right; align-items: center;">Ocorrência:</label>
+					<div class="col-8">
+						<ng-select [items]="ocorrencias" bindLabel="ocorrenciaNome" bindValue="id"
+							*ngIf="model.id == 0"
+							placeholder="Selecione ocorrências" [(ngModel)]="model.ocorrenciasListId" 
+							formControlName="ocorrenciasListId" appendTo="body" [multiple]="true">
+							<ng-template ng-label-tmp let-item="item" let-clear="clear">
+								<span class="ng-value-label">{{item.sigla}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)">×</span>
+							</ng-template>
+						</ng-select>
+						<ng-select [items]="ocorrencias" bindLabel="ocorrenciaNome" bindValue="id"
+							*ngIf="model.id > 0"
+							placeholder="Selecione ocorrências" [(ngModel)]="model.ocorrenciaId" 
+							formControlName="ocorrenciaId" appendTo="body">
+							<ng-template ng-label-tmp let-item="item" let-clear="clear" >
+								<span class="ng-value-label" >{{item.sigla}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)">×</span>
+							</ng-template>
+						</ng-select>
+					</div>
+					<div style="padding-top:1%;">
+						<mat-icon *ngIf="model.id > 0"
+							matTooltip="A opção de seleção multipla de ocorrência só pode ser realizada quando for uma nova regra."
+							style="color: coral;">
+							info
+						</mat-icon>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Tipo Condição:</label>
+					<div class="col-3">
+						<ng-select [items]="tipos" bindLabel="name" bindValue="id" placeholder="Selecione um Tipo"
+							[(ngModel)]="model.tipoCondicao" formControlName="tipoCondicao" appendTo="body">
+						</ng-select>
+						<div *ngIf="tipoCondicao.invalid && (tipoCondicao.dirty || tipoCondicao.touched)" class="alert alert-danger">
+							<div *ngIf="tipoCondicao.errors.required">Obrigatório informar o tipo</div>
+						</div>	
+					</div>
+					<label class="col-2 col-form-label" style="text-align:right;">Operação:</label>
+					<div class="col-3">
+						<ng-select [items]="operacoes" bindLabel="name" bindValue="id" placeholder="Selecione uma Operação"
+							[(ngModel)]="model.operacao" formControlName="operacao" appendTo="body">
+						</ng-select>
+						<div *ngIf="operacao.invalid && (operacao.dirty || operacao.touched)" class="alert alert-danger">
+							<div *ngIf="operacao.errors.required">Obrigatório informar a operação</div>
+						</div>			
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-2 col-form-label" style="text-align:right;">Valor:</label>
+					<div class="col-3">
+						<input type="number" id="valor" name="valor" class="form-control" formControlName="valor" maxlength="5"
+							[(ngModel)]="model.valor"/>
+							<div *ngIf="valor.invalid && (valor.dirty || valor.touched)" class="alert alert-danger">
+								<div *ngIf="valor.errors.required">Obrigatório informar a operação</div>
+							</div>	
+							<div *ngIf="validaValorMenorQueZeroMaiorQueDezMil(model.valor)" class="alert alert-danger">
+								<div>Valor deve ser maior que 0 e menor que 10000</div>
+							</div>
+					</div>		
+				</div>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" mat-raised-button color="danger" [mat-dialog-close]="data.animal" matTooltip="Cancel changes">
+		Cancelar
+	</button>
+	<button type="button" mat-raised-button color="primary" (click)="onSubmit()" 
+		[disabled]="viewLoading"
+		[class.spinner]="viewLoading" matTooltip="Save changes">
+		Adicionar
+	</button>
+</mat-dialog-actions>
